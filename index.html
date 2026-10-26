@@ -1,0 +1,1918 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لوحتي: سبورة للحصص عن بُعد</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -2 32 32'%3E%3Crect x='1.5' y='1.5' width='29' height='21' rx='5' fill='%232D4238' stroke='%23B48958' stroke-width='2.4'/%3E%3Cpath d='M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0' fill='none' stroke='%23F7D774' stroke-width='2.4' stroke-linecap='round'/%3E%3Crect x='10' y='23.5' width='12' height='3' rx='1.5' fill='%23B48958'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Aref+Ruqaa:wght@400;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --ui-bg:#EEF0EC; --ui-surface:#FFFFFF; --ui-ink:#15201B; --ui-muted:#56625C;
+  --ui-line:rgba(21,32,27,.13); --ui-hover:rgba(21,32,27,.07);
+  --glass:rgba(255,255,255,.84); --glass-strong:rgba(255,255,255,.93);
+  --glass-hi:rgba(255,255,255,.75); --glass-edge:rgba(21,32,27,.12);
+  --on-bg:#15201B; --on-ink:#FFFFFF;
+  --accent:#E8B21F; --accent-ink:#231B03;
+  --danger:#B3361F;
+  --shadow:0 12px 32px rgba(10,20,15,.24), 0 2px 6px rgba(10,20,15,.12);
+  --blur:saturate(160%) blur(16px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ui-bg:#121916; --ui-surface:#1B2320; --ui-ink:#EAF0EC; --ui-muted:#A2B0A8;
+    --ui-line:rgba(234,240,236,.13); --ui-hover:rgba(234,240,236,.09);
+    --glass:rgba(22,29,26,.74); --glass-strong:rgba(26,34,30,.93);
+    --glass-hi:rgba(255,255,255,.08); --glass-edge:rgba(0,0,0,.45);
+    --on-bg:#F1C548; --on-ink:#1A1505;
+    --accent:#F1C548; --accent-ink:#1A1505;
+    --danger:#FF8F78;
+    --shadow:0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ui-bg:#121916; --ui-surface:#1B2320; --ui-ink:#EAF0EC; --ui-muted:#A2B0A8;
+  --ui-line:rgba(234,240,236,.13); --ui-hover:rgba(234,240,236,.09);
+  --glass:rgba(22,29,26,.74); --glass-strong:rgba(26,34,30,.93);
+  --glass-hi:rgba(255,255,255,.08); --glass-edge:rgba(0,0,0,.45);
+  --on-bg:#F1C548; --on-ink:#1A1505;
+  --accent:#F1C548; --accent-ink:#1A1505;
+  --danger:#FF8F78;
+  --shadow:0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{
+  margin:0;height:100%;display:flex;flex-direction:column;overflow:hidden;
+  background:var(--ui-bg);color:var(--ui-ink);
+  font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  font-size:15px;line-height:1.5;
+}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+[dir="rtl"] svg.i.flip{transform:scaleX(-1)}
+svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* ---------- frosted panes ---------- */
+.pane{
+  background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  border:1px solid var(--glass-edge);border-radius:14px;color:var(--ui-ink);
+  box-shadow:var(--shadow), inset 0 1px 0 var(--glass-hi);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .pane,.menu{background:var(--glass-strong)}
+}
+
+/* ---------- buttons ---------- */
+.btn,.ib{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;flex:none;
+  height:36px;border:0;background:transparent;border-radius:10px;padding:0 10px;
+  font-weight:700;font-size:14px;cursor:pointer;color:var(--ui-ink)
+}
+.ib{width:36px;padding:0}
+.btn:hover,.ib:hover{background:var(--ui-hover)}
+.btn:disabled,.ib:disabled{opacity:.35;cursor:default;background:transparent}
+.btn[aria-pressed="true"],.btn[aria-expanded="true"],.ib[aria-expanded="true"]{background:var(--on-bg);color:var(--on-ink)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);box-shadow:inset 0 -2px 0 rgba(0,0,0,.14)}
+.btn.primary:hover{filter:brightness(1.06);background:var(--accent)}
+
+/* groups with automatic dividers */
+.ovf-row{display:flex;align-items:center;gap:2px;flex:none}
+.ovf-row > .g{display:flex;align-items:center;gap:2px;flex:none}
+.ovf-row > .g.empty{display:none}
+.ovf-row > .g:not(.empty) ~ .g:not(.empty)::before{
+  content:"";width:1px;height:24px;background:var(--ui-line);margin-inline:4px 6px;flex:none
+}
+
+/* ---------- stage ---------- */
+#stage{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:none;background:#2D4238}
+#board,#fx{position:absolute;inset:0;width:100%;height:100%;display:block}
+#fx{pointer-events:none}
+#board{cursor:crosshair}
+.hint{
+  position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;
+  font-family:"Aref Ruqaa","Kalam",serif;color:var(--hint,rgba(244,242,236,.42));width:min(560px,calc(100% - 48px))
+}
+.hint b{display:block;font-size:clamp(28px,3.8vw,44px);font-weight:700;line-height:1.5}
+.hint span{font-size:20px}
+.editor{
+  position:absolute;z-index:4;margin:0;border:1.5px dashed var(--accent);border-radius:4px;background:transparent;
+  font-family:"Kalam","Aref Ruqaa",cursive;resize:none;overflow:hidden;outline:none;padding:0 2px;min-width:120px;white-space:pre;max-width:calc(100% - 16px)
+}
+.editor.note-ed{border:none;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.25);color:#2B2A26;white-space:pre-wrap}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:absolute;top:12px;left:12px;right:12px;z-index:10;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none
+}
+.topbar > .pane{pointer-events:auto;display:flex;align-items:center;gap:2px;padding:5px;flex:none}
+.brand{display:flex;align-items:center;gap:7px;padding:0 6px;white-space:nowrap;flex:none;height:36px}
+.brand .logo{width:30px;height:27px;flex:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+.brand .word{font-family:"Aref Ruqaa",serif;font-weight:700;font-size:25px;line-height:1;transform:translateY(-2px)}
+.title-in{
+  font:inherit;font-weight:700;color:inherit;background:transparent;border:1px solid transparent;flex:none;
+  border-radius:9px;height:36px;padding:0 9px;width:150px;min-width:0;text-overflow:ellipsis
+}
+.title-in:hover{background:var(--ui-hover)}
+.title-in:focus{outline:none;border-color:var(--accent);background:var(--ui-surface)}
+.vsep{width:1px;height:24px;background:var(--ui-line);margin:0 4px;flex:none}
+.pages{display:flex;align-items:center;gap:2px;flex:none}
+.pg-label{font-variant-numeric:tabular-nums;min-width:8.5ch}
+.pg-short{display:none}
+.topbar.compact #hdrItems > .g:first-child .t,.topbar.compact2 #hdrItems .t,.topbar.compact2 #presentBtn .t{display:none}
+.topbar.compact #hdrItems > .g:first-child .btn,.topbar.compact2 #hdrItems .btn{width:36px;padding:0}
+.topbar.tiny .brand,.topbar.tight .brand .word,.topbar.tight #addPg,.topbar.tight .pg-long,.topbar.tight .vsep{display:none}
+.topbar.tight .pg-short{display:inline}
+.topbar.tight .pg-label{min-width:5ch}
+.only-menu{display:none}
+body.presenting .topbar{display:none}
+
+/* ---------- dock ---------- */
+.dock{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:10;
+  display:flex;align-items:center;gap:2px;padding:6px;border-radius:18px;width:max-content
+}
+.tb{
+  position:relative;width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;flex:none;
+  border:0;border-radius:12px;background:transparent;color:var(--ui-ink);cursor:pointer
+}
+.tb:hover{background:var(--ui-hover)}
+.tb[aria-pressed="true"],.tb[aria-checked="true"],.tb[aria-expanded="true"]{background:var(--on-bg);color:var(--on-ink)}
+.tb:disabled{opacity:.3;cursor:default;background:transparent}
+.tb.wide{width:auto;padding:0 12px;gap:6px;font-weight:700;font-size:13px}
+.size-dot{display:block;border-radius:50%;background:currentColor}
+.sw-btn{width:34px;height:40px;border:0;background:transparent;display:grid;place-items:center;border-radius:10px;cursor:pointer;flex:none;padding:0}
+.sw-btn:hover{background:var(--ui-hover)}
+.sw-dot{
+  width:24px;height:24px;border-radius:50%;background:var(--c);transition:transform .12s ease;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.25)
+}
+.sw-btn:hover .sw-dot{transform:scale(1.08)}
+.sw-btn[aria-checked="true"] .sw-dot{box-shadow:0 0 0 2px var(--glass-strong),0 0 0 4.5px var(--ui-ink)}
+.tb.holds-active:not([aria-expanded="true"]){box-shadow:inset 0 0 0 2px var(--on-bg)}
+.more-dot{position:absolute;inset-inline-end:6px;bottom:6px;width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 2px var(--glass-strong)}
+
+/* ---------- floating controls ---------- */
+.selbar{position:absolute;z-index:8;display:flex;gap:2px;padding:4px;border-radius:12px}
+.selbar button{border:0;background:transparent;border-radius:8px;padding:6px 9px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.selbar button:hover{background:var(--ui-hover)}
+.selbar .del{color:var(--danger)}
+.zoom{position:absolute;inset-inline-end:12px;bottom:84px;z-index:9;display:flex;flex-direction:column;align-items:stretch;padding:4px;border-radius:14px}
+.zoom button{border:0;background:transparent;width:44px;height:34px;border-radius:9px;cursor:pointer;font-weight:700;font-variant-numeric:tabular-nums;font-size:12px;display:grid;place-items:center}
+.zoom button:hover{background:var(--ui-hover)}
+.toast{
+  position:absolute;left:50%;bottom:84px;transform:translateX(-50%);z-index:20;
+  display:flex;align-items:center;gap:12px;padding:9px 10px 9px 16px;border-radius:14px;width:max-content;max-width:calc(100% - 24px);
+  background:rgba(16,22,19,.86);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  border:1px solid rgba(255,255,255,.10);color:#F1F5F2;box-shadow:var(--shadow);font-weight:700
+}
+.toast button{border:0;border-radius:9px;padding:5px 11px;background:var(--accent);color:#231B03;font-weight:700;cursor:pointer;flex:none}
+.present-exit{position:absolute;top:12px;inset-inline-end:12px;z-index:10;display:none;opacity:.7}
+.present-exit:hover,.present-exit:focus-visible{opacity:1}
+body.presenting .present-exit{display:inline-flex}
+
+/* reveal shade */
+#shade{
+  position:absolute;left:0;right:0;bottom:0;top:var(--shade-top,0px);z-index:5;
+  background:repeating-linear-gradient(180deg,#3E454C 0 26px,#373D44 26px 28px);
+  box-shadow:0 -6px 18px rgba(0,0,0,.35);
+}
+#shade::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:#2A2F35}
+.shade-handle{
+  position:absolute;top:18px;left:50%;transform:translateX(-50%);display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+  padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.5);color:#1E2328;font-weight:700;cursor:ns-resize;
+  background:rgba(244,242,236,.88);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);
+  box-shadow:0 3px 12px rgba(0,0,0,.35);touch-action:none;user-select:none
+}
+#spot{
+  position:absolute;inset:0;z-index:6;pointer-events:none;
+  background:radial-gradient(circle at var(--sx,50%) var(--sy,50%), transparent var(--sr,150px), rgba(5,8,7,.86) calc(var(--sr,150px) + 3px));
+}
+
+/* ---------- widgets ---------- */
+.widget{
+  position:absolute;z-index:9;width:300px;max-width:calc(100% - 24px);overflow:hidden;
+  background:var(--ui-surface);color:var(--ui-ink);border:1px solid var(--glass-edge);border-radius:16px;box-shadow:var(--shadow);
+}
+.w-head{
+  display:flex;align-items:center;justify-content:space-between;padding:6px 6px 6px 14px;cursor:grab;touch-action:none;user-select:none;font-weight:700;
+  background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border-bottom:1px solid var(--ui-line)
+}
+.w-head:active{cursor:grabbing}
+.w-x{border:0;background:transparent;border-radius:8px;width:32px;height:32px;cursor:pointer;font-size:20px;line-height:1}
+.w-x:hover{background:var(--ui-hover)}
+.w-body{padding:12px 14px 14px}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.chip,.wbtn{
+  border:1px solid var(--ui-line);background:var(--ui-surface);border-radius:10px;padding:6px 10px;
+  font-weight:700;font-size:14px;cursor:pointer;white-space:nowrap
+}
+.chip:hover,.wbtn:hover{background:var(--ui-hover)}
+.wbtn.primary{background:var(--accent);border-color:transparent;color:var(--accent-ink)}
+.timer-face{font-size:clamp(44px,14vw,64px);font-weight:700;text-align:center;font-variant-numeric:tabular-nums;line-height:1.05;padding:2px 0}
+.widget.done .timer-face{color:var(--danger);animation:pulse 1s ease-in-out 3}
+@keyframes pulse{50%{transform:scale(1.06)}}
+.pick-face{
+  font-family:"Aref Ruqaa","Kalam",serif;font-size:32px;font-weight:700;text-align:center;min-height:68px;display:flex;align-items:center;justify-content:center;
+  background:var(--ui-bg);border-radius:12px;padding:6px 10px;line-height:1.15;overflow-wrap:anywhere
+}
+.pick-face.idle{font-family:inherit;font-size:15px;color:var(--ui-muted)}
+textarea.names{
+  display:block;width:100%;margin-top:10px;font:inherit;color:inherit;background:var(--ui-bg);border:1px solid var(--ui-line);
+  border-radius:10px;padding:8px 10px;resize:vertical;min-height:84px;max-height:40vh
+}
+.chk{display:flex;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+.muted{color:var(--ui-muted);font-size:13px;margin:6px 0 0}
+.tal-row{display:grid;grid-template-columns:22px minmax(0,1fr) 30px 32px 32px;gap:6px;align-items:center;margin-top:8px}
+.tal-l{font-weight:700}
+.tal-bar{height:22px;border-radius:6px;background:var(--ui-bg);overflow:hidden}
+.tal-bar i{display:block;height:100%;width:0;border-radius:6px;transition:width .2s}
+.tal-n{font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+.tal-row button{height:30px;border:1px solid var(--ui-line);background:var(--ui-surface);border-radius:8px;cursor:pointer;font-weight:700}
+.tal-row button:hover{background:var(--ui-hover)}
+
+/* ---------- menus & dialogs ---------- */
+.menu{
+  position:fixed;z-index:50;min-width:220px;max-width:calc(100vw - 16px);max-height:calc(100% - 16px);overflow:auto;padding:6px;
+  background:var(--glass-strong);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);color:var(--ui-ink);
+  border:1px solid var(--glass-edge);border-radius:14px;box-shadow:var(--shadow), inset 0 1px 0 var(--glass-hi)
+}
+.menu.wide{width:300px}
+.menu > button:not(.tb):not(.sw-btn){
+  display:flex;align-items:center;gap:10px;width:100%;text-align:start;border:0;background:transparent;justify-content:flex-start;
+  border-radius:9px;padding:0 10px;min-height:38px;cursor:pointer;font-size:14px;font-weight:400
+}
+.menu > button:not(.tb):not(.sw-btn):hover{background:var(--ui-hover)}
+.menu > button:disabled{opacity:.45;cursor:not-allowed}
+.menu > button[aria-pressed="true"]{background:var(--on-bg);color:var(--on-ink)}
+.menu .danger{color:var(--danger)}
+.more-menu .t,.more-menu .only-menu{display:inline!important}
+.more-menu > .btn{font-weight:700}
+.more-menu > [data-menu]::after{content:"‹";margin-inline-start:auto;font-size:18px;color:var(--ui-muted)}
+.dock-more{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-width:0;width:max-content;max-width:min(320px,calc(100vw - 16px));padding:8px;border-radius:16px}
+.dock-more > .g{display:flex;flex-wrap:wrap;gap:2px;flex-basis:100%}
+.dock-more > .g + .g,.dock-more > .tb + .g{border-top:1px solid var(--ui-line);padding-top:6px;margin-top:2px}
+.m-h{font-size:13px;color:var(--ui-muted);padding:8px 10px 4px}
+.menu hr{border:0;border-top:1px solid var(--ui-line);margin:6px 4px}
+.m-note{font-size:13px;color:var(--ui-muted);margin:4px 10px 6px;max-width:260px}
+.opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:2px 6px 6px}
+.opts.five{grid-template-columns:repeat(5,minmax(0,1fr))}
+.opt{
+  display:flex;flex-direction:column;align-items:center;gap:5px;border:1.5px solid var(--ui-line);border-radius:10px;min-width:0;
+  background:transparent;padding:6px 3px;cursor:pointer;font-size:12px;font-weight:700;overflow:hidden;text-overflow:ellipsis
+}
+.opt:hover{background:var(--ui-hover)}
+.opt[aria-pressed="true"]{border-color:var(--ui-ink);box-shadow:inset 0 0 0 1px var(--ui-ink)}
+.opt .sw{width:100%;height:30px;border-radius:6px;border:1px solid rgba(0,0,0,.15)}
+.opt svg{width:30px;height:30px}
+dialog{
+  border:1px solid var(--glass-edge);border-radius:18px;padding:0;background:var(--ui-surface);color:var(--ui-ink);
+  box-shadow:var(--shadow);width:min(460px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto
+}
+dialog::backdrop{background:rgba(10,16,13,.35);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.dlg-body{padding:18px 20px 20px}
+.dlg-body h2{margin:0 0 4px;font-size:19px}
+.dlg-body p{margin:0 0 12px;color:var(--ui-muted)}
+.field{width:100%;font:inherit;font-size:17px;color:inherit;background:var(--ui-bg);border:1px solid var(--ui-line);border-radius:10px;padding:10px 12px}
+.field:focus{outline:none;border-color:var(--accent)}
+.err{color:var(--danger);font-size:14px;min-height:20px;margin-top:6px}
+.dlg-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px;flex-wrap:wrap}
+.keys{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:14px;margin:4px 0 0}
+.keys kbd{
+  font-family:inherit;font-weight:700;font-size:13px;padding:2px 7px;border-radius:6px;border:1px solid var(--ui-line);
+  background:var(--ui-bg);white-space:nowrap;justify-self:start
+}
+.widget.wide-w{width:330px}
+.cls-row{display:flex;gap:6px;margin-top:10px;align-items:center}
+.cls-row .field{flex:1;min-width:0}
+.field.sm{font-size:14px;padding:0 10px;height:36px}
+select.field.sm{padding-inline-end:6px;cursor:pointer}
+.sq{width:36px;height:36px;flex:none;display:grid;place-items:center;border:1px solid var(--ui-line);background:var(--ui-surface);border-radius:10px;cursor:pointer;color:var(--ui-ink)}
+.sq:hover{background:var(--ui-hover)}
+#pDel:hover{color:var(--danger)}
+.wbtn.xl{display:inline-flex;align-items:center;gap:6px;height:36px;flex:none;color:#107C41;border-color:rgba(16,124,65,.35)}
+:root[data-theme="dark"] .wbtn.xl{color:#5CD18F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wbtn.xl{color:#5CD18F}}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
+#cheer{
+  position:fixed;left:50%;top:42%;z-index:61;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.7);
+  font-family:"Aref Ruqaa",serif;font-weight:700;font-size:clamp(56px,10vw,120px);line-height:1.3;white-space:nowrap;
+  color:#FFE27A;text-shadow:0 4px 0 #B8860B,0 10px 30px rgba(0,0,0,.45);transition:opacity .35s ease,transform .45s cubic-bezier(.2,1.6,.4,1)
+}
+#cheer.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#pickCard{
+  position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);z-index:12;text-align:center;
+  width:max-content;min-width:min(380px,calc(100% - 32px));max-width:calc(100% - 32px);padding:16px 22px 16px;border-radius:22px
+}
+.pc-label{font-size:14px;color:var(--ui-muted);font-weight:500}
+.pc-label span{color:var(--ui-ink);font-weight:700}
+.pc-name{font-family:"Aref Ruqaa","Kalam",serif;font-weight:700;font-size:clamp(40px,7vw,72px);line-height:1.5;overflow-wrap:anywhere;transition:opacity .1s}
+.pc-name.spin{opacity:.5}
+.pc-meta{font-size:13px;color:var(--ui-muted);min-height:20px}
+.pc-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+
+<main id="stage">
+  <canvas id="board" aria-label="مساحة اللوحة"></canvas>
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="hint" id="hint"><b>التقط الطبشورة وابدأ الكتابة.</b><span>الأدوات في الشريط السفلي. اضغط ؟ لعرض الاختصارات.</span></div>
+
+  <div class="selbar pane" id="selbar" hidden>
+    <button id="selColor" title="تغيير لون الملاحظة">اللون</button>
+    <button id="selFront" title="إحضار إلى الأمام">للأمام</button>
+    <button id="selDup" title="تكرار (Ctrl+D)">تكرار</button>
+    <button id="selDel" class="del" title="حذف (Delete)">حذف</button>
+  </div>
+
+  <div class="zoom pane" role="group" aria-label="التكبير">
+    <button id="zIn" aria-label="تكبير" title="تكبير (Ctrl +)"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+    <button id="zReset" title="إعادة العرض (Ctrl 0)">100%</button>
+    <button id="zOut" aria-label="تصغير" title="تصغير (Ctrl −)"><svg class="i" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+  </div>
+
+  <div id="shade" hidden><button class="shade-handle" id="shadeHandle" aria-label="ستارة الكشف. اسحبها أو استخدم الأسهم لتحريكها."><svg class="i" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4"/></svg>اسحب للكشف</button></div>
+  <div id="spot" hidden></div>
+
+  <section class="widget" id="w-timer" hidden aria-label="المؤقت">
+    <div class="w-head"><span>المؤقت</span><button class="w-x" aria-label="إغلاق المؤقت">×</button></div>
+    <div class="w-body">
+      <div class="timer-face" id="tFace" aria-live="polite" dir="ltr">05:00</div>
+      <div class="row" style="justify-content:center">
+        <button class="chip" data-t="60">دقيقة</button><button class="chip" data-t="180">3 دقائق</button>
+        <button class="chip" data-t="300">5 دقائق</button><button class="chip" data-t="600">10 دقائق</button>
+      </div>
+      <div class="row" style="justify-content:center">
+        <button class="wbtn" id="tPlus">+30 ث</button>
+        <button class="wbtn primary" id="tStart">ابدأ</button>
+        <button class="wbtn" id="tReset">إعادة</button>
+        <button class="wbtn" id="tMinus">−30 ث</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="widget wide-w" id="w-picker" hidden aria-label="اختيار طالب">
+    <div class="w-head"><span>اختيار طالب</span><button class="w-x" aria-label="إغلاق اختيار طالب">×</button></div>
+    <div class="w-body">
+      <div class="pick-face idle" id="pFace" aria-live="polite">أضف أسماء طلابك ثم اختر</div>
+      <div class="cls-row">
+        <select id="pClass" class="field sm" aria-label="الفصل"></select>
+        <button class="sq" id="pAdd" title="فصل جديد" aria-label="فصل جديد"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+        <button class="sq" id="pDel" title="حذف هذا الفصل" aria-label="حذف هذا الفصل"><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>
+      </div>
+      <div class="cls-row">
+        <input id="pClassName" class="field sm" aria-label="اسم الفصل" placeholder="اسم الفصل" maxlength="60">
+        <button class="wbtn xl" id="pImport" title="يقبل Excel (xlsx وxlsm وxlsb وxls) وLibreOffice (ods) وApple Numbers وCSV وTSV وTXT. كل ورقة في الملف تصبح فصلًا"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg>استيراد من Excel</button>
+      </div>
+      <textarea class="names" id="pNames" placeholder="اسم طالب في كل سطر" aria-label="أسماء الطلاب، اسم في كل سطر" dir="auto"></textarea>
+      <label class="chk"><input type="checkbox" id="pNoRepeat" checked> لا تكرر اختيار الطالب نفسه</label>
+      <div class="row"><button class="wbtn primary" id="pPick">اختر طالبًا</button><button class="wbtn" id="pReset">ابدأ من جديد</button></div>
+      <p class="muted" id="pLeft"></p>
+    </div>
+  </section>
+
+  <section class="widget" id="w-tally" hidden aria-label="سؤال سريع">
+    <div class="w-head"><span>سؤال سريع</span><button class="w-x" aria-label="إغلاق السؤال السريع">×</button></div>
+    <div class="w-body">
+      <p class="muted" style="margin-top:0">اطرح سؤال اختيار من متعدد، ثم عُدّ الإجابات التي يكتبها الطلاب في الدردشة.</p>
+      <div id="tallyRows"></div>
+      <div class="row"><button class="wbtn primary" id="tlShow">اعرض النتائج على اللوحة</button><button class="wbtn" id="tlReset">إعادة</button></div>
+    </div>
+  </section>
+
+  <header class="topbar" id="topbar">
+    <div class="pane" id="paneLeft">
+      <div class="brand" aria-label="لوحتي">
+        <svg class="logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
+        <span class="word">لوحتي</span>
+      </div>
+      <input id="title" class="title-in" value="درس بدون عنوان" aria-label="عنوان الدرس" maxlength="80" spellcheck="false" dir="auto">
+      <span class="vsep"></span>
+      <nav class="pages" aria-label="الصفحات">
+        <button class="ib" id="prevPg" aria-label="الصفحة السابقة" title="الصفحة السابقة (→)"><svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+        <button class="btn pg-label" id="pgLabel" data-menu="m-page" aria-haspopup="menu" aria-expanded="false"><span class="pg-long">الصفحة 1 من 1</span><span class="pg-short">1/1</span></button>
+        <button class="ib" id="nextPg" aria-label="الصفحة التالية" title="الصفحة التالية (←)"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="ib" id="addPg" aria-label="إضافة صفحة بعد هذه" title="صفحة جديدة"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+      </nav>
+    </div>
+    <div class="pane" id="paneRight">
+      <div class="ovf-row" id="hdrItems">
+        <div class="g" role="group" aria-label="أدوات الفصل">
+          <button class="btn" id="cheerBtn" title="احتفال وتشجيع للطلاب (C)"><svg class="i" viewBox="0 0 24 24"><path d="M4 20l4.5-12 7.5 7.5z"/><path d="M13 6.5c.5-1.6 2-2.5 3.6-2M17.5 10.5c1.6-.5 3.1.1 3.8 1.5M14 3v.01M21 7v.01M19 3.5l.5 1.5M8.5 8l7.5 7.5"/></svg><span class="t">تشجيع</span></button>
+          <button class="btn" id="hQuick" title="اختيار طالب مباشرة من الفصل الحالي (K)"><svg class="i" viewBox="0 0 24 24"><path d="M3 7h3c4 0 6 10 10 10h4M3 17h3c1.6 0 2.8-1.6 3.9-3.6M14.1 9.6C15.2 8 16.4 7 18 7h2M18 4l3 3-3 3M18 14l3 3-3 3"/></svg><span class="t">طالب عشوائي</span></button>
+          <button class="btn" id="hPicker" data-widget="w-picker" aria-pressed="false" title="اختيار طالب عشوائيًا من قائمة الفصل"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h11M4 12h11M4 18h11"/><circle cx="19.5" cy="6" r="1.3" fill="currentColor"/><circle cx="19.5" cy="12" r="1.3" fill="currentColor"/><circle cx="19.5" cy="18" r="1.3" fill="currentColor"/></svg><span class="t">اختيار طالب</span></button>
+          <button class="btn" id="hTimer" data-widget="w-timer" aria-pressed="false" title="مؤقت تنازلي"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l-2.5 2M9.5 2.5h5"/></svg><span class="t">المؤقت</span></button>
+          <button class="btn" id="hTally" data-widget="w-tally" aria-pressed="false" title="عدّ إجابات سؤال سريع"><svg class="i" viewBox="0 0 24 24"><path d="M5 20V10M10 20V4M15 20v-7M20 20v-4"/></svg><span class="t">سؤال سريع</span></button>
+          <button class="btn" id="revealBtn" aria-pressed="false" title="غطِّ اللوحة واكشفها تدريجيًا (R)"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 12h18M10 12v2.5h4V12"/></svg><span class="t">كشف تدريجي</span></button>
+          <button class="btn" id="spotBtn" aria-pressed="false" title="عتّم كل شيء عدا جزءًا واحدًا (O)"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg><span class="t">تسليط الضوء</span></button>
+        </div>
+        <div class="g">
+          <button class="btn" id="hBoard" data-menu="m-board" aria-haspopup="menu" aria-expanded="false" title="الخلفية والنمط"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M17 9h-4M17 12h-7"/></svg><span class="t">اللوحة</span></button>
+          <button class="btn" id="hInsert" data-menu="m-insert" aria-haspopup="menu" aria-expanded="false" title="إدراج صور ورسوم بيانية وقوالب"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3"/><path d="M12 8v8M8 12h8"/></svg><span class="t">إدراج</span></button>
+          <button class="btn" id="hFile" data-menu="m-file" aria-haspopup="menu" aria-expanded="false" title="حفظ وفتح وتنزيل"><svg class="i" viewBox="0 0 24 24"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v7.5a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg><span class="t">ملف</span></button>
+          <button class="ib" id="helpBtn" aria-label="اختصارات لوحة المفاتيح" title="اختصارات لوحة المفاتيح (؟)"><svg class="i" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M8 14h8"/></svg><span class="only-menu">اختصارات لوحة المفاتيح</span></button>
+        </div>
+      </div>
+      <button class="ib" id="hdrMore" data-menu="m-hdrmore" aria-haspopup="menu" aria-expanded="false" aria-label="أدوات أخرى" title="المزيد" hidden><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="btn primary" id="presentBtn" title="إخفاء الشريط العلوي أثناء الشرح (F)"><svg class="i" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="t">عرض</span></button>
+    </div>
+  </header>
+
+  <nav class="dock pane" id="dock" aria-label="أدوات الرسم">
+    <div class="ovf-row" id="dockItems">
+      <div class="g">
+        <button class="tb" data-tool="select" id="dSelect" title="تحديد وتحريك (V)" aria-label="تحديد"><svg class="i flip" viewBox="0 0 24 24"><path d="M6 3l12 9-5.5 1L10 19z"/></svg></button>
+        <button class="tb" data-tool="hand" id="dHand" title="التنقل في اللوحة (G، أو اضغط مطولًا على المسافة)" aria-label="تحريك اللوحة"><svg class="i" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3L9.5 5.5M12 3l2.5 2.5M12 21l-2.5-2.5M12 21l2.5-2.5M3 12l2.5-2.5M3 12l2.5 2.5M21 12l-2.5-2.5M21 12l-2.5 2.5"/></svg></button>
+      </div>
+      <div class="g">
+        <button class="tb" data-tool="pen" id="dPen" title="قلم (P)" aria-label="قلم"><svg class="i flip" viewBox="0 0 24 24"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/><path d="M14.5 6.5l3 3"/></svg></button>
+        <button class="tb" data-tool="calligraphy" id="dCal" title="قلم الخط: سُمك يتغير مع اتجاه الكتابة (Q)" aria-label="قلم الخط"><svg class="i" viewBox="0 0 24 24"><path d="M13.5 3.5l7 7-5 2.5-4.5-4.5z"/><path d="M11 8.5L4 18l2 2 9.5-7"/><path d="M4 18l4.5-4.5"/><circle cx="10" cy="12" r="1"/></svg></button>
+        <button class="tb" data-tool="highlighter" id="dHl" title="قلم تظليل بألوان فسفورية (H)" aria-label="قلم تظليل"><svg class="i flip" viewBox="0 0 24 24"><path d="M9 14l-4.5 4.5L7 21l2.5-2.5"/><path d="M8 13.5L17.5 4l3 3-9.5 9.5H8z"/><path d="M13 21h8"/></svg></button>
+        <button class="tb" data-tool="eraser" id="dEraser" title="ممحاة: تمسح الخط كاملًا (E)" aria-label="ممحاة"><svg class="i flip" viewBox="0 0 24 24"><path d="M8.5 20H20"/><path d="M4.6 15.4l9.6-9.6a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L11 19H8.2z"/><path d="M9.5 10.5l5 5"/></svg></button>
+        <button class="tb" data-tool="laser" id="dLaser" title="مؤشر ليزر يترك أثرًا يتلاشى (L)" aria-label="مؤشر ليزر"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6L7 7M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg></button>
+      </div>
+      <div class="g">
+        <button class="tb" data-tool="text" id="dText" title="كتابة نص (T)" aria-label="نص"><svg class="i" viewBox="0 0 24 24"><path d="M5 7V5h14v2M12 5v14M9 19h6"/></svg></button>
+        <button class="tb" data-tool="note" id="dNote" title="ملاحظة لاصقة (N)" aria-label="ملاحظة لاصقة"><svg class="i flip" viewBox="0 0 24 24"><path d="M5 4h14v10l-6 6H5z"/><path d="M13 20v-6h6"/></svg></button>
+        <button class="tb" id="shapeBtn" data-menu="m-shapes" aria-haspopup="menu" aria-expanded="false" title="الأشكال (S)" aria-label="الأشكال"><svg class="i" viewBox="0 0 24 24" id="shapeIcon"><rect x="4" y="6" width="16" height="12" rx="1"/></svg></button>
+      </div>
+      <div class="g" id="colorGrp" role="radiogroup" aria-label="اللون"></div>
+      <div class="g" id="sizeGrp" role="radiogroup" aria-label="السُّمك">
+        <button class="tb" data-size="0" role="radio" aria-label="رفيع" title="رفيع ([)"><span class="size-dot" style="width:5px;height:5px"></span></button>
+        <button class="tb" data-size="1" role="radio" aria-label="متوسط" title="متوسط"><span class="size-dot" style="width:9px;height:9px"></span></button>
+        <button class="tb" data-size="2" role="radio" aria-label="عريض" title="عريض (])"><span class="size-dot" style="width:15px;height:15px"></span></button>
+      </div>
+      <div class="g" id="smartGrp">
+        <button class="tb wide" id="smartBtn" aria-pressed="true" title="الأشكال الذكية: تُرتَّب الخطوط والمربعات والدوائر الكبيرة المرسومة باليد"><svg class="i flip" viewBox="0 0 24 24"><path d="M4 20L15 9M14.5 3.5v3M20.5 9.5h-3M18.5 5.5l-2 2M11 4.5l.8 1.6M19.4 13l-1.6-.8"/></svg>أشكال ذكية</button>
+      </div>
+      <div class="g" id="undoGrp">
+        <button class="tb" id="undoBtn" title="تراجع (Ctrl+Z)" aria-label="تراجع"><svg class="i" viewBox="0 0 24 24"><path d="M15 8l4.5 4.5L15 17"/><path d="M19.5 12.5H9a4.5 4.5 0 0 0 0 9h2"/></svg></button>
+        <button class="tb" id="redoBtn" title="إعادة (Ctrl+Shift+Z)" aria-label="إعادة"><svg class="i" viewBox="0 0 24 24"><path d="M9 8L4.5 12.5 9 17"/><path d="M4.5 12.5H15a4.5 4.5 0 0 1 0 9h-2"/></svg></button>
+      </div>
+    </div>
+    <button class="tb" id="dockMore" data-menu="m-dockmore" aria-haspopup="menu" aria-expanded="false" aria-label="أدوات أخرى" title="أدوات أخرى" hidden><svg class="i" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg><span class="more-dot" hidden></span></button>
+  </nav>
+
+  <div id="pickCard" class="pane" hidden role="status" aria-live="polite">
+    <div class="pc-label">الطالب المختار من <span id="pcClass"></span></div>
+    <div class="pc-name" id="pcName"></div>
+    <div class="pc-meta" id="pcMeta"></div>
+    <div class="pc-actions" id="pcActions"><button class="wbtn primary" id="pcAgain">اختيار آخر</button><button class="wbtn" id="pcSettings">القوائم</button><button class="wbtn" id="pcClose">إغلاق</button></div>
+  </div>
+  <button class="btn present-exit pane" id="exitPresent">إنهاء العرض</button>
+  <div class="toast" id="toast" role="status" hidden><span></span><button hidden></button></div>
+</main>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div id="cheer" role="status" aria-live="polite"></div>
+
+<!-- menus -->
+<div class="menu" id="m-page" role="menu" hidden>
+  <button role="menuitem" data-act="addPage">صفحة جديدة بعد هذه</button>
+  <button role="menuitem" data-act="dupPage">تكرار هذه الصفحة</button>
+  <button role="menuitem" data-act="delPage" class="danger">حذف هذه الصفحة</button>
+</div>
+<div class="menu wide" id="m-board" role="menu" hidden>
+  <div class="m-h">الخلفية</div>
+  <div class="opts" id="bgOpts">
+    <button class="opt" data-bg="chalk"><span class="sw" style="background:#2D4238"></span>سبورة طباشير</button>
+    <button class="opt" data-bg="white"><span class="sw" style="background:#FCFCF9"></span>سبورة بيضاء</button>
+    <button class="opt" data-bg="night"><span class="sw" style="background:#171C27"></span>ليلي</button>
+  </div>
+  <div class="m-h">النمط</div>
+  <div class="opts five" id="patOpts">
+    <button class="opt" data-pat="none" title="سادة"><svg viewBox="0 0 30 30"><rect x="3" y="3" width="24" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>سادة</button>
+    <button class="opt" data-pat="grid" title="مربعات"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="24" height="24" rx="3" stroke-width="1.5"/><path d="M11 3v24M19 3v24M3 11h24M3 19h24"/></svg>مربعات</button>
+    <button class="opt" data-pat="lined" title="مسطّر"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="24" height="24" rx="3" stroke-width="1.5"/><path d="M3 10h24M3 16h24M3 22h24"/></svg>مسطّر</button>
+    <button class="opt" data-pat="graph" title="رسم بياني بمحاور"><svg viewBox="0 0 30 30" fill="none" stroke="currentColor"><rect x="3" y="3" width="24" height="24" rx="3" stroke-width="1.5"/><path d="M15 3v24M3 15h24" stroke-width="2"/><path d="M9 3v24M21 3v24M3 9h24M3 21h24" stroke-width=".8"/></svg>بياني</button>
+    <button class="opt" data-pat="dots" title="نقاط"><svg viewBox="0 0 30 30"><rect x="3" y="3" width="24" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><g fill="currentColor"><circle cx="10" cy="10" r="1.3"/><circle cx="20" cy="10" r="1.3"/><circle cx="10" cy="20" r="1.3"/><circle cx="20" cy="20" r="1.3"/><circle cx="15" cy="15" r="1.3"/></g></svg>نقاط</button>
+  </div>
+  <button role="menuitem" data-act="allPages">تطبيق هذه الخلفية على كل الصفحات</button>
+  <hr>
+  <button role="menuitem" data-act="clearPage" class="danger">مسح هذه الصفحة</button>
+</div>
+<div class="menu" id="m-insert" role="menu" hidden>
+  <button role="menuitem" data-act="image">صورة أو ورقة عمل…</button>
+  <button role="menuitem" data-act="graph">رسم بياني لدالة…</button>
+  <button role="menuitem" data-act="noteCenter">ملاحظة لاصقة</button>
+  <div class="m-h">قوالب الدروس</div>
+  <button role="menuitem" data-act="tpl:tchart">جدول مقارنة (إيجابيات وسلبيات)</button>
+  <button role="menuitem" data-act="tpl:venn">مخطط فِن</button>
+  <button role="menuitem" data-act="tpl:kwl">جدول: أعرف، أريد أن أعرف، تعلّمت</button>
+  <button role="menuitem" data-act="tpl:numline">خط الأعداد</button>
+  <button role="menuitem" data-act="tpl:exit">بطاقة الخروج</button>
+</div>
+<div class="menu" id="m-file" role="menu" hidden>
+  <button role="menuitem" data-act="png" class="needs-dl">تنزيل هذه الصفحة كصورة</button>
+  <button role="menuitem" data-act="saveJson" class="needs-dl">حفظ ملف الدرس</button>
+  <button role="menuitem" data-act="openJson">فتح ملف درس…</button>
+  <p class="m-note" id="dlNote" hidden>التنزيل غير متاح في هذا العرض. تُحفظ لوحتك تلقائيًا في هذا المتصفح.</p>
+</div>
+<div class="menu" id="m-shapes" role="menu" hidden style="min-width:180px">
+  <button role="menuitem" data-shape="line"><svg class="i" viewBox="0 0 24 24"><path d="M5 19L19 5"/></svg>خط</button>
+  <button role="menuitem" data-shape="arrow"><svg class="i" viewBox="0 0 24 24"><path d="M19 19L5 5M14 5H5v9"/></svg>سهم</button>
+  <button role="menuitem" data-shape="rect"><svg class="i" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1"/></svg>مستطيل</button>
+  <button role="menuitem" data-shape="ellipse"><svg class="i" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="8.5" ry="6.5"/></svg>شكل بيضاوي</button>
+  <p class="m-note">اضغط Shift لزوايا مستقيمة ومربعات ودوائر تامة.</p>
+</div>
+<div class="menu more-menu" id="m-hdrmore" role="menu" hidden></div>
+<div class="menu dock-more" id="m-dockmore" role="menu" aria-label="أدوات رسم أخرى" hidden></div>
+
+<dialog id="dlg-graph" aria-labelledby="gTitle">
+  <div class="dlg-body">
+    <h2 id="gTitle">ارسم دالة</h2>
+    <p>اكتبها كما تكتبها في الدفتر. افصل بين أكثر من دالة بفاصلة منقوطة.</p>
+    <input class="field" id="gInput" placeholder="y = x^2 - 4" autocomplete="off" spellcheck="false" dir="ltr">
+    <div class="row" id="gExamples" dir="ltr">
+      <button class="chip">x^2 - 4</button><button class="chip">2x + 1</button><button class="chip">sin(x); cos(x)</button><button class="chip">1/x</button><button class="chip">sqrt(x)</button>
+    </div>
+    <div class="err" id="gErr" role="alert"></div>
+    <div class="dlg-actions"><button class="wbtn" id="gCancel">إلغاء</button><button class="wbtn primary" id="gOk">أضف الرسم</button></div>
+  </div>
+</dialog>
+
+<dialog id="dlg-help" aria-labelledby="hTitle">
+  <div class="dlg-body">
+    <h2 id="hTitle">اختصارات لوحة المفاتيح</h2>
+    <p>تعمل الاختصارات أيًّا كانت لغة لوحة المفاتيح.</p>
+    <div class="keys">
+      <kbd>P</kbd><span>قلم</span>
+      <kbd>Q</kbd><span>قلم الخط</span>
+      <kbd>H</kbd><span>قلم التظليل</span>
+      <kbd>E</kbd><span>ممحاة</span>
+      <kbd>L</kbd><span>مؤشر الليزر</span>
+      <kbd>T</kbd><span>نص</span>
+      <kbd>N</kbd><span>ملاحظة لاصقة</span>
+      <kbd>S</kbd><span>آخر شكل استخدمته</span>
+      <kbd>V</kbd><span>تحديد وتحريك</span>
+      <kbd>G</kbd><span>التنقل في اللوحة (أو اضغط مطولًا على المسافة واسحب)</span>
+      <kbd>1–6</kbd><span>الألوان</span>
+      <kbd>[ ]</kbd><span>أرفع أو أعرض</span>
+      <kbd>← →</kbd><span>الصفحة التالية أو السابقة</span>
+      <kbd>Ctrl Z</kbd><span>تراجع (مع Shift للإعادة)</span>
+      <kbd>Ctrl D</kbd><span>تكرار العنصر المحدد</span>
+      <kbd>Delete</kbd><span>حذف العنصر المحدد</span>
+      <kbd>Ctrl + تمرير</kbd><span>تكبير وتصغير، والتمرير وحده للتنقل</span>
+      <kbd>O</kbd><span>تسليط الضوء (Shift مع التمرير لتغيير حجمه)</span>
+      <kbd>R</kbd><span>ستارة الكشف التدريجي</span>
+      <kbd>C</kbd><span>تشجيع واحتفال</span>
+      <kbd>K</kbd><span>اختيار طالب عشوائي مباشرة</span>
+      <kbd>F</kbd><span>وضع العرض</span>
+      <kbd>Esc</kbd><span>إغلاق تسليط الضوء أو القوائم أو وضع العرض</span>
+    </div>
+    <p style="margin:14px 0 0">الصق صورة أو اسحبها إلى اللوحة لتكتب عليها.</p>
+    <div class="dlg-actions"><button class="wbtn primary" id="hClose">حسنًا</button></div>
+  </div>
+</dialog>
+
+<input type="file" id="imgFile" accept="image/*" hidden>
+<input type="file" id="jsonFile" accept="application/json,.json" hidden>
+<input type="file" id="xlsFile" accept=".xlsx,.xlsm,.xlsb,.xls,.xltx,.xltm,.xlt,.ods,.fods,.numbers,.csv,.tsv,.txt,.xml,.dif,.slk,.prn,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12,application/vnd.oasis.opendocument.spreadsheet,text/csv,text/tab-separated-values,text/plain" hidden>
+<script>
+(() => {
+"use strict";
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const uid = () => Math.random().toString(36).slice(2, 10);
+const r1 = v => Math.round(v * 10) / 10;
+
+/* ---------- palettes ---------- */
+const PAL = {
+  chalk: { bg:"#2D4238", fg:["#F4F2EC","#F7D774","#F5A3BC","#9DD3F7","#AEE5A4","#FFB877"], pat:"rgba(244,242,236,.09)", patStrong:"rgba(244,242,236,.24)", hint:"rgba(244,242,236,.42)" },
+  white: { bg:"#FCFCF9", fg:["#1F2630","#1F5FD1","#D02F64","#2B8A3E","#D9480F","#6741D9"], pat:"rgba(31,38,48,.08)", patStrong:"rgba(31,38,48,.22)", hint:"rgba(31,38,48,.38)" },
+  night: { bg:"#171C27", fg:["#EEF1F6","#FFD66B","#FF9EC2","#8CCBFF","#9BEBA6","#FFAE6B"], pat:"rgba(238,241,246,.07)", patStrong:"rgba(238,241,246,.22)", hint:"rgba(238,241,246,.40)" }
+};
+const NOTE_COLORS = ["#FFE58A","#FFC2D4","#BDE3FF","#C8F0C0"];
+const BOARD_FONT = '"Kalam","Aref Ruqaa","Segoe Print",cursive';
+const UI_FONT = '"IBM Plex Sans Arabic",system-ui,sans-serif';
+const HLP = ["#FFF23A","#7CFF4F","#FF5FCF","#45D4FF","#FFA12C","#C68BFF"];
+const HL_NAMES = ["أصفر فسفوري","أخضر فسفوري","وردي فسفوري","أزرق فسفوري","برتقالي فسفوري","بنفسجي فسفوري"];
+const CAL = [7, 13, 22], LH = 1.45;
+const isRTL = t => { const m = /[A-Za-z\u0590-\u08FF\uFB1D-\uFEFC]/.exec(t || ""); return !!m && /[\u0590-\u08FF\uFB1D-\uFEFC]/.test(m[0]); };
+const PEN = [3, 6, 12], HL = [16, 26, 42], SHAPE = [3, 5, 9], TEXT = [24, 34, 50], ERASE = [10, 20, 38];
+const COLOR_NAMES = ["أبيض","أصفر","وردي","أزرق","أخضر","برتقالي"];
+const COLOR_NAMES_W = ["أسود","أزرق","أحمر","أخضر","برتقالي","بنفسجي"];
+const STORE = "chalkline:v1", ROSTER = "chalkline:roster", ROSTERS = "lawhati:rosters";
+
+/* ---------- document state ---------- */
+const newPage = (bg = "chalk", pattern = "none") => ({ id: uid(), bg, pattern, items: [], cam: { x: null, y: null, z: 1 } });
+let doc = { title: "درس بدون عنوان", cur: 0, pages: [newPage()] };
+try {
+  const saved = JSON.parse(localStorage.getItem(STORE) || "null");
+  if (saved && Array.isArray(saved.pages) && saved.pages.length) doc = saved;
+} catch (e) {}
+const page = () => doc.pages[doc.cur];
+const pal = () => PAL[page().bg] || PAL.chalk;
+
+let tool = "pen", lastShape = "rect", color = 0, hlColor = 0, size = 1, smart = true, noteColor = 0;
+let selected = null, draft = null, action = null, pinch = null, editing = null, spaceHeld = false;
+let hover = null;
+const hidden = new Set();
+const hist = new Map();
+const H = () => { const id = page().id; if (!hist.has(id)) hist.set(id, { u: [], r: [] }); return hist.get(id); };
+
+/* ---------- canvas setup ---------- */
+const stage = $("#stage"), cv = $("#board"), ctx = cv.getContext("2d"), fx = $("#fx"), fctx = fx.getContext("2d");
+const scene = document.createElement("canvas"), sctx = scene.getContext("2d");
+const mctx = document.createElement("canvas").getContext("2d");
+let vw = 0, vh = 0, dpr = 1, raf = 0, sceneDirty = true;
+
+function ensureCam(p) { if (p.cam.x == null) { p.cam.x = vw / 2; p.cam.y = vh / 2; p.cam.z = p.cam.z || 1; } }
+function resize() {
+  const r = stage.getBoundingClientRect();
+  vw = r.width; vh = r.height; dpr = Math.min(window.devicePixelRatio || 1, 2);
+  for (const c of [cv, fx, scene]) { c.width = Math.max(1, Math.round(vw * dpr)); c.height = Math.max(1, Math.round(vh * dpr)); }
+  sceneDirty = true; render(); fitAll();
+}
+new ResizeObserver(resize).observe(stage);
+const req = () => { if (!raf) raf = requestAnimationFrame(render); };
+function markDirty() { sceneDirty = true; req(); scheduleSave(); updateUndo(); }
+function markView() { sceneDirty = true; req(); scheduleSave(); }
+
+const col = c => typeof c === "number" ? pal().fg[c] || pal().fg[0] : c;
+
+/* ---------- drawing primitives ---------- */
+function rr(g, x, y, w, h, r) {
+  g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+}
+function drawStroke(g, it) {
+  const p = it.pts; g.save();
+  const c = it.hl ? HLP[(typeof it.c === "number" ? it.c : 0) % HLP.length] : col(it.c);
+  g.strokeStyle = g.fillStyle = c; g.lineWidth = it.w; g.lineCap = "round"; g.lineJoin = "round";
+  if (it.hl) { const light = page().bg === "white"; g.globalAlpha = light ? .45 : .52; g.globalCompositeOperation = light ? "multiply" : "screen"; g.lineCap = "butt"; }
+  if (it.cal) { drawNib(g, it); g.restore(); return; }
+  g.beginPath();
+  if (p.length <= 4) { g.arc(p[0], p[1], it.w / 2, 0, Math.PI * 2); g.fill(); g.restore(); return; }
+  g.moveTo(p[0], p[1]);
+  for (let i = 2; i < p.length - 2; i += 2) g.quadraticCurveTo(p[i], p[i + 1], (p[i] + p[i + 2]) / 2, (p[i + 1] + p[i + 3]) / 2);
+  g.lineTo(p[p.length - 2], p[p.length - 1]); g.stroke(); g.restore();
+}
+/* calligraphy: a flat nib held at a fixed angle, so the line is thick or thin depending on direction */
+const NIB = 58 * Math.PI / 180;
+function drawNib(g, it) {
+  const p = it.pts, nx = Math.cos(NIB) * it.w / 2, ny = -Math.sin(NIB) * it.w / 2;
+  g.beginPath();
+  if (p.length <= 4) { g.moveTo(p[0] - nx, p[1] - ny); g.lineTo(p[0] + nx, p[1] + ny); g.lineWidth = Math.max(1.5, it.w * .18); g.stroke(); return; }
+  const q = [];
+  for (let i = 0; i < p.length; i += 2) {
+    if (i === 0 || i >= p.length - 2) q.push(p[i], p[i + 1]);
+    else q.push((p[i - 2] + 2 * p[i] + p[i + 2]) / 4, (p[i - 1] + 2 * p[i + 1] + p[i + 3]) / 4);
+  }
+  for (let i = 0; i < q.length - 2; i += 2) {
+    const ax = q[i], ay = q[i + 1], bx = q[i + 2], by = q[i + 3];
+    g.moveTo(ax + nx, ay + ny); g.lineTo(bx + nx, by + ny); g.lineTo(bx - nx, by - ny); g.lineTo(ax - nx, ay - ny); g.closePath();
+  }
+  g.fill("nonzero");
+  g.lineWidth = Math.max(1.2, it.w * .14); g.lineCap = "round"; g.lineJoin = "round"; g.beginPath(); g.moveTo(q[0], q[1]);
+  for (let i = 2; i < q.length; i += 2) g.lineTo(q[i], q[i + 1]);
+  g.stroke();
+}
+function drawShape(g, it) {
+  const { x1, y1, x2, y2 } = it; g.save();
+  g.strokeStyle = col(it.c); g.lineWidth = it.w; g.lineCap = "round"; g.lineJoin = "round"; g.beginPath();
+  if (it.type === "rect") g.rect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1));
+  else if (it.type === "ellipse") g.ellipse((x1 + x2) / 2, (y1 + y2) / 2, Math.abs(x2 - x1) / 2 || .5, Math.abs(y2 - y1) / 2 || .5, 0, 0, Math.PI * 2);
+  else {
+    g.moveTo(x1, y1); g.lineTo(x2, y2);
+    if (it.type === "arrow") {
+      const a = Math.atan2(y2 - y1, x2 - x1), L = Math.max(14, it.w * 4);
+      g.moveTo(x2 - L * Math.cos(a - .45), y2 - L * Math.sin(a - .45)); g.lineTo(x2, y2);
+      g.lineTo(x2 - L * Math.cos(a + .45), y2 - L * Math.sin(a + .45));
+    }
+  }
+  g.stroke(); g.restore();
+}
+function textMetrics(it) {
+  mctx.font = `${it.fs}px ${BOARD_FONT}`;
+  const lines = it.text.split("\n"); let w = 0;
+  for (const l of lines) w = Math.max(w, mctx.measureText(l).width);
+  return { w, h: lines.length * it.fs * LH, lines };
+}
+function drawText(g, it) {
+  g.save(); g.fillStyle = col(it.c); g.font = `${it.fs}px ${BOARD_FONT}`; g.textBaseline = "top";
+  g.textAlign = it.rtl ? "right" : "left";
+  it.text.split("\n").forEach((l, i) => { g.direction = isRTL(l) ? "rtl" : "ltr"; g.fillText(l, it.x, it.y + i * it.fs * LH); });
+  g.restore();
+}
+function wrap(text, maxW, font) {
+  mctx.font = font; const out = [];
+  for (const para of text.split("\n")) {
+    if (!para) { out.push(""); continue; }
+    let line = "";
+    for (const word of para.split(/\s+/)) {
+      const t = line ? line + " " + word : word;
+      if (mctx.measureText(t).width > maxW && line) { out.push(line); line = word; } else line = t;
+    }
+    out.push(line);
+  }
+  return out;
+}
+function noteLayout(it) {
+  const font = `22px ${BOARD_FONT}`, lines = wrap(it.text || "", it.w - 28, font);
+  return { font, lines, h: Math.max(it.w * .72, lines.length * 30 + 34) };
+}
+function drawNote(g, it) {
+  const { font, lines, h } = noteLayout(it); g.save();
+  g.shadowColor = "rgba(0,0,0,.28)"; g.shadowBlur = 14; g.shadowOffsetY = 4;
+  g.fillStyle = NOTE_COLORS[it.nc || 0]; rr(g, it.x, it.y, it.w, h, 6); g.fill();
+  g.shadowColor = "transparent"; g.font = font; g.textBaseline = "top";
+  const rx = it.rtl ? it.x + it.w - 14 : it.x + 14; g.textAlign = it.rtl ? "right" : "left";
+  if (it.text) { g.fillStyle = "#2B2A26"; lines.forEach((l, i) => { g.direction = isRTL(l) ? "rtl" : "ltr"; g.fillText(l, rx, it.y + 14 + i * 30); }); }
+  else { g.fillStyle = "rgba(43,42,38,.45)"; g.direction = "rtl"; g.fillText("انقر مرتين للكتابة", rx, it.y + 16); }
+  g.restore();
+}
+const imgCache = new Map();
+function getImg(src) {
+  let im = imgCache.get(src);
+  if (!im) { im = new Image(); im.onload = () => { sceneDirty = true; req(); }; im.src = src; imgCache.set(src, im); }
+  return im;
+}
+function drawImage(g, it) {
+  const im = getImg(it.src);
+  if (im.complete && im.naturalWidth) g.drawImage(im, it.x, it.y, it.w, it.h);
+  else { g.save(); g.strokeStyle = pal().patStrong; g.setLineDash([6, 6]); g.strokeRect(it.x, it.y, it.w, it.h); g.restore(); }
+}
+
+/* ---------- function plotting ---------- */
+const FN = { sin:"Math.sin", cos:"Math.cos", tan:"Math.tan", asin:"Math.asin", acos:"Math.acos", atan:"Math.atan",
+  sqrt:"Math.sqrt", abs:"Math.abs", ln:"Math.log", log:"Math.log10", exp:"Math.exp", floor:"Math.floor", ceil:"Math.ceil",
+  round:"Math.round", min:"Math.min", max:"Math.max", pow:"Math.pow", sign:"Math.sign", pi:"Math.PI", e:"Math.E", x:"x" };
+const fnCache = new Map();
+function compile(raw) {
+  if (fnCache.has(raw)) return fnCache.get(raw);
+  let s = raw.trim().toLowerCase().replace(/^(y|f\s*\(\s*x\s*\))\s*=/, "")
+    .replace(/π/g, "pi").replace(/×|·/g, "*").replace(/÷/g, "/").replace(/[−–]/g, "-").replace(/²/g, "^2").replace(/³/g, "^3");
+  if (!s.trim() || !/^[0-9a-z.+\-*/^(),\s]*$/.test(s)) throw new Error("استخدم الأرقام وx والعمليات + − × ÷ ^ ودوال مثل sin(x).");
+  s = s.replace(/(\d|\))\s*(?=[a-z(])/g, "$1*").replace(/\bx\s*(?=\()/g, "x*").replace(/\^/g, "**");
+  s = s.replace(/(^|[(,*/+\-])\s*-\s*/g, "$1(-1)*");
+  let bad = "";
+  s = s.replace(/[a-z]+/g, t => { if (FN[t]) return FN[t]; bad = t; return t; });
+  if (bad) throw new Error(`لا أستطيع رسم «${bad}». جرّب sin(x) أو sqrt(x) أو x^2.`);
+  let f;
+  try { f = new Function("x", `"use strict";return (${s});`); f(1.3); }
+  catch (e) { throw new Error("في الصيغة خطأ. تحقق من الأقواس والعمليات."); }
+  fnCache.set(raw, f); return f;
+}
+function drawPlot(g, it) {
+  const P = pal(), { x, y, w, h, unit } = it, cx = x + w / 2, cy = y + h / 2;
+  g.save(); g.beginPath(); g.rect(x, y, w, h); g.clip();
+  g.lineWidth = 1; g.strokeStyle = P.pat; g.beginPath();
+  for (let k = -Math.ceil(w / 2 / unit); k <= Math.ceil(w / 2 / unit); k++) { g.moveTo(cx + k * unit, y); g.lineTo(cx + k * unit, y + h); }
+  for (let k = -Math.ceil(h / 2 / unit); k <= Math.ceil(h / 2 / unit); k++) { g.moveTo(x, cy + k * unit); g.lineTo(x + w, cy + k * unit); }
+  g.stroke();
+  g.strokeStyle = P.patStrong; g.lineWidth = 2; g.beginPath(); g.moveTo(x, cy); g.lineTo(x + w, cy); g.moveTo(cx, y); g.lineTo(cx, y + h); g.stroke();
+  g.direction = "ltr"; g.fillStyle = P.patStrong; g.font = `13px ${UI_FONT}`; g.textAlign = "center"; g.textBaseline = "top";
+  const step = unit < 30 ? 2 : 1;
+  for (let k = -Math.floor(w / 2 / unit); k <= Math.floor(w / 2 / unit); k++) if (k && k % step === 0) g.fillText(k, cx + k * unit, cy + 4);
+  g.textAlign = "right"; g.textBaseline = "middle";
+  for (let k = -Math.floor(h / 2 / unit); k <= Math.floor(h / 2 / unit); k++) if (k && k % step === 0) g.fillText(-k, cx - 5, cy + k * unit);
+  const exprs = it.expr.split(";").map(s => s.trim()).filter(Boolean);
+  exprs.forEach((ex, n) => {
+    let f; try { f = compile(ex); } catch (e) { return; }
+    g.strokeStyle = col((it.c + n) % 6); g.lineWidth = 3; g.lineJoin = "round"; g.beginPath();
+    let pen = false, last = 0;
+    for (let sx = 0; sx <= w; sx += 1.5) {
+      let Y; try { Y = f((sx - w / 2) / unit); } catch (e) { Y = NaN; }
+      if (!isFinite(Y) || Math.abs(Y) > 1e6) { pen = false; continue; }
+      const py = cy - Y * unit;
+      if (pen && Math.abs(py - last) > h) pen = false;
+      if (!pen) { g.moveTo(x + sx, py); pen = true; } else g.lineTo(x + sx, py);
+      last = py;
+    }
+    g.stroke();
+  });
+  g.restore();
+  g.save(); g.strokeStyle = P.patStrong; g.lineWidth = 1.5; g.strokeRect(x, y, w, h);
+  g.font = `22px ${BOARD_FONT}`; g.textBaseline = "bottom"; g.direction = "ltr"; g.textAlign = "left"; let lx = x + 2;
+  exprs.forEach((ex, n) => { const label = (n ? "   " : "") + "y = " + ex.replace(/^(y|f\s*\(\s*x\s*\))\s*=\s*/i, ""); g.fillStyle = col((it.c + n) % 6); g.fillText(label, lx, y - 6); lx += g.measureText(label).width; });
+  g.restore();
+}
+function drawItem(g, it) {
+  switch (it.type) {
+    case "stroke": drawStroke(g, it); break;
+    case "line": case "arrow": case "rect": case "ellipse": drawShape(g, it); break;
+    case "text": drawText(g, it); break;
+    case "note": drawNote(g, it); break;
+    case "image": drawImage(g, it); break;
+    case "plot": drawPlot(g, it); break;
+  }
+}
+
+/* ---------- geometry ---------- */
+const bbCache = new WeakMap();
+function bbox(it) {
+  switch (it.type) {
+    case "stroke": {
+      let b = bbCache.get(it);
+      if (!b) {
+        const p = it.pts; let a = Infinity, c = Infinity, d = -Infinity, e = -Infinity;
+        for (let i = 0; i < p.length; i += 2) { a = Math.min(a, p[i]); c = Math.min(c, p[i + 1]); d = Math.max(d, p[i]); e = Math.max(e, p[i + 1]); }
+        const m = it.w / 2; b = { x: a - m, y: c - m, w: d - a + it.w, h: e - c + it.w }; bbCache.set(it, b);
+      }
+      return b;
+    }
+    case "line": case "arrow": case "rect": case "ellipse": {
+      const m = it.w / 2 + (it.type === "arrow" ? Math.max(14, it.w * 4) / 2 : 0);
+      return { x: Math.min(it.x1, it.x2) - m, y: Math.min(it.y1, it.y2) - m, w: Math.abs(it.x2 - it.x1) + 2 * m, h: Math.abs(it.y2 - it.y1) + 2 * m };
+    }
+    case "text": { const t = textMetrics(it), w = Math.max(t.w, 8); return { x: it.rtl ? it.x - w : it.x, y: it.y, w, h: t.h }; }
+    case "note": return { x: it.x, y: it.y, w: it.w, h: noteLayout(it).h };
+    case "plot": return { x: it.x, y: it.y - 34, w: it.w, h: it.h + 34 };
+    default: return { x: it.x, y: it.y, w: it.w, h: it.h };
+  }
+}
+function segDist(px, py, ax, ay, bx, by) {
+  const dx = bx - ax, dy = by - ay, l = dx * dx + dy * dy;
+  let t = l ? ((px - ax) * dx + (py - ay) * dy) / l : 0; t = clamp(t, 0, 1);
+  return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+}
+function hit(it, x, y, r) {
+  const b = bbox(it);
+  if (x < b.x - r || x > b.x + b.w + r || y < b.y - r || y > b.y + b.h + r) return false;
+  const t = r + (it.w && typeof it.w === "number" && it.type !== "note" && it.type !== "image" && it.type !== "plot" ? it.w / 2 : 0);
+  switch (it.type) {
+    case "stroke": {
+      const p = it.pts;
+      if (p.length <= 4) return Math.hypot(x - p[0], y - p[1]) <= t;
+      for (let i = 0; i < p.length - 2; i += 2) if (segDist(x, y, p[i], p[i + 1], p[i + 2], p[i + 3]) <= t) return true;
+      return false;
+    }
+    case "line": case "arrow": return segDist(x, y, it.x1, it.y1, it.x2, it.y2) <= t + (it.type === "arrow" ? 4 : 0);
+    case "rect": {
+      const a = Math.min(it.x1, it.x2), c = Math.max(it.x1, it.x2), d = Math.min(it.y1, it.y2), e = Math.max(it.y1, it.y2);
+      return Math.min(Math.abs(x - a), Math.abs(x - c), Math.abs(y - d), Math.abs(y - e)) <= t;
+    }
+    case "ellipse": {
+      const cx = (it.x1 + it.x2) / 2, cy = (it.y1 + it.y2) / 2, rx = Math.max(Math.abs(it.x2 - it.x1) / 2, 1), ry = Math.max(Math.abs(it.y2 - it.y1) / 2, 1);
+      return Math.abs(Math.hypot((x - cx) / rx, (y - cy) / ry) - 1) * Math.min(rx, ry) <= t;
+    }
+    default: return true;
+  }
+}
+function moveItem(it, dx, dy) {
+  if (it.type === "stroke") { for (let i = 0; i < it.pts.length; i += 2) { it.pts[i] += dx; it.pts[i + 1] += dy; } bbCache.delete(it); }
+  else if ("x1" in it) { it.x1 += dx; it.x2 += dx; it.y1 += dy; it.y2 += dy; }
+  else { it.x += dx; it.y += dy; }
+}
+const resizable = it => it && (it.type === "note" || it.type === "image" || it.type === "plot");
+function handlePos(it) { return it.type === "note" ? { x: it.x + it.w, y: it.y + noteLayout(it).h } : { x: it.x + it.w, y: it.y + it.h }; }
+function topHit(w, r) { const items = page().items; for (let i = items.length - 1; i >= 0; i--) if (!hidden.has(items[i]) && hit(items[i], w.x, w.y, r)) return items[i]; return null; }
+
+/* ---------- auto-shapes (ink beautification) ---------- */
+function beautify(s) {
+  const p = s.pts, n = p.length / 2; if (n < 6) return null;
+  let L = 0, a = Infinity, c = Infinity, d = -Infinity, e = -Infinity;
+  for (let i = 0; i < p.length; i += 2) {
+    if (i) L += Math.hypot(p[i] - p[i - 2], p[i + 1] - p[i - 1]);
+    a = Math.min(a, p[i]); c = Math.min(c, p[i + 1]); d = Math.max(d, p[i]); e = Math.max(e, p[i + 1]);
+  }
+  const bw = d - a, bh = e - c, big = Math.max(bw, bh);
+  if (big * page().cam.z < 70) return null;
+  const x0 = p[0], y0 = p[1], x1 = p[p.length - 2], y1 = p[p.length - 1], D = Math.hypot(x1 - x0, y1 - y0);
+  if (D / L > .95) {
+    let dev = 0; for (let i = 0; i < p.length; i += 2) dev = Math.max(dev, segDist(p[i], p[i + 1], x0, y0, x1, y1));
+    if (dev < Math.max(4, D * .05)) {
+      let X = x1, Y = y1; const ang = Math.atan2(y1 - y0, x1 - x0), snap = Math.round(ang / (Math.PI / 4)) * (Math.PI / 4);
+      if (Math.abs(ang - snap) < .07) { X = x0 + D * Math.cos(snap); Y = y0 + D * Math.sin(snap); }
+      return { type: "line", c: s.c, w: s.w, x1: x0, y1: y0, x2: r1(X), y2: r1(Y) };
+    }
+  }
+  if (D < .22 * big && Math.min(bw, bh) > 20) {
+    const cx = (a + d) / 2, cy = (c + e) / 2, rx = bw / 2, ry = bh / 2; let eE = 0, rE = 0;
+    for (let i = 0; i < p.length; i += 2) {
+      const x = p[i], y = p[i + 1];
+      eE += Math.abs(Math.hypot((x - cx) / rx, (y - cy) / ry) - 1);
+      rE += Math.min(x - a, d - x, y - c, e - y) / ((rx + ry) / 2);
+    }
+    eE /= n; rE /= n;
+    if (eE < .11 && eE < rE) return { type: "ellipse", c: s.c, w: s.w, x1: r1(a), y1: r1(c), x2: r1(d), y2: r1(e) };
+    if (rE < .075) return { type: "rect", c: s.c, w: s.w, x1: r1(a), y1: r1(c), x2: r1(d), y2: r1(e) };
+  }
+  return null;
+}
+
+/* ---------- rendering ---------- */
+function drawPattern(g, p) {
+  if (p.pattern === "none") return;
+  const P = pal(), z = p.cam.z, x0 = -p.cam.x / z, y0 = -p.cam.y / z, x1 = (vw - p.cam.x) / z, y1 = (vh - p.cam.y) / z;
+  let gs = p.pattern === "lined" ? 48 : 40; while (gs * z < 10) gs *= 2;
+  g.save(); g.lineWidth = 1 / z;
+  if (p.pattern === "dots") {
+    g.fillStyle = P.patStrong; const s = 2.4 / z;
+    for (let x = Math.floor(x0 / gs) * gs; x <= x1; x += gs) for (let y = Math.floor(y0 / gs) * gs; y <= y1; y += gs) g.fillRect(x - s / 2, y - s / 2, s, s);
+  } else if (p.pattern === "lined") {
+    g.strokeStyle = P.patStrong; g.beginPath();
+    for (let y = Math.floor(y0 / gs) * gs; y <= y1; y += gs) { g.moveTo(x0, y); g.lineTo(x1, y); }
+    g.stroke();
+  } else {
+    const thin = new Path2D(), thick = new Path2D();
+    for (let x = Math.floor(x0 / gs) * gs; x <= x1; x += gs) { const path = p.pattern === "graph" && Math.round(x / gs) % 5 === 0 ? thick : thin; path.moveTo(x, y0); path.lineTo(x, y1); }
+    for (let y = Math.floor(y0 / gs) * gs; y <= y1; y += gs) { const path = p.pattern === "graph" && Math.round(y / gs) % 5 === 0 ? thick : thin; path.moveTo(x0, y); path.lineTo(x1, y); }
+    g.strokeStyle = P.pat; g.stroke(thin); g.strokeStyle = p.pattern === "graph" ? P.patStrong : P.pat; g.stroke(thick);
+    if (p.pattern === "graph") { g.lineWidth = 2.5 / z; g.strokeStyle = P.patStrong; g.beginPath(); g.moveTo(x0, 0); g.lineTo(x1, 0); g.moveTo(0, y0); g.lineTo(0, y1); g.stroke(); }
+  }
+  g.restore();
+}
+function renderScene() {
+  const p = page(), P = pal(), c = p.cam; sctx.direction = "ltr";
+  sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.fillStyle = P.bg; sctx.fillRect(0, 0, scene.width, scene.height);
+  sctx.setTransform(dpr * c.z, 0, 0, dpr * c.z, dpr * c.x, dpr * c.y);
+  drawPattern(sctx, p);
+  for (const it of p.items) if (!hidden.has(it)) drawItem(sctx, it);
+  sceneDirty = false;
+}
+function render() {
+  raf = 0; if (!vw) return;
+  const p = page(); ensureCam(p);
+  if (sceneDirty) renderScene();
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(scene, 0, 0); ctx.direction = "ltr";
+  const c = p.cam; ctx.setTransform(dpr * c.z, 0, 0, dpr * c.z, dpr * c.x, dpr * c.y);
+  if (draft) drawItem(ctx, draft);
+  if (selected && !hidden.has(selected)) {
+    const b = bbox(selected), m = 6 / c.z;
+    ctx.save(); ctx.strokeStyle = "#E0AE24"; ctx.lineWidth = 1.6 / c.z; ctx.setLineDash([6 / c.z, 4 / c.z]);
+    ctx.strokeRect(b.x - m, b.y - m, b.w + 2 * m, b.h + 2 * m); ctx.setLineDash([]);
+    if (resizable(selected)) { const h = handlePos(selected), s = 12 / c.z; ctx.fillStyle = "#E0AE24"; ctx.fillRect(h.x - s / 2, h.y - s / 2, s, s); }
+    ctx.restore();
+  }
+  $("#hint").hidden = p.items.length > 0 || !!draft || !!editing;
+  $("#hint").style.setProperty("--hint", pal().hint);
+  stage.style.background = pal().bg;
+  $("#zReset").textContent = Math.round(c.z * 100) + "%";
+  placeSelbar();
+}
+
+/* ---------- laser & hover overlay ---------- */
+let trail = [], fxRaf = 0;
+function addLaser(s) { trail.push({ x: s.x, y: s.y, t: performance.now() }); if (!fxRaf) fxRaf = requestAnimationFrame(drawFx); }
+function drawFx() {
+  fxRaf = 0; const now = performance.now();
+  fctx.setTransform(dpr, 0, 0, dpr, 0, 0); fctx.clearRect(0, 0, vw, vh);
+  trail = trail.filter(p => now - p.t < 700);
+  if (trail.length) {
+    fctx.save(); fctx.lineCap = "round"; fctx.lineJoin = "round"; fctx.shadowColor = "#FF2D2D"; fctx.shadowBlur = 14;
+    for (let i = 1; i < trail.length; i++) {
+      const a = trail[i - 1], b = trail[i], life = 1 - (now - b.t) / 700;
+      fctx.strokeStyle = `rgba(255,59,48,${life})`; fctx.lineWidth = 2 + 5 * life;
+      fctx.beginPath(); fctx.moveTo(a.x, a.y); fctx.lineTo(b.x, b.y); fctx.stroke();
+    }
+    const l = trail[trail.length - 1]; fctx.fillStyle = "#FF3B30"; fctx.beginPath(); fctx.arc(l.x, l.y, 5, 0, Math.PI * 2); fctx.fill();
+    fctx.restore();
+  }
+  if (hover && tool === "eraser") {
+    fctx.save(); fctx.strokeStyle = page().bg === "white" ? "rgba(0,0,0,.5)" : "rgba(255,255,255,.7)"; fctx.lineWidth = 1.5;
+    fctx.beginPath(); fctx.arc(hover.x, hover.y, ERASE[size], 0, Math.PI * 2); fctx.stroke(); fctx.restore();
+  }
+  if (trail.length) fxRaf = requestAnimationFrame(drawFx);
+}
+
+/* ---------- history ---------- */
+function pushHistory() { const h = H(); h.u.push(JSON.stringify(page().items)); if (h.u.length > 80) h.u.shift(); h.r.length = 0; updateUndo(); }
+function dropHistory() { H().u.pop(); updateUndo(); }
+function undo() { commitEditor(); const h = H(); if (!h.u.length) return; h.r.push(JSON.stringify(page().items)); page().items = JSON.parse(h.u.pop()); selected = null; markDirty(); }
+function redo() { commitEditor(); const h = H(); if (!h.r.length) return; h.u.push(JSON.stringify(page().items)); page().items = JSON.parse(h.r.pop()); selected = null; markDirty(); }
+function updateUndo() { const h = H(); $("#undoBtn").disabled = !h.u.length; $("#redoBtn").disabled = !h.r.length; }
+
+/* ---------- persistence ---------- */
+let saveT = 0, warnedQuota = false;
+function scheduleSave() { clearTimeout(saveT); saveT = setTimeout(saveNow, 700); }
+function saveNow() {
+  try { localStorage.setItem(STORE, JSON.stringify(doc)); }
+  catch (e) { if (!warnedQuota) { warnedQuota = true; toast("هذه اللوحة أكبر من أن تُحفظ في المتصفح. استخدم ملف › حفظ ملف الدرس."); } }
+}
+
+/* ---------- pointer input ---------- */
+const pointers = new Map();
+function sp(e) { const r = stage.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+function toWorld(s) { const c = page().cam; return { x: (s.x - c.x) / c.z, y: (s.y - c.y) / c.z }; }
+function setCursor(kind) {
+  const map = { pen: "crosshair", calligraphy: "crosshair", highlighter: "crosshair", eraser: "none", laser: "none", select: "default", hand: "grab", text: "text", note: "copy", line: "crosshair", arrow: "crosshair", rect: "crosshair", ellipse: "crosshair" };
+  cv.style.cursor = kind || (spaceHeld ? "grab" : map[tool] || "default");
+}
+function constrain(d, x, y) {
+  if (d.type === "line" || d.type === "arrow") {
+    const ang = Math.round(Math.atan2(y - d.y1, x - d.x1) / (Math.PI / 4)) * (Math.PI / 4), L = Math.hypot(x - d.x1, y - d.y1);
+    return [d.x1 + L * Math.cos(ang), d.y1 + L * Math.sin(ang)];
+  }
+  const s = Math.max(Math.abs(x - d.x1), Math.abs(y - d.y1));
+  return [d.x1 + s * Math.sign(x - d.x1 || 1), d.y1 + s * Math.sign(y - d.y1 || 1)];
+}
+function eraseAt(w) {
+  const items = page().items, r = ERASE[size] / page().cam.z;
+  for (let i = items.length - 1; i >= 0; i--) {
+    const it = items[i];
+    if (it.type === "note" || it.type === "image" || it.type === "plot") continue;
+    if (hit(it, w.x, w.y, r)) { items.splice(i, 1); action.any = true; sceneDirty = true; if (selected === it) selected = null; }
+  }
+  req();
+}
+function cancelAction() { draft = null; if (action && action.kind === "erase" && !action.any) dropHistory(); action = null; req(); }
+function startPinch() {
+  const [a, b] = [...pointers.values()];
+  pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2, cam: { ...page().cam } };
+}
+function updatePinch() {
+  const [a, b] = [...pointers.values()], c = page().cam, P = pinch;
+  const d = Math.hypot(a.x - b.x, a.y - b.y), cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2;
+  const z = clamp(P.cam.z * d / P.d, .25, 4), wx = (P.cx - P.cam.x) / P.cam.z, wy = (P.cy - P.cam.y) / P.cam.z;
+  c.z = z; c.x = cx - wx * z; c.y = cy - wy * z; markView();
+}
+function zoomAt(sx, sy, f) {
+  const c = page().cam, z = clamp(c.z * f, .25, 4), wx = (sx - c.x) / c.z, wy = (sy - c.y) / c.z;
+  c.z = z; c.x = sx - wx * z; c.y = sy - wy * z; markView();
+}
+
+cv.addEventListener("pointerdown", e => {
+  closeMenus(); if (!pickCard.hidden && !spinning) hidePick();
+  if (editing) { commitEditor(); e.preventDefault(); return; }
+  const s = sp(e); pointers.set(e.pointerId, { x: s.x, y: s.y, type: e.pointerType });
+  try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+  if (pointers.size === 2 && [...pointers.values()].every(p => p.type === "touch")) { cancelAction(); startPinch(); return; }
+  if (pointers.size > 1) return;
+  const p = page(), w = toWorld(s), z = p.cam.z;
+  if (e.button === 1 || e.button === 2 || spaceHeld || tool === "hand") {
+    action = { kind: "pan", sx: s.x, sy: s.y, cx: p.cam.x, cy: p.cam.y }; setCursor("grabbing"); e.preventDefault(); return;
+  }
+  if (e.pointerType === "mouse" && e.button !== 0) return;
+  switch (tool) {
+    case "pen": case "highlighter": case "calligraphy":
+      draft = { type: "stroke", c: tool === "highlighter" ? hlColor : color, w: (tool === "pen" ? PEN : tool === "calligraphy" ? CAL : HL)[size], pts: [r1(w.x), r1(w.y)] };
+      if (tool === "highlighter") draft.hl = 1;
+      if (tool === "calligraphy") draft.cal = 1;
+      action = { kind: "draw" }; break;
+    case "line": case "arrow": case "rect": case "ellipse":
+      draft = { type: tool, c: color, w: SHAPE[size], x1: r1(w.x), y1: r1(w.y), x2: r1(w.x), y2: r1(w.y) };
+      action = { kind: "shape" }; break;
+    case "eraser": pushHistory(); action = { kind: "erase", any: false }; eraseAt(w); break;
+    case "laser": addLaser(s); action = { kind: "laser" }; break;
+    case "select": {
+      if (resizable(selected)) { const h = handlePos(selected); if (Math.hypot(w.x - h.x, w.y - h.y) < 12 / z) { pushHistory(); action = { kind: "resize", it: selected }; break; } }
+      const it = topHit(w, 7 / z);
+      if (it) { selected = it; action = { kind: "move", it, lx: w.x, ly: w.y, moved: false }; }
+      else { selected = null; action = { kind: "pan", sx: s.x, sy: s.y, cx: p.cam.x, cy: p.cam.y }; }
+      break;
+    }
+    case "text": {
+      const it = topHit(w, 4 / z);
+      if (it && it.type === "text") openEditor(it, false);
+      else openEditor({ type: "text", rtl: 1, x: r1(w.x), y: r1(w.y - TEXT[size] * .7), text: "", c: color, fs: TEXT[size] }, true);
+      e.preventDefault(); break;
+    }
+    case "note": {
+      const it = topHit(w, 4 / z);
+      if (it && it.type === "note") openEditor(it, false);
+      else openEditor({ type: "note", rtl: 1, x: r1(w.x - 110), y: r1(w.y - 30), w: 220, text: "", nc: noteColor }, true);
+      e.preventDefault(); break;
+    }
+  }
+  req();
+});
+cv.addEventListener("pointermove", e => {
+  const s = sp(e), pt = pointers.get(e.pointerId);
+  if (pt) { pt.x = s.x; pt.y = s.y; }
+  if (pinch) { if (pointers.size >= 2) updatePinch(); return; }
+  if (!action) return;
+  const p = page(), w = toWorld(s);
+  switch (action.kind) {
+    case "draw": {
+      const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e], P = draft.pts;
+      for (const ce of (evs.length ? evs : [e])) {
+        const cw = toWorld(sp(ce)), n = P.length;
+        if (Math.hypot(cw.x - P[n - 2], cw.y - P[n - 1]) > .9 / p.cam.z) P.push(r1(cw.x), r1(cw.y));
+      }
+      req(); break;
+    }
+    case "shape": { let [x, y] = e.shiftKey ? constrain(draft, w.x, w.y) : [w.x, w.y]; draft.x2 = r1(x); draft.y2 = r1(y); req(); break; }
+    case "erase": eraseAt(w); break;
+    case "laser": break;
+    case "pan": p.cam.x = action.cx + s.x - action.sx; p.cam.y = action.cy + s.y - action.sy; markView(); break;
+    case "move": {
+      const dx = w.x - action.lx, dy = w.y - action.ly;
+      if (!action.moved) { if (Math.hypot(dx, dy) < 3 / p.cam.z) break; pushHistory(); action.moved = true; }
+      moveItem(action.it, dx, dy); action.lx = w.x; action.ly = w.y; sceneDirty = true; req(); break;
+    }
+    case "resize": {
+      const it = action.it;
+      if (it.type === "image") { const ratio = it.h / it.w; it.w = Math.max(40, w.x - it.x); it.h = it.w * ratio; }
+      else if (it.type === "note") it.w = Math.max(140, w.x - it.x);
+      else { it.w = Math.max(220, w.x - it.x); it.h = Math.max(160, w.y - it.y); }
+      sceneDirty = true; req(); break;
+    }
+  }
+});
+function endPointer(e) {
+  pointers.delete(e.pointerId);
+  if (pinch) { if (pointers.size < 2) pinch = null; return; }
+  if (!action) return;
+  const a = action; action = null;
+  switch (a.kind) {
+    case "draw": {
+      let it = draft; draft = null;
+      if (smart && !it.hl && !it.cal) it = beautify(it) || it;
+      pushHistory(); page().items.push(it); markDirty(); break;
+    }
+    case "shape": {
+      const d = draft; draft = null;
+      if (Math.hypot(d.x2 - d.x1, d.y2 - d.y1) > 3 / page().cam.z) { pushHistory(); page().items.push(d); markDirty(); } else req();
+      break;
+    }
+    case "erase": if (!a.any) dropHistory(); else markDirty(); break;
+    case "pan": setCursor(); break;
+    case "move": if (a.moved) markDirty(); else req(); break;
+    case "resize": markDirty(); break;
+  }
+}
+cv.addEventListener("pointerup", endPointer);
+cv.addEventListener("pointercancel", e => { cancelAction(); pointers.delete(e.pointerId); if (pointers.size < 2) pinch = null; });
+cv.addEventListener("contextmenu", e => e.preventDefault());
+cv.addEventListener("dblclick", e => {
+  const w = toWorld(sp(e)), it = topHit(w, 6 / page().cam.z);
+  if (it && (it.type === "text" || it.type === "note")) openEditor(it, false);
+});
+stage.addEventListener("pointermove", e => {
+  const s = sp(e);
+  if (!spotEl.hidden) { spotEl.style.setProperty("--sx", s.x + "px"); spotEl.style.setProperty("--sy", s.y + "px"); }
+  if (tool === "laser" && e.target === cv && (e.pointerType !== "touch" || action)) addLaser(s);
+  if (tool === "eraser") { hover = e.target === cv ? s : null; if (!fxRaf) fxRaf = requestAnimationFrame(drawFx); }
+});
+stage.addEventListener("pointerleave", () => { hover = null; if (!fxRaf) fxRaf = requestAnimationFrame(drawFx); });
+stage.addEventListener("wheel", e => {
+  if (e.target !== cv && !e.target.closest("#shade,#spot")) return;
+  e.preventDefault();
+  const s = sp(e);
+  if (!spotEl.hidden && e.shiftKey) { spotR = clamp(spotR * Math.exp(-(e.deltaY || e.deltaX) * .002), 50, 600); spotEl.style.setProperty("--sr", spotR + "px"); return; }
+  if (e.ctrlKey || e.metaKey) zoomAt(s.x, s.y, Math.exp(-e.deltaY * .0025));
+  else { const c = page().cam; c.x -= e.deltaX; c.y -= e.deltaY; markView(); }
+}, { passive: false });
+
+/* ---------- text & note editing ---------- */
+let editorEl = null;
+function openEditor(it, isNew) {
+  commitEditor(); selected = null;
+  editing = { it, isNew }; if (!isNew) { hidden.add(it); sceneDirty = true; }
+  const c = page().cam, ta = document.createElement("textarea");
+  ta.className = "editor" + (it.type === "note" ? " note-ed" : "");
+  ta.value = it.text; ta.spellcheck = true; ta.setAttribute("aria-label", it.type === "note" ? "نص الملاحظة" : "نص على اللوحة");
+  ta.dir = it.rtl ? "rtl" : "ltr"; ta.style.top = (it.y * c.z + c.y) + "px";
+  const ax = it.x * c.z + c.x;
+  if (it.type === "text" && it.rtl) { ta.style.right = (vw - ax) + "px"; ta.style.left = "auto"; } else ta.style.left = ax + "px";
+  if (it.type === "note") {
+    Object.assign(ta.style, { width: it.w * c.z + "px", fontSize: 22 * c.z + "px", lineHeight: 30 * c.z + "px",
+      padding: `${16 * c.z}px ${14 * c.z}px`, background: NOTE_COLORS[it.nc || 0], minHeight: it.w * .72 * c.z + "px" });
+  } else {
+    Object.assign(ta.style, { fontSize: it.fs * c.z + "px", lineHeight: it.fs * LH * c.z + "px", color: col(it.c), minWidth: Math.max(140, 200 * c.z) + "px" });
+  }
+  const grow = () => {
+    ta.style.height = "auto"; ta.style.height = ta.scrollHeight + 4 + "px";
+    if (it.type === "text") { ta.style.width = "auto"; ta.style.width = Math.min((it.rtl ? ax : vw - ax) - 8, ta.scrollWidth + 24) + "px"; }
+  };
+  ta.addEventListener("input", grow);
+  ta.addEventListener("keydown", e => {
+    if (e.key === "Escape" || (e.key === "Enter" && (e.ctrlKey || e.metaKey))) { e.preventDefault(); commitEditor(); }
+    e.stopPropagation();
+  });
+  ta.addEventListener("blur", () => commitEditor());
+  stage.appendChild(ta); editorEl = ta; grow(); req(); ta.focus();
+  setTimeout(() => { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }, 0);
+}
+function commitEditor() {
+  if (!editing) return;
+  const { it, isNew } = editing, ta = editorEl, val = ta.value.replace(/\s+$/, "");
+  editing = null; editorEl = null; ta.remove(); hidden.delete(it);
+  const items = page().items;
+  if (it.type === "text" && !val) { if (!isNew) { pushHistory(); const i = items.indexOf(it); if (i > -1) items.splice(i, 1); } }
+  else if (isNew || val !== it.text) { pushHistory(); it.text = val; if (isNew) items.push(it); }
+  markDirty();
+}
+
+/* ---------- selection toolbar ---------- */
+const selbar = $("#selbar");
+function placeSelbar() {
+  if (!selected || action || editing || !page().items.includes(selected)) { selbar.hidden = true; if (selected && !page().items.includes(selected)) selected = null; return; }
+  const c = page().cam, b = bbox(selected);
+  $("#selColor").hidden = selected.type !== "note";
+  selbar.hidden = false;
+  const bw = selbar.offsetWidth, x = clamp((b.x - 6) * c.z + c.x, 8, vw - bw - 8);
+  let y = (b.y - 6) * c.z + c.y - 46; if (y < 70) y = (b.y + b.h + 6) * c.z + c.y + 8;
+  const minY = document.body.classList.contains("presenting") ? 8 : topbar.offsetTop + topbar.offsetHeight + 8;
+  selbar.style.left = x + "px"; selbar.style.top = clamp(y, minY, vh - 120) + "px";
+}
+function deleteSelected() { if (!selected) return; pushHistory(); const items = page().items, i = items.indexOf(selected); if (i > -1) items.splice(i, 1); selected = null; markDirty(); }
+function duplicateSelected() {
+  if (!selected) return; pushHistory();
+  const cp = JSON.parse(JSON.stringify(selected)); moveItem(cp, 24, 24); page().items.push(cp); selected = cp; markDirty();
+}
+$("#selDel").onclick = deleteSelected;
+$("#selDup").onclick = duplicateSelected;
+$("#selFront").onclick = () => { if (!selected) return; pushHistory(); const items = page().items; items.splice(items.indexOf(selected), 1); items.push(selected); markDirty(); };
+$("#selColor").onclick = () => { if (!selected || selected.type !== "note") return; pushHistory(); selected.nc = ((selected.nc || 0) + 1) % NOTE_COLORS.length; noteColor = selected.nc; markDirty(); };
+
+/* ---------- tray ---------- */
+const SHAPE_ICONS = {
+  line: '<path d="M5 19L19 5"/>', arrow: '<path d="M5 19L19 5M10 5h9v9"/>',
+  rect: '<rect x="4" y="6" width="16" height="12" rx="1"/>', ellipse: '<ellipse cx="12" cy="12" rx="8.5" ry="6.5"/>'
+};
+function setTool(t) {
+  commitEditor();
+  if (["line","arrow","rect","ellipse"].includes(t)) { lastShape = t; $("#shapeIcon").innerHTML = SHAPE_ICONS[t]; }
+  const hlSwitch = (t === "highlighter") !== (tool === "highlighter");
+  tool = t; if (t !== "select") selected = null;
+  if (hlSwitch) buildChalk();
+  $$("[data-tool]").forEach(b => b.setAttribute("aria-pressed", b.dataset.tool === t));
+  $("#shapeBtn").setAttribute("aria-pressed", ["line","arrow","rect","ellipse"].includes(t));
+  updateDockMore();
+  setCursor(); if (!fxRaf) fxRaf = requestAnimationFrame(drawFx); req();
+}
+$$("[data-tool]").forEach(b => b.addEventListener("click", () => { setTool(b.dataset.tool); if (b.closest(".menu")) closeMenus(); }));
+$$("#m-shapes [data-shape]").forEach(b => b.addEventListener("click", () => { setTool(b.dataset.shape); closeMenus(); }));
+function buildChalk() {
+  const box = $("#colorGrp"), hl = tool === "highlighter";
+  const names = hl ? HL_NAMES : page().bg === "white" ? COLOR_NAMES_W : COLOR_NAMES, cols = hl ? HLP : pal().fg, cur = hl ? hlColor : color;
+  box.innerHTML = ""; box.setAttribute("aria-label", hl ? "ألوان التظليل" : "اللون");
+  cols.forEach((c, i) => {
+    const b = document.createElement("button");
+    b.className = "sw-btn" + (hl ? " hl" : ""); b.setAttribute("role", "radio"); b.setAttribute("aria-checked", i === cur);
+    b.setAttribute("aria-label", names[i]); b.title = `${names[i]} (${i + 1})`;
+    b.innerHTML = `<span class="sw-dot" style="--c:${c}"></span>`;
+    b.onclick = () => setColor(i);
+    box.appendChild(b);
+  });
+  updateDockMore();
+}
+function setColor(i) {
+  if (tool === "highlighter") hlColor = i; else color = i;
+  $$("#colorGrp .sw-btn").forEach((b, j) => b.setAttribute("aria-checked", j === i));
+  if (selected && "c" in selected && typeof selected.c === "number" && selected.c !== i) { pushHistory(); selected.c = i; markDirty(); }
+  if (tool === "eraser" || tool === "laser" || tool === "select" || tool === "hand") setTool("pen");
+  updateDockMore();
+}
+function updateDockMore() {
+  const menu = $("#m-dockmore"), more = $("#dockMore"), dot = more.querySelector(".more-dot");
+  more.classList.toggle("holds-active", !!menu.querySelector('.tb[aria-pressed="true"]:not(#smartBtn)'));
+  dot.hidden = !menu.contains($("#colorGrp")); dot.style.background = tool === "highlighter" ? HLP[hlColor] : pal().fg[color];
+}
+function setSize(i) { size = clamp(i, 0, 2); $$("[data-size]").forEach(b => b.setAttribute("aria-checked", +b.dataset.size === size)); }
+$$("[data-size]").forEach(b => b.addEventListener("click", () => setSize(+b.dataset.size)));
+$("#smartBtn").onclick = () => { smart = !smart; $("#smartBtn").setAttribute("aria-pressed", smart); toast(smart ? "الأشكال الذكية مفعّلة: تُرتَّب الخطوط والمربعات والدوائر الكبيرة" : "الأشكال الذكية متوقفة"); };
+$("#undoBtn").onclick = undo; $("#redoBtn").onclick = redo;
+
+/* ---------- pages ---------- */
+function updatePages() {
+  $("#pgLabel .pg-long").textContent = `الصفحة ${doc.cur + 1} من ${doc.pages.length}`; $("#pgLabel .pg-short").textContent = `${doc.cur + 1}/${doc.pages.length}`;
+  $("#pgLabel").setAttribute("aria-label", `الصفحة ${doc.cur + 1} من ${doc.pages.length}، خيارات الصفحة`);
+  $("#prevPg").disabled = doc.cur === 0; $("#nextPg").disabled = doc.cur === doc.pages.length - 1;
+  $$("#bgOpts [data-bg]").forEach(b => b.setAttribute("aria-pressed", b.dataset.bg === page().bg));
+  $$("#patOpts [data-pat]").forEach(b => b.setAttribute("aria-pressed", b.dataset.pat === page().pattern));
+  buildChalk(); updateUndo();
+}
+function gotoPage(i) {
+  commitEditor(); i = clamp(i, 0, doc.pages.length - 1); if (i === doc.cur) return;
+  doc.cur = i; selected = null; draft = null; action = null; updatePages(); markView();
+}
+function addPage() { commitEditor(); const p = page(); doc.pages.splice(doc.cur + 1, 0, newPage(p.bg, p.pattern)); gotoPage(doc.cur + 1); updatePages(); }
+function dupPage() { commitEditor(); const cp = JSON.parse(JSON.stringify(page())); cp.id = uid(); doc.pages.splice(doc.cur + 1, 0, cp); gotoPage(doc.cur + 1); updatePages(); }
+function delPage() {
+  commitEditor();
+  if (doc.pages.length === 1) { clearPage(); return; }
+  const idx = doc.cur, [removed] = doc.pages.splice(idx, 1);
+  doc.cur = Math.min(idx, doc.pages.length - 1); selected = null; updatePages(); markView();
+  toast(`حُذفت الصفحة ${idx + 1}`, "تراجع", () => { doc.pages.splice(idx, 0, removed); doc.cur = idx; updatePages(); markView(); });
+}
+function clearPage() {
+  if (!page().items.length) return;
+  pushHistory(); page().items = []; selected = null; markDirty(); toast("مُسحت الصفحة", "تراجع", undo);
+}
+$("#prevPg").onclick = () => gotoPage(doc.cur - 1);
+$("#nextPg").onclick = () => gotoPage(doc.cur + 1);
+$("#addPg").onclick = addPage;
+
+/* ---------- menus ---------- */
+function closeMenus() { $$(".menu").forEach(m => m.hidden = true); $$("[data-menu]").forEach(b => b.setAttribute("aria-expanded", "false")); if (typeof updateDockMore === "function" && $("#dockMore")) updateDockMore(); }
+$$("[data-menu]").forEach(btn => btn.addEventListener("click", e => {
+  e.stopPropagation(); const m = document.getElementById(btn.dataset.menu), wasOpen = !m.hidden;
+  const r = btn.getBoundingClientRect(), fromMenu = btn.closest(".menu");
+  closeMenus(); if (wasOpen) return;
+  commitEditor(); m.hidden = false; btn.setAttribute("aria-expanded", "true");
+  const anchor = fromMenu ? (btn.closest("#m-dockmore") ? $("#dockMore") : $("#hdrMore")).getBoundingClientRect() : r;
+  const mw = m.offsetWidth, mh = m.offsetHeight, up = anchor.top > innerHeight / 2;
+  const left = up ? anchor.left + anchor.width / 2 - mw / 2 : (anchor.right > innerWidth / 2 && !fromMenu ? anchor.right - mw : anchor.left);
+  m.style.left = clamp(left, 8, innerWidth - mw - 8) + "px";
+  m.style.top = (up ? Math.max(8, anchor.top - mh - 8) : Math.min(anchor.bottom + 8, innerHeight - mh - 8)) + "px";
+  updateDockMore();
+  const first = m.querySelector("button:not([disabled])"); if (first && e.detail === 0) first.focus();
+}));
+document.addEventListener("pointerdown", e => { if (!e.target.closest(".menu,[data-menu]")) closeMenus(); });
+$$("#bgOpts [data-bg]").forEach(b => b.onclick = () => { page().bg = b.dataset.bg; updatePages(); markView(); });
+$$("#patOpts [data-pat]").forEach(b => b.onclick = () => { page().pattern = b.dataset.pat; updatePages(); markView(); });
+
+const actions = {
+  addPage, dupPage, delPage, clearPage,
+  allPages() { const p = page(); doc.pages.forEach(q => { q.bg = p.bg; q.pattern = p.pattern; }); markView(); toast("طُبّقت الخلفية على كل الصفحات"); },
+  image() { $("#imgFile").click(); },
+  graph() { openGraph(); },
+  noteCenter() { const c = viewCenter(); setTool("note"); openEditor({ type: "note", x: r1(c.x - 110), y: r1(c.y - 80), w: 220, text: "", nc: noteColor }, true); },
+  png: exportPng, saveJson, openJson() { $("#jsonFile").click(); }
+};
+$$("[data-act]").forEach(b => b.addEventListener("click", () => {
+  const a = b.dataset.act; closeMenus();
+  if (a.startsWith("tpl:")) insertTemplate(a.slice(4)); else actions[a] && actions[a]();
+}));
+
+/* ---------- insert helpers ---------- */
+function viewCenter() { const c = page().cam; return { x: (vw / 2 - c.x) / c.z, y: (vh / 2 - c.y) / c.z }; }
+function addItems(list, select) { pushHistory(); page().items.push(...list); if (select) { setTool("select"); selected = list[list.length - 1]; } markDirty(); }
+const T = (x, y, text, c = 0, fs = 32, rtl = 1) => ({ type: "text", rtl, x: r1(x), y: r1(y), text, c, fs });
+const S = (type, x1, y1, x2, y2, c = 0, w = 4) => ({ type, x1: r1(x1), y1: r1(y1), x2: r1(x2), y2: r1(y2), c, w });
+function insertTemplate(kind) {
+  const { x, y } = viewCenter(); let L = [];
+  if (kind === "tchart") {
+    L = [S("line", x - 320, y - 150, x + 320, y - 150), S("line", x, y - 210, x, y + 230),
+      T(x + 290, y - 222, "إيجابيات", 4, 42), T(x - 30, y - 222, "سلبيات", 2, 42)];
+  } else if (kind === "venn") {
+    L = [S("ellipse", x - 60, y - 180, x + 330, y + 180, 3), S("ellipse", x - 330, y - 180, x + 60, y + 180, 2),
+      T(x + 240, y - 32, "أ", 3, 48), T(x - 210, y - 32, "ب", 2, 48), T(x + 38, y - 26, "كلاهما", 0, 30)];
+  } else if (kind === "kwl") {
+    const w = 240, top = y - 190;
+    ["ماذا أعرف؟", "ماذا أريد أن أعرف؟", "ماذا تعلّمت؟"].forEach((t, i) => {
+      const cx = x + (1 - i) * (w + 12);
+      L.push(S("rect", cx - w / 2, top, cx + w / 2, top + 380, i + 1), T(cx + w / 2 - 14, top + 8, t, i + 1, 28));
+    });
+  } else if (kind === "numline") {
+    const step = 60; L.push(S("arrow", x, y, x + 6 * step, y), S("arrow", x, y, x - 6 * step, y));
+    for (let k = -5; k <= 5; k++) { L.push(S("line", x + k * step, y - 12, x + k * step, y + 12, 0, 3)); L.push(T(x + k * step - (k < 0 ? 14 : 7), y + 18, String(k).replace("-", "−"), k ? 0 : 1, 26, 0)); }
+  } else if (kind === "exit") {
+    L = [S("rect", x - 300, y - 200, x + 300, y + 200, 1, 4), T(x + 270, y - 192, "بطاقة الخروج", 1, 46),
+      T(x + 270, y - 100, "١. شيء تعلّمته اليوم…", 0, 30), T(x + 270, y - 20, "٢. سؤال ما زال لديّ…", 0, 30),
+      T(x + 270, y + 60, "٣. مدى ثقتي بفهمي (من ١ إلى ٥)", 0, 30)];
+  }
+  addItems(L, false); toast("أُضيف القالب. استخدم أداة التحديد لتحريك أي جزء منه.");
+}
+function insertImageFile(file, at) {
+  if (!file || !file.type.startsWith("image/")) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    const im = new Image();
+    im.onload = () => {
+      const max = 1600, k = Math.min(1, max / Math.max(im.width, im.height));
+      let src = rd.result;
+      if (k < 1 || file.size > 600000) {
+        const c = document.createElement("canvas"); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        src = file.type === "image/png" ? c.toDataURL("image/png") : c.toDataURL("image/jpeg", .86);
+      }
+      const z = page().cam.z, fit = Math.min(1, (vw * .6 / z) / im.width, (vh * .6 / z) / im.height);
+      const w = im.width * fit, h = im.height * fit, ctr = at || viewCenter();
+      addItems([{ type: "image", x: r1(ctr.x - w / 2), y: r1(ctr.y - h / 2), w: r1(w), h: r1(h), src }], true);
+      toast("أُضيفت الصورة. اختر قلمًا للكتابة عليها.");
+    };
+    im.src = rd.result;
+  };
+  rd.readAsDataURL(file);
+}
+$("#imgFile").onchange = e => { insertImageFile(e.target.files[0]); e.target.value = ""; };
+stage.addEventListener("dragover", e => { e.preventDefault(); });
+stage.addEventListener("drop", e => { e.preventDefault(); const f = [...(e.dataTransfer?.files || [])].find(f => f.type.startsWith("image/")); if (f) insertImageFile(f, toWorld(sp(e))); });
+document.addEventListener("paste", e => {
+  if (editing || /INPUT|TEXTAREA/.test(document.activeElement?.tagName || "")) return;
+  const items = [...(e.clipboardData?.items || [])], img = items.find(i => i.type.startsWith("image/"));
+  if (img) { e.preventDefault(); insertImageFile(img.getAsFile()); return; }
+  const text = e.clipboardData?.getData("text/plain");
+  if (text) { e.preventDefault(); const c = viewCenter(), r = isRTL(text); addItems([T(r ? c.x + 150 : c.x - 150, c.y - 20, text.slice(0, 2000), color, TEXT[size], r ? 1 : 0)], true); }
+});
+
+/* graph dialog */
+const dlgGraph = $("#dlg-graph");
+function openGraph() { $("#gErr").textContent = ""; $("#gInput").value = ""; dlgGraph.showModal(); $("#gInput").focus(); }
+function addGraph() {
+  const v = $("#gInput").value.trim(); if (!v) { $("#gErr").textContent = "اكتب دالة أولًا، مثل x^2 - 4."; return; }
+  try { v.split(";").filter(s => s.trim()).forEach(s => compile(s)); }
+  catch (err) { $("#gErr").textContent = err.message; return; }
+  dlgGraph.close(); const c = viewCenter();
+  addItems([{ type: "plot", x: r1(c.x - 300), y: r1(c.y - 190), w: 600, h: 380, unit: 40, expr: v, c: color === 0 ? 1 : color }], true);
+}
+$("#gOk").onclick = addGraph; $("#gCancel").onclick = () => dlgGraph.close();
+$("#gInput").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); addGraph(); } });
+$$("#gExamples .chip").forEach(b => b.onclick = () => { $("#gInput").value = b.textContent; $("#gInput").focus(); });
+const dlgHelp = $("#dlg-help");
+$("#helpBtn").onclick = () => dlgHelp.showModal(); $("#hClose").onclick = () => dlgHelp.close();
+
+/* ---------- export / files ---------- */
+let downloads = null;
+$$(".needs-dl").forEach(b => b.disabled = true); $("#dlNote").hidden = false;
+(async () => {
+  try { if (window.claude && typeof window.claude.use === "function") downloads = await window.claude.use("downloads"); } catch (e) { downloads = null; }
+  if (!downloads) downloads = { save: async ({ filename, data }) => {
+    /* standalone site: a normal browser download */
+    const blob = data instanceof Blob ? data : new Blob([data], { type: /\.json$/i.test(filename) ? "application/json" : "text/plain" });
+    const url = URL.createObjectURL(blob), a = document.createElement("a");
+    a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  } };
+  $$(".needs-dl").forEach(b => b.disabled = !downloads); $("#dlNote").hidden = !!downloads;
+})();
+const slug = () => (doc.title || "lesson").toLowerCase().replace(/[^a-z0-9\u0600-\u06ff]+/g, "-").replace(/^-|-$/g, "") || "lesson";
+async function offer(filename, data, okMsg) {
+  if (!downloads) { toast("التنزيل غير متاح في هذا العرض."); return; }
+  try { await downloads.save({ filename, data }); toast(okMsg); }
+  catch (e) {
+    if (e && e.code === "declined") return;
+    if (e && e.code === "rate_limited") { toast("هناك تنزيل ينتظر موافقتك."); return; }
+    toast("تعذّر حفظ الملف هنا.");
+  }
+}
+function exportPng() {
+  const keep = selected; selected = null; render();
+  cv.toBlob(b => { selected = keep; req(); if (b) offer(`${slug()}-page-${doc.cur + 1}.png`, b, "حُفظت صورة الصفحة"); }, "image/png");
+}
+function saveJson() { offer(`${slug()}.json`, JSON.stringify({ app: "chalkline", version: 1, ...doc }), "حُفظ ملف الدرس"); }
+$("#jsonFile").onchange = e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    try {
+      const d = JSON.parse(rd.result);
+      if (!Array.isArray(d.pages) || !d.pages.length) throw 0;
+      d.pages.forEach(p => { p.id = p.id || uid(); p.items = Array.isArray(p.items) ? p.items : []; p.cam = p.cam || { x: null, y: null, z: 1 }; p.bg = PAL[p.bg] ? p.bg : "chalk"; p.pattern = p.pattern || "none"; });
+      doc = { title: String(d.title || "درس بدون عنوان").slice(0, 80), cur: 0, pages: d.pages };
+      hist.clear(); selected = null; $("#title").value = doc.title; updatePages(); markView();
+      toast(`فُتح «${doc.title}» (عدد الصفحات: ${doc.pages.length})`);
+    } catch (_) { toast("هذا الملف ليس درسًا من لوحتي."); }
+  };
+  rd.readAsText(f);
+};
+$("#title").value = doc.title;
+$("#title").addEventListener("input", e => { doc.title = e.target.value; scheduleSave(); fitHeader(); });
+$("#title").addEventListener("keydown", e => { if (e.key === "Enter") e.target.blur(); e.stopPropagation(); });
+
+/* ---------- zoom controls ---------- */
+$("#zIn").onclick = () => zoomAt(vw / 2, vh / 2, 1.2);
+$("#zOut").onclick = () => zoomAt(vw / 2, vh / 2, 1 / 1.2);
+$("#zReset").onclick = () => { const c = page().cam; c.z = 1; c.x = vw / 2; c.y = vh / 2; markView(); };
+
+/* ---------- toast ---------- */
+let toastT = 0;
+function toast(msg, label, fn) {
+  const t = $("#toast"), b = t.querySelector("button");
+  t.querySelector("span").textContent = msg;
+  if (label) { b.hidden = false; b.textContent = label; b.onclick = () => { t.hidden = true; fn(); }; } else b.hidden = true;
+  t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, label ? 6500 : 3000);
+}
+
+/* ---------- present, reveal, spotlight ---------- */
+function setPresenting(on) { document.body.classList.toggle("presenting", on); closeMenus(); requestAnimationFrame(fitAll); if (on) toast("وضع العرض. اضغط F أو Esc لإظهار الشريط العلوي."); }
+$("#presentBtn").onclick = () => setPresenting(true);
+$("#exitPresent").onclick = () => setPresenting(false);
+
+const shade = $("#shade"), shadeHandle = $("#shadeHandle"); let shadeTop = 0;
+function setShade(y) {
+  shadeTop = clamp(y, 0, Math.max(0, vh - 40)); shade.style.setProperty("--shade-top", shadeTop + "px");
+  const hb = document.body.classList.contains("presenting") ? 0 : topbar.offsetTop + topbar.offsetHeight;
+  shadeHandle.style.top = Math.max(18, hb + 14 - shadeTop) + "px";
+}
+function toggleReveal() {
+  closeMenus(); const on = shade.hidden; shade.hidden = !on; $("#revealBtn").setAttribute("aria-pressed", on);
+  if (on) { setShade(0); toast("اللوحة مغطاة. اسحب المقبض للأسفل لكشفها."); }
+}
+$("#revealBtn").onclick = toggleReveal;
+shadeHandle.addEventListener("pointerdown", e => {
+  e.preventDefault(); shadeHandle.setPointerCapture(e.pointerId);
+  const start = e.clientY, top0 = shadeTop;
+  const mv = ev => setShade(top0 + ev.clientY - start);
+  const up = () => { shadeHandle.removeEventListener("pointermove", mv); shadeHandle.removeEventListener("pointerup", up); };
+  shadeHandle.addEventListener("pointermove", mv); shadeHandle.addEventListener("pointerup", up);
+});
+shadeHandle.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown") { setShade(shadeTop + 40); e.preventDefault(); }
+  if (e.key === "ArrowUp") { setShade(shadeTop - 40); e.preventDefault(); }
+  e.stopPropagation();
+});
+
+const spotEl = $("#spot"); let spotR = 150;
+function setSpot(on) {
+  spotEl.hidden = !on; $("#spotBtn").setAttribute("aria-pressed", on);
+  if (on) { spotEl.style.setProperty("--sx", vw / 2 + "px"); spotEl.style.setProperty("--sy", vh / 2 + "px"); spotEl.style.setProperty("--sr", spotR + "px");
+    toast("تسليط الضوء مفعّل. Shift مع التمرير لتغيير حجمه، وEsc لإيقافه."); }
+}
+$("#spotBtn").onclick = () => { closeMenus(); setSpot(spotEl.hidden); };
+
+/* ---------- widgets ---------- */
+const DEFAULT_POS = { "w-timer": ["left", 16, 0], "w-picker": ["left", 16, 236], "w-tally": ["right", 16, 0] };
+function toggleWidget(id, force) {
+  const w = document.getElementById(id), on = force ?? w.hidden;
+  if (!on && w.contains(document.activeElement)) document.activeElement.blur();
+  w.hidden = !on; $(`[data-widget="${id}"]`).setAttribute("aria-pressed", on);
+  if (on && !w.dataset.placed) {
+    const [side, dx, dy] = DEFAULT_POS[id];
+    w.style.top = (topbar.offsetTop + topbar.offsetHeight + 12 + dy) + "px"; w.style.left = (side === "right" ? Math.max(12, vw - w.offsetWidth - dx) : dx) + "px"; w.dataset.placed = 1;
+  }
+  if (on) { const l = parseFloat(w.style.left), t = parseFloat(w.style.top); w.style.left = clamp(l, 0, Math.max(0, vw - w.offsetWidth)) + "px"; w.style.top = clamp(t, 0, Math.max(0, vh - 60)) + "px"; }
+}
+$$("[data-widget]").forEach(b => b.onclick = () => { closeMenus(); toggleWidget(b.dataset.widget); });
+$$(".widget").forEach(w => {
+  w.querySelector(".w-x").onclick = () => toggleWidget(w.id, false);
+  const head = w.querySelector(".w-head");
+  head.addEventListener("pointerdown", e => {
+    if (e.target.closest("button")) return;
+    e.preventDefault(); head.setPointerCapture(e.pointerId);
+    const sx = e.clientX, sy = e.clientY, l0 = w.offsetLeft, t0 = w.offsetTop;
+    const mv = ev => { w.style.left = clamp(l0 + ev.clientX - sx, 0, vw - w.offsetWidth) + "px"; w.style.top = clamp(t0 + ev.clientY - sy, 0, vh - 48) + "px"; };
+    const up = () => { head.removeEventListener("pointermove", mv); head.removeEventListener("pointerup", up); };
+    head.addEventListener("pointermove", mv); head.addEventListener("pointerup", up);
+  });
+  w.addEventListener("keydown", e => e.stopPropagation());
+});
+
+/* timer */
+let tTotal = 300, tLeft = 300, tEnd = 0, tInt = 0, actx = null;
+const fmt = s => { s = Math.max(0, Math.ceil(s)); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
+function tShow() { $("#tFace").textContent = fmt(tLeft); }
+function tStop() { clearInterval(tInt); tInt = 0; $("#tStart").textContent = "ابدأ"; }
+function tSet(s) { tStop(); $("#w-timer").classList.remove("done"); tTotal = tLeft = clamp(s, 5, 5999); tShow(); }
+function beep() {
+  try {
+    const t = actx.currentTime;
+    [0, .28, .56].forEach(o => {
+      const os = actx.createOscillator(), g = actx.createGain(); os.frequency.value = 880;
+      g.gain.setValueAtTime(.0001, t + o); g.gain.exponentialRampToValueAtTime(.25, t + o + .02); g.gain.exponentialRampToValueAtTime(.0001, t + o + .22);
+      os.connect(g).connect(actx.destination); os.start(t + o); os.stop(t + o + .25);
+    });
+  } catch (e) {}
+}
+$("#tStart").onclick = () => {
+  try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume(); } catch (e) {}
+  if (tInt) { tLeft = (tEnd - Date.now()) / 1000; tStop(); return; }
+  if (tLeft <= 0) tLeft = tTotal;
+  $("#w-timer").classList.remove("done"); tEnd = Date.now() + tLeft * 1000; $("#tStart").textContent = "إيقاف مؤقت";
+  tInt = setInterval(() => {
+    tLeft = (tEnd - Date.now()) / 1000; tShow();
+    if (tLeft <= 0) { tStop(); tLeft = 0; $("#tFace").textContent = "انتهى الوقت"; $("#w-timer").classList.add("done"); beep(); }
+  }, 200);
+};
+$("#tReset").onclick = () => tSet(tTotal);
+$("#tPlus").onclick = () => { if (tInt) tEnd += 30000; else { tLeft += 30; tTotal = Math.max(tTotal, tLeft); tShow(); } };
+$("#tMinus").onclick = () => { if (tInt) tEnd = Math.max(Date.now() + 1000, tEnd - 30000); else { tLeft = Math.max(5, tLeft - 30); tShow(); } };
+$$("#w-timer [data-t]").forEach(b => b.onclick = () => tSet(+b.dataset.t));
+
+/* picker: one saved list per class, importable from Excel */
+const pNames = $("#pNames"), pFace = $("#pFace"), pClass = $("#pClass"), pClassName = $("#pClassName");
+let spinning = false;
+const pickedBy = new Map();
+let R = null;
+try { R = JSON.parse(localStorage.getItem(ROSTERS) || "null"); } catch (e) {}
+if (!R || !Array.isArray(R.list) || !R.list.length) {
+  let old = ""; try { old = localStorage.getItem(ROSTER) || ""; } catch (e) {}
+  const first = { id: uid(), name: "فصلي", text: old };
+  R = { cur: first.id, list: [first] };
+}
+const curClass = () => R.list.find(c => c.id === R.cur) || R.list[0];
+const picked = () => { const id = curClass().id; if (!pickedBy.has(id)) pickedBy.set(id, new Set()); return pickedBy.get(id); };
+let rosterT = 0;
+function saveRosters() { clearTimeout(rosterT); rosterT = setTimeout(() => { try { localStorage.setItem(ROSTERS, JSON.stringify(R)); } catch (e) { toast("تعذّر حفظ قوائم الفصول في هذا المتصفح."); } }, 300); }
+const roster = () => [...new Set(pNames.value.split("\n").map(s => s.trim()).filter(Boolean))];
+function renderClasses() {
+  pClass.innerHTML = "";
+  R.list.forEach(c => {
+    const o = document.createElement("option"); o.value = c.id;
+    const n = [...new Set(c.text.split("\n").map(s => s.trim()).filter(Boolean))].length;
+    o.textContent = `${c.name || "فصل بدون اسم"} (${n})`; pClass.appendChild(o);
+  });
+  const c = curClass(); R.cur = c.id; pClass.value = c.id; pClassName.value = c.name; pNames.value = c.text;
+  $("#pDel").disabled = false; pLeft();
+}
+function pLeft() {
+  const all = roster(), done = picked(), left = all.filter(n => !done.has(n)).length;
+  $("#pLeft").textContent = !all.length ? "" : $("#pNoRepeat").checked ? `بقي ${left} من ${all.length}` : `عدد الطلاب: ${all.length}`;
+}
+function setIdle(msg) { pFace.classList.add("idle"); pFace.textContent = msg; }
+pNames.addEventListener("input", () => { curClass().text = pNames.value; saveRosters(); pLeft(); const o = pClass.selectedOptions[0]; if (o) o.textContent = `${curClass().name || "فصل بدون اسم"} (${roster().length})`; });
+pClassName.addEventListener("input", () => { curClass().name = pClassName.value.trim(); saveRosters(); const o = pClass.selectedOptions[0]; if (o) o.textContent = `${curClass().name || "فصل بدون اسم"} (${roster().length})`; });
+pClass.addEventListener("change", () => { R.cur = pClass.value; saveRosters(); renderClasses(); setIdle("جاهز. اضغط «اختر طالبًا»"); });
+$("#pAdd").onclick = () => {
+  const c = { id: uid(), name: `فصل ${R.list.length + 1}`, text: "" };
+  R.list.push(c); R.cur = c.id; saveRosters(); renderClasses(); setIdle("أضف أسماء الطلاب أو استوردها من Excel"); pClassName.select();
+};
+$("#pDel").onclick = () => {
+  const c = curClass(), idx = R.list.indexOf(c);
+  R.list.splice(idx, 1);
+  if (!R.list.length) R.list.push({ id: uid(), name: "فصلي", text: "" });
+  R.cur = R.list[Math.max(0, idx - 1)].id; saveRosters(); renderClasses();
+  toast(`حُذف فصل «${c.name || "بدون اسم"}»`, "تراجع", () => { R.list.splice(idx, 0, c); R.cur = c.id; saveRosters(); renderClasses(); });
+};
+$("#pNoRepeat").onchange = pLeft;
+$("#pReset").onclick = () => { picked().clear(); setIdle("جاهز. اضغط «اختر طالبًا»"); pLeft(); };
+/* shared draw: show(text, final) is called while shuffling and once with the winner */
+function drawStudent(show) {
+  if (spinning) return "busy";
+  const all = roster(), done = picked();
+  if (!all.length) return "empty";
+  const pool = $("#pNoRepeat").checked ? all.filter(n => !done.has(n)) : all;
+  if (!pool.length) return "all";
+  const winner = pool[Math.floor(Math.random() * pool.length)];
+  const finish = () => { spinning = false; done.add(winner); pLeft(); show(winner, true); };
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || all.length < 2) { finish(); return "ok"; }
+  spinning = true; let n = 0;
+  const iv = setInterval(() => { show(all[Math.floor(Math.random() * all.length)], false); if (++n > 14) { clearInterval(iv); finish(); } }, 75);
+  return "ok";
+}
+const showInWidget = t => { pFace.classList.remove("idle"); pFace.textContent = t; };
+$("#pPick").onclick = () => {
+  const r = drawStudent(showInWidget);
+  if (r === "empty") { setIdle("اكتب اسمًا واحدًا على الأقل، أو استورد ملف Excel"); pNames.focus(); }
+  if (r === "all") setIdle("اختير جميع الطلاب. اضغط «ابدأ من جديد».");
+};
+
+/* quick pick: one tap from the top bar, no settings */
+const pickCard = $("#pickCard");
+function hidePick() { pickCard.hidden = true; }
+function quickPick() {
+  closeMenus();
+  const r = drawStudent((t, final) => {
+    pickCard.hidden = false; $("#pcName").textContent = t; $("#pcName").classList.toggle("spin", !final);
+    $("#pcClass").textContent = curClass().name || "فصل بدون اسم";
+    $("#pcMeta").textContent = final ? $("#pLeft").textContent : "";
+    $("#pcActions").hidden = !final;
+    if (!$("#w-picker").hidden) showInWidget(t);
+    if (final) $("#pcAgain").focus({ preventScroll: true });
+  });
+  if (r === "empty") {
+    hidePick(); toggleWidget("w-picker", true);
+    setIdle("أضف أسماء الطلاب أو استوردها من Excel، ثم استخدم «طالب عشوائي»"); pNames.focus();
+  } else if (r === "all") {
+    hidePick();
+    toast(`اختير جميع طلاب «${curClass().name || "الفصل"}»`, "ابدأ من جديد", () => { picked().clear(); pLeft(); quickPick(); });
+  }
+}
+$("#hQuick").onclick = quickPick;
+$("#pcAgain").onclick = quickPick;
+$("#pcClose").onclick = hidePick;
+$("#pcSettings").onclick = () => { hidePick(); toggleWidget("w-picker", true); };
+
+/* Excel / CSV import: every sheet becomes a class, the name column is found automatically */
+let xlsxLoading = null;
+function loadXLSX() {
+  if (window.XLSX) return Promise.resolve(window.XLSX);
+  if (xlsxLoading) return xlsxLoading;
+  xlsxLoading = new Promise((res, rej) => {
+    const sc = document.createElement("script");
+    sc.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+    sc.onload = () => window.XLSX ? res(window.XLSX) : rej(new Error("missing"));
+    sc.onerror = () => { xlsxLoading = null; rej(new Error("load")); };
+    document.head.appendChild(sc);
+  });
+  return xlsxLoading;
+}
+const countAr = (n, one, two, few, many) => n === 1 ? one : n === 2 ? two : n <= 10 ? `${n} ${few}` : `${n} ${many}`;
+const ONLY_NUM = /^[\s\d٠-٩\-\/.:,#]+$/;
+const NAME_HEAD = /(اسم|الاسم|الطالب|الطالبة|المتعلم|name|student)/i;
+const FULL_HEAD = /(رباعي|ثلاثي|كامل|full)/i;
+const SKIP_HEAD = /(رقم|هوية|سجل|جوال|هاتف|بريد|id|number|phone|mail|code)/i;
+function namesFromRows(rows) {
+  rows = rows.filter(r => Array.isArray(r) && r.some(c => String(c ?? "").trim()));
+  if (!rows.length) return [];
+  const clean = v => String(v ?? "").replace(/\s+/g, " ").trim();
+  let hi = -1, col = -1;
+  for (let i = 0; i < Math.min(rows.length, 6) && col < 0; i++) {
+    const cells = rows[i].map(clean);
+    let c = cells.findIndex(h => NAME_HEAD.test(h) && FULL_HEAD.test(h));
+    if (c < 0) c = cells.findIndex(h => NAME_HEAD.test(h) && !SKIP_HEAD.test(h));
+    if (c > -1) { hi = i; col = c; }
+  }
+  if (col < 0) {
+    const width = Math.max(...rows.map(r => r.length)); let best = 0;
+    for (let c = 0; c < width; c++) {
+      let sc = 0; for (const r of rows) { const v = clean(r[c]); if (v && !ONLY_NUM.test(v)) sc += Math.min(v.split(" ").length, 4); }
+      if (sc > best) { best = sc; col = c; }
+    }
+    if (col < 0) return [];
+  }
+  return [...new Set(rows.slice(hi + 1).map(r => clean(r[col])).filter(v => v && !ONLY_NUM.test(v) && !(NAME_HEAD.test(v) && v.split(" ").length <= 2)))];
+}
+/* Arabic CSV files saved by Excel are often Windows-1256, not UTF-8 */
+function decodeText(buf) {
+  try { return new TextDecoder("utf-8", { fatal: true }).decode(buf); }
+  catch (e) { try { return new TextDecoder("windows-1256").decode(buf); } catch (_) { return new TextDecoder("utf-8").decode(buf); } }
+}
+$("#pImport").onclick = () => $("#xlsFile").click();
+$("#xlsFile").onchange = async e => {
+  const f = e.target.files[0]; e.target.value = ""; if (!f) return;
+  const btn = $("#pImport"); btn.disabled = true; setIdle("جارٍ قراءة الملف…");
+  try {
+    const XLSX = await loadXLSX();
+    const buf = await f.arrayBuffer();
+    const wb = /\.(csv|tsv|txt|prn)$/i.test(f.name) ? XLSX.read(decodeText(buf), { type: "string", FS: /\.tsv$/i.test(f.name) ? "\t" : undefined }) : XLSX.read(buf, { type: "array" });
+    const base = f.name.replace(/\.[^.]+$/, "");
+    const sheets = wb.SheetNames.map(n => ({ n, names: namesFromRows(XLSX.utils.sheet_to_json(wb.Sheets[n], { header: 1, raw: false, defval: "" })) })).filter(x => x.names.length);
+    if (!sheets.length) { setIdle("لم أجد أسماء في هذا الملف. تأكد أن الأسماء في عمود واحد."); return; }
+    const generic = /^(sheet|ورقة|ورقه)\s*\d*$/i;
+    let firstId = null, total = 0;
+    sheets.forEach(sh => {
+      const name = (sheets.length === 1 && generic.test(sh.n.trim())) ? base : sh.n.trim();
+      let c = R.list.find(x => x.name === name);
+      if (c) c.text = sh.names.join("\n"); else { c = { id: uid(), name, text: sh.names.join("\n") }; R.list.push(c); }
+      pickedBy.delete(c.id); firstId = firstId || c.id; total += sh.names.length;
+    });
+    R.list = R.list.filter(c => c.text.trim() || c.id === firstId || R.list.length === 1);
+    R.cur = firstId; saveRosters(); renderClasses();
+    const st = countAr(total, "طالبًا واحدًا", "طالبَين", "طلاب", "طالبًا");
+    setIdle(sheets.length > 1 ? `استوردت ${countAr(sheets.length, "فصلًا", "فصلَين", "فصول", "فصلًا")} فيها ${st}. اختر الفصل من القائمة.` : `استوردت ${st} إلى «${curClass().name}».`);
+  } catch (err) {
+    setIdle(err && err.message === "load" ? "تعذّر تحميل قارئ Excel. تحقق من الاتصال وحاول مجددًا." : "تعذّر قراءة الملف. جرّب حفظه بصيغة ‎.xlsx‎ أو ‎.csv‎.");
+  } finally { btn.disabled = false; }
+};
+renderClasses();
+
+/* encouragement: confetti shower + a short cheer */
+const confCv = $("#confetti"), confCtx = confCv.getContext("2d"), cheerEl = $("#cheer");
+const CONF_COLORS = ["#FFD23F", "#EE4266", "#3BCEAC", "#7B2FF7", "#0EAD69", "#4D96FF", "#FF8C42", "#F15BB5"];
+const CHEERS = ["أحسنت!", "رائع!", "ممتاز!", "أبدعت!", "عمل رائع!", "بارك الله فيك!", "أنت مبدع!", "إجابة موفقة!"];
+let confetti = [], confRaf = 0, cheerT = 0, lastCheer = -1;
+function chime() {
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume();
+    const t = actx.currentTime;
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+      const os = actx.createOscillator(), g = actx.createGain(); os.type = "triangle"; os.frequency.value = f;
+      g.gain.setValueAtTime(.0001, t + i * .09); g.gain.exponentialRampToValueAtTime(.18, t + i * .09 + .02); g.gain.exponentialRampToValueAtTime(.0001, t + i * .09 + .5);
+      os.connect(g).connect(actx.destination); os.start(t + i * .09); os.stop(t + i * .09 + .55);
+    });
+  } catch (e) {}
+}
+function celebrate() {
+  closeMenus();
+  let i; do { i = Math.floor(Math.random() * CHEERS.length); } while (i === lastCheer && CHEERS.length > 1); lastCheer = i;
+  cheerEl.textContent = CHEERS[i]; cheerEl.classList.remove("show"); void cheerEl.offsetWidth; cheerEl.classList.add("show");
+  clearTimeout(cheerT); cheerT = setTimeout(() => cheerEl.classList.remove("show"), 1900);
+  chime();
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const W = innerWidth, Hh = innerHeight, d = Math.min(window.devicePixelRatio || 1, 2);
+  if (confCv.width !== Math.round(W * d) || confCv.height !== Math.round(Hh * d)) { confCv.width = Math.round(W * d); confCv.height = Math.round(Hh * d); }
+  if (confetti.length > 700) confetti.splice(0, confetti.length - 400);
+  const piece = (x, y, vx, vy, g, drag) => ({ x, y, vx, vy, g, drag, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .35,
+    w: 6 + Math.random() * 7, h: 9 + Math.random() * 10, c: CONF_COLORS[Math.floor(Math.random() * CONF_COLORS.length)],
+    shape: Math.random() < .22 ? "c" : Math.random() < .2 ? "t" : "r", sway: Math.random() * 6.28, ss: .02 + Math.random() * .04 });
+  for (let k = 0; k < 170; k++) confetti.push(piece(Math.random() * W, -20 - Math.random() * Hh * .7, (Math.random() - .5) * 2.4, 2 + Math.random() * 3, .045 + Math.random() * .04, .995));
+  for (const side of [0, 1]) for (let k = 0; k < 55; k++) {
+    const a = -Math.PI / 2 + (side ? -1 : 1) * (.3 + Math.random() * .55), sp = 11 + Math.random() * 10;
+    confetti.push(piece(side ? W + 8 : -8, Hh * .9, Math.cos(a) * sp, Math.sin(a) * sp, .24, .975));
+  }
+  if (!confRaf) confRaf = requestAnimationFrame(stepConfetti);
+}
+function stepConfetti() {
+  const W = innerWidth, Hh = innerHeight, d = confCv.width / W;
+  confCtx.setTransform(d, 0, 0, d, 0, 0); confCtx.clearRect(0, 0, W, Hh);
+  confetti = confetti.filter(p => p.y < Hh + 40 && p.x > -60 && p.x < W + 60);
+  for (const p of confetti) {
+    p.vx *= p.drag; p.vy = p.vy * p.drag + p.g; p.sway += p.ss;
+    p.x += p.vx + Math.sin(p.sway) * .8; p.y += p.vy; p.rot += p.vr;
+    confCtx.save(); confCtx.translate(p.x, p.y); confCtx.rotate(p.rot); confCtx.scale(1, Math.cos(p.sway * 2.2));
+    confCtx.fillStyle = p.c;
+    if (p.shape === "c") { confCtx.beginPath(); confCtx.arc(0, 0, p.w / 2, 0, 6.283); confCtx.fill(); }
+    else if (p.shape === "t") { confCtx.beginPath(); confCtx.moveTo(0, -p.h / 2); confCtx.lineTo(p.w / 2, p.h / 2); confCtx.lineTo(-p.w / 2, p.h / 2); confCtx.closePath(); confCtx.fill(); }
+    else confCtx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+    confCtx.restore();
+  }
+  confRaf = confetti.length ? requestAnimationFrame(stepConfetti) : 0;
+  if (!confRaf) confCtx.clearRect(0, 0, W, Hh);
+}
+$("#cheerBtn").onclick = celebrate;
+const TALLY = ["أ", "ب", "ج", "د"], counts = [0, 0, 0, 0];
+function buildTally() {
+  const box = $("#tallyRows"), P = PAL.white.fg; box.innerHTML = "";
+  TALLY.forEach((l, i) => {
+    const r = document.createElement("div"); r.className = "tal-row";
+    r.innerHTML = `<span class="tal-l">${l}</span><div class="tal-bar"><i style="background:${P[i + 1]}"></i></div><span class="tal-n">0</span><button aria-label="إجابة أقل للخيار ${l}">−</button><button aria-label="إجابة أكثر للخيار ${l}">+</button>`;
+    const [minus, plus] = r.querySelectorAll("button");
+    minus.onclick = () => { counts[i] = Math.max(0, counts[i] - 1); drawTally(); };
+    plus.onclick = () => { counts[i]++; drawTally(); };
+    box.appendChild(r);
+  });
+}
+function drawTally() {
+  const max = Math.max(1, ...counts), total = counts.reduce((a, b) => a + b, 0);
+  $$("#tallyRows .tal-row").forEach((r, i) => { r.querySelector("i").style.width = (counts[i] / max * 100) + "%"; r.querySelector(".tal-n").textContent = counts[i]; r.title = total ? Math.round(counts[i] / total * 100) + "%" : ""; });
+}
+$("#tlReset").onclick = () => { counts.fill(0); drawTally(); };
+$("#tlShow").onclick = () => {
+  const total = counts.reduce((a, b) => a + b, 0);
+  if (!total) { toast("عُدّ بعض الإجابات أولًا."); return; }
+  const { x, y } = viewCenter(), max = Math.max(...counts), base = y + 140, L = [T(x + 250, y - 240, "نتائج السؤال السريع", 0, 38)];
+  counts.forEach((n, i) => {
+    const bx = x + 130 - i * 110, h = n / max * 260;
+    if (n) L.push(S("rect", bx, base - h, bx + 70, base, i + 1, 5));
+    L.push(T(bx + 48, base + 6, TALLY[i], i + 1, 34), T(bx + 4, base - h - 40, `${n} (${Math.round(n / total * 100)}%)`, 0, 24, 0));
+  });
+  L.push(S("line", x - 260, base, x + 230, base, 0, 3));
+  addItems(L, false); toast("أُضيفت النتائج إلى اللوحة");
+};
+buildTally();
+
+/* ---------- keyboard ---------- */
+document.addEventListener("keydown", e => {
+  const el = e.target, typing = /INPUT|TEXTAREA|SELECT/.test(el.tagName) || el.isContentEditable;
+  if (typing || document.querySelector("dialog[open]")) return;
+  const mod = e.ctrlKey || e.metaKey, k = e.key, code = e.code;
+  if (mod && code === "KeyZ") { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
+  if (mod && code === "KeyY") { e.preventDefault(); redo(); return; }
+  if (mod && code === "KeyD") { e.preventDefault(); duplicateSelected(); return; }
+  if (mod && (code === "Equal" || code === "NumpadAdd")) { e.preventDefault(); zoomAt(vw / 2, vh / 2, 1.2); return; }
+  if (mod && (code === "Minus" || code === "NumpadSubtract")) { e.preventDefault(); zoomAt(vw / 2, vh / 2, 1 / 1.2); return; }
+  if (mod && (code === "Digit0" || code === "Numpad0")) { e.preventDefault(); $("#zReset").click(); return; }
+  if (mod || e.altKey) return;
+  if (k === " " && (el === document.body || el === cv)) { e.preventDefault(); if (!spaceHeld) { spaceHeld = true; setCursor(); } return; }
+  if (k === "?" || k === "؟" || (code === "Slash" && e.shiftKey)) { dlgHelp.showModal(); return; }
+  const map = { KeyV: "select", KeyG: "hand", KeyP: "pen", KeyQ: "calligraphy", KeyH: "highlighter", KeyE: "eraser", KeyL: "laser", KeyT: "text", KeyN: "note" };
+  if (map[code]) { setTool(map[code]); return; }
+  if (code === "KeyS") { setTool(lastShape); return; }
+  if (code === "KeyO") { setSpot(spotEl.hidden); return; }
+  if (code === "KeyR") { toggleReveal(); return; }
+  if (code === "KeyC") { celebrate(); return; }
+  if (code === "KeyK") { quickPick(); return; }
+  if (code === "KeyF") { setPresenting(!document.body.classList.contains("presenting")); return; }
+  const dm = /^(Digit|Numpad)([1-6])$/.exec(code); if (dm) { setColor(+dm[2] - 1); return; }
+  if (code === "BracketLeft") { setSize(size - 1); return; }
+  if (code === "BracketRight") { setSize(size + 1); return; }
+  if ((k === "Delete" || k === "Backspace") && selected) { e.preventDefault(); deleteSelected(); return; }
+  const inRadio = el.tagName === "BUTTON" && el.closest("[role=radiogroup]");
+  if (k === "ArrowLeft" || k === "PageDown") { if (!inRadio) { e.preventDefault(); gotoPage(doc.cur + 1); } return; }
+  if (k === "ArrowRight" || k === "PageUp") { if (!inRadio) { e.preventDefault(); gotoPage(doc.cur - 1); } return; }
+  if (k === "Escape") {
+    if (!$$(".menu").every(m => m.hidden)) { closeMenus(); return; }
+    if (!pickCard.hidden) { hidePick(); return; }
+    if (!spotEl.hidden) { setSpot(false); return; }
+    if (document.body.classList.contains("presenting")) { setPresenting(false); return; }
+    if (selected) { selected = null; req(); }
+  }
+});
+document.addEventListener("keyup", e => { if (e.key === " " && spaceHeld) { spaceHeld = false; setCursor(); e.preventDefault(); } });
+window.addEventListener("blur", () => { spaceHeld = false; setCursor(); });
+
+/* ---------- responsive overflow ("More" lists) ---------- */
+const topbar = $("#topbar");
+function unitsFrom(list) {
+  return list.map(el => { const ph = document.createComment("slot"); el.parentNode.insertBefore(ph, el); return { el, ph }; });
+}
+const docOrder = (a, b) => a.ph.compareDocumentPosition(b.ph) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+function restore(units) { units.forEach(u => u.ph.parentNode.insertBefore(u.el, u.ph.nextSibling)); }
+function markEmpty(row) { [...row.children].forEach(g => g.classList.toggle("empty", !g.querySelector("button"))); }
+// Order = which item moves into the list first when space runs out.
+const hdrUnits = unitsFrom(["#helpBtn", "#hFile", "#hInsert", "#hBoard", "#revealBtn", "#spotBtn", "#hTally", "#hPicker", "#cheerBtn", "#hTimer", "#hQuick"].map(q => $(q)));
+const dockUnits = unitsFrom(["#smartGrp", "#sizeGrp", "#dHand", "#dLaser", "#dCal", "#dHl", "#dNote", "#dText", "#shapeBtn", "#colorGrp", "#undoGrp", "#dEraser", "#dSelect"].map(q => $(q)));
+function sizeTitle(cap) {
+  const t = $("#title"); mctx.font = `700 15px ${UI_FONT}`;
+  t.style.width = clamp(mctx.measureText(t.value || "درس بدون عنوان").width + 24, 64, cap) + "px";
+}
+function moveOverflow(units, fits, more, menu, row) {
+  restore(units); menu.innerHTML = ""; more.hidden = true; markEmpty(row);
+  if (fits()) return;
+  more.hidden = false; const moved = [];
+  for (const u of units) { if (fits()) break; menu.appendChild(u.el); moved.push(u); markEmpty(row); }
+  moved.sort(docOrder).forEach(u => menu.appendChild(u.el));
+}
+function fitHeader() {
+  if (document.body.classList.contains("presenting")) return;
+  const L = $("#paneLeft"), R = $("#paneRight");
+  const fits = () => L.offsetWidth + R.offsetWidth + 10 <= topbar.clientWidth;
+  topbar.classList.remove("compact", "compact2", "tight", "tiny"); sizeTitle(260);
+  restore(hdrUnits); $("#m-hdrmore").innerHTML = ""; $("#hdrMore").hidden = true; markEmpty($("#hdrItems"));
+  if (fits()) return;
+  topbar.classList.add("compact"); if (fits()) return;
+  topbar.classList.add("compact2"); if (fits()) return;
+  sizeTitle(170); if (fits()) return;
+  topbar.classList.add("tight"); sizeTitle(120); if (fits()) return;
+  moveOverflow(hdrUnits, fits, $("#hdrMore"), $("#m-hdrmore"), $("#hdrItems"));
+  if (!fits()) topbar.classList.add("tiny");
+  if (!fits()) sizeTitle(Math.max(64, topbar.clientWidth - R.offsetWidth - (L.offsetWidth - $("#title").offsetWidth) - 10));
+}
+function fitDock() {
+  const dock = $("#dock"), max = stage.clientWidth - 24;
+  moveOverflow(dockUnits, () => dock.offsetWidth <= max, $("#dockMore"), $("#m-dockmore"), $("#dockItems"));
+  updateDockMore();
+}
+function fitAll() { if (!vw) return; closeMenus(); fitHeader(); fitDock(); }
+
+/* ---------- start ---------- */
+setTool("pen"); setSize(1); updatePages();
+if (document.fonts && document.fonts.load) {
+  Promise.all([document.fonts.load(`22px ${BOARD_FONT}`), document.fonts.load(`700 15px ${UI_FONT}`, "لوحتي"), document.fonts.load(`22px "Aref Ruqaa"`, "لوحتي"), document.fonts.load(`700 22px "Aref Ruqaa"`, "لوحتي")]).then(() => { sceneDirty = true; req(); fitAll(); }).catch(() => {});
+}
+window.addEventListener("pagehide", saveNow);
+})();
+</script>
+</body>
+</html>
