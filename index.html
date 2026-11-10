@@ -327,6 +327,92 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 .pc-name.spin{opacity:.5}
 .pc-meta{font-size:13px;color:var(--ui-muted);min-height:20px}
 .pc-actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+
+/* ---------- video ---------- */
+.vidbar{position:absolute;z-index:9;display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:12px;width:min(420px,calc(100% - 24px))}
+.vidbar button{border:0;background:transparent;width:32px;height:32px;border-radius:8px;display:grid;place-items:center;cursor:pointer;flex:none;color:var(--ui-ink)}
+.vidbar button:hover{background:var(--ui-hover)}
+.vidbar input[type=range]{flex:1;min-width:60px;accent-color:var(--accent)}
+.vb-time{font-size:12px;font-variant-numeric:tabular-nums;color:var(--ui-muted);white-space:nowrap}
+/* ---------- live: teacher ---------- */
+.live-btn{position:relative}
+.live-btn .live-dot{display:none;width:9px;height:9px;border-radius:50%;background:#E5484D;box-shadow:0 0 0 3px rgba(229,72,77,.25);animation:livePulse 1.6s ease-in-out infinite}
+.live-btn.on{background:rgba(229,72,77,.12);color:var(--ui-ink)}
+.live-btn.on .live-dot{display:inline-block}
+.live-n{min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#E5484D;color:#fff;font-size:12px;display:inline-grid;place-items:center}
+@keyframes livePulse{50%{box-shadow:0 0 0 6px rgba(229,72,77,0)}}
+.topbar.compact2 #hLive .t{display:none}
+.view-banner{position:absolute;top:70px;left:0;right:0;margin-inline:auto;width:max-content;z-index:10;display:flex;align-items:center;gap:2px;padding:5px;border-radius:14px;max-width:calc(100% - 24px);flex-wrap:wrap;justify-content:center}
+@media (max-width:760px){.view-banner .t{display:none}}
+.vw-who{display:flex;flex-direction:column;line-height:1.25;padding:0 6px;text-align:center}
+.vw-who small{font-size:11px;color:var(--ui-muted)}
+.class-view{position:absolute;inset:0;z-index:12;display:flex;flex-direction:column;background:color-mix(in srgb,var(--ui-bg) 88%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cv-head{margin:12px 12px 0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;flex-wrap:wrap}
+.cv-title{display:flex;flex-direction:column;line-height:1.3;padding-inline:4px}
+.cv-title b{font-size:17px}.cv-title small{color:var(--ui-muted);font-size:13px}
+.cv-actions{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.danger-t{color:var(--danger)}
+.danger-t.armed{background:var(--danger);color:#fff}
+.cv-body{flex:1;min-height:0;overflow:auto;padding:12px}
+.cv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.card{position:relative;border-radius:14px;overflow:hidden;background:var(--ui-surface);border:1px solid var(--glass-edge);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.card.off{opacity:.55}
+.card.hand{box-shadow:0 0 0 3px #F1C548,0 2px 8px rgba(0,0,0,.12)}
+.card .thumb{display:block;width:100%;aspect-ratio:16/10;border:0;padding:0;cursor:zoom-in;background:#2D4238}
+.card canvas{display:block;width:100%;height:100%}
+.c-foot{display:flex;align-items:center;gap:6px;padding:7px 10px;font-size:14px}
+.c-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.c-dot{width:8px;height:8px;border-radius:50%;background:#2F9E44;flex:none}
+.card.off .c-dot{background:#999}
+.c-badges{display:flex;gap:4px;align-items:center;font-size:13px}
+.c-badge{padding:1px 7px;border-radius:999px;background:var(--ui-hover);font-weight:700}
+.c-badge.done{background:#D3F9D8;color:#1B6E2D}
+.c-badge.ans{background:#E7F0FF;color:#1D4ED8}
+.c-acts{position:absolute;top:6px;inset-inline-start:6px;display:flex;gap:4px;opacity:0;transition:opacity .15s}
+.card:hover .c-acts,.card:focus-within .c-acts{opacity:1}
+.c-acts button{width:30px;height:30px;border-radius:9px;border:0;background:rgba(16,22,19,.75);color:#fff;cursor:pointer;display:grid;place-items:center}
+.cv-empty{display:flex;align-items:center;justify-content:center;gap:28px;padding:40px 16px;flex-wrap:wrap;text-align:start}
+.cv-empty p{margin:6px 0 10px;color:var(--ui-muted)}
+.cv-empty-qr,.lv-qr{background:#fff;border-radius:16px;padding:10px;width:220px;max-width:70vw;aspect-ratio:1;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.cv-empty-qr svg,.lv-qr svg{width:100%;height:100%}
+.lv-code{font-size:clamp(34px,6vw,52px);font-weight:700;letter-spacing:.14em;font-variant-numeric:tabular-nums;line-height:1.1}
+.live-dlg{width:min(640px,calc(100% - 32px))}
+.lv-grid{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.lv-side{flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px}
+.lv-link{display:flex;gap:6px}
+.lv-link .field{flex:1;min-width:0}
+.lv-count{font-weight:700}
+.lv-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:6px 0}
+.lv-row .field{flex:1;min-width:160px}
+/* ---------- live: student ---------- */
+body.student #paneRight,body.student .pages,body.student #title,body.student .vsep,body.student #hint,body.student #dLaser{display:none!important}
+body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:none}
+.stu-name{font-weight:700;padding:0 8px;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#stuPane{display:flex;align-items:center;gap:4px;padding:5px;pointer-events:auto}
+#stuPane[hidden]{display:none}
+.conn{width:10px;height:10px;border-radius:50%;background:#999;margin-inline:6px;flex:none}
+.conn.ok{background:#2F9E44;box-shadow:0 0 0 3px rgba(47,158,68,.2)}
+.conn.bad{background:#E5484D}
+.stu-timer{font-weight:700;font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:999px;background:var(--accent);color:var(--accent-ink)}
+.stu-screen{position:absolute;inset:0;z-index:11;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at 50% 35%,#36503f,#22322b 70%)}
+.stu-card{width:min(420px,100%);padding:28px 24px 22px;border-radius:24px;text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.stu-logo{width:76px;height:66px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
+.stu-card h1{margin:0;font-family:"Aref Ruqaa",serif;font-size:34px;line-height:1.4}
+.stu-card p{margin:0;color:var(--ui-muted)}
+#ssForm{display:flex;flex-direction:column;gap:8px;width:100%}
+.wbtn.big{height:46px;font-size:16px}
+.ss-code{color:var(--ui-muted);letter-spacing:.12em}
+.ss-wait{display:flex;gap:8px;height:16px;align-items:center}
+.ss-wait i{width:10px;height:10px;border-radius:50%;background:var(--accent);animation:wb 1.2s ease-in-out infinite}
+.ss-wait i:nth-child(2){animation-delay:.15s}.ss-wait i:nth-child(3){animation-delay:.3s}
+@keyframes wb{40%{transform:translateY(-7px);opacity:.6}}
+.stu-lock{position:absolute;inset:0;z-index:9;display:grid;place-items:center;background:rgba(10,14,12,.35)}
+.stu-lock .pane{padding:14px 22px;font-weight:700;border-radius:16px}
+.stu-q{position:absolute;left:50%;bottom:84px;transform:translateX(-50%);z-index:10;padding:12px 14px;border-radius:18px;display:flex;flex-direction:column;gap:10px;align-items:center;width:max-content;max-width:calc(100% - 24px)}
+.q-btns{display:flex;gap:10px}
+.q-btns button{width:64px;height:64px;border-radius:16px;border:2px solid var(--ui-line);background:var(--ui-surface);font-size:26px;font-weight:700;cursor:pointer;color:var(--ui-ink)}
+.q-btns button[aria-pressed="true"]{background:var(--on-bg);color:var(--on-ink);border-color:transparent}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
 }
@@ -399,9 +485,72 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
     <div class="w-body">
       <p class="muted" style="margin-top:0">اطرح سؤال اختيار من متعدد، ثم عُدّ الإجابات التي يكتبها الطلاب في الدردشة.</p>
       <div id="tallyRows"></div>
-      <div class="row"><button class="wbtn primary" id="tlShow">اعرض النتائج على اللوحة</button><button class="wbtn" id="tlReset">إعادة</button></div>
+      <div class="row"><button class="wbtn primary" id="tlLive" hidden>اسأل الطلاب مباشرة</button><button class="wbtn primary" id="tlShow">اعرض النتائج على اللوحة</button><button class="wbtn" id="tlReset">إعادة</button></div>
     </div>
   </section>
+
+
+  <div class="vidbar pane" id="vidBar" hidden dir="ltr">
+    <button id="vbPlay" aria-label="تشغيل"><svg class="i" viewBox="0 0 24 24" id="vbPlayIcon"><path d="M8 5.5v13l10-6.5z" fill="currentColor"/></svg></button>
+    <input type="range" id="vbSeek" min="0" max="1000" value="0" aria-label="موضع التشغيل">
+    <span class="vb-time" id="vbTime">0:00 / 0:00</span>
+    <button id="vbMute" aria-label="كتم الصوت"><svg class="i" viewBox="0 0 24 24" id="vbMuteIcon"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg></button>
+  </div>
+
+  <div class="view-banner pane" id="viewBanner" hidden>
+    <button class="ib" id="vwPrev" aria-label="الطالب السابق" title="الطالب السابق (→)"><svg class="i" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="vw-who"><b id="vwName"></b><small>ما تكتبه هنا يظهر على لوحة الطالب</small></div>
+    <button class="ib" id="vwNext" aria-label="الطالب التالي" title="الطالب التالي (←)"><svg class="i" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <span class="vsep"></span>
+    <button class="btn" id="vwCheer" title="احتفال على شاشة هذا الطالب باسمه">⭐ <span class="t">تشجيع</span></button>
+    <button class="btn" id="vwCopy" title="انسخ عمل الطالب إلى صفحة جديدة في لوحتك، دون اسمه، لتعرضه على الصف"><svg class="i" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg><span class="t">نسخ إلى لوحتي</span></button>
+    <button class="btn" id="vwClearFb" title="امسح ما كتبته أنت على لوحة هذا الطالب"><span class="t">مسح ملاحظاتي</span></button>
+    <button class="btn primary" id="vwBack">العودة إلى الطلاب</button>
+  </div>
+
+  <section class="class-view" id="classView" hidden aria-label="لوحات الطلاب">
+    <div class="cv-head pane">
+      <div class="cv-title"><b>لوحات الطلاب</b><small id="cvSummary"></small></div>
+      <div class="cv-actions">
+        <button class="btn primary" id="cvPush" title="أرسل صفحتك الحالية إلى كل الطلاب ليكتبوا عليها"><svg class="i flip" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/><path d="M11.5 13.5L20 4"/></svg><span>إرسال صفحتي كتمرين</span></button>
+        <button class="btn" id="cvEnd" title="أعِد الطلاب إلى شاشة الانتظار">إنهاء التمرين</button>
+        <button class="btn" id="cvLock" aria-pressed="false" title="أوقف كتابة الطلاب مؤقتًا">قفل الكتابة</button>
+        <button class="btn" id="cvHide" aria-pressed="false" title="مفيد عند مشاركة شاشتك">إخفاء الأسماء</button>
+        <button class="btn" id="cvClear" title="امسح ما كتبه كل الطلاب">مسح لوحاتهم</button>
+        <button class="btn" id="cvJoin">رمز الانضمام</button>
+        <button class="btn danger-t" id="cvStop">إنهاء الحصة</button>
+        <button class="ib" id="cvClose" aria-label="إغلاق لوحات الطلاب" title="العودة إلى لوحتي">×</button>
+      </div>
+    </div>
+    <div class="cv-body">
+      <div class="cv-grid" id="cvGrid"></div>
+      <div class="cv-empty" id="cvEmpty" hidden>
+        <div class="cv-empty-qr" id="cvEmptyQr"></div>
+        <div><b>بانتظار انضمام الطلاب</b><p>اطلب منهم مسح الرمز أو فتح الرابط، ثم كتابة الرمز:</p><div class="lv-code" id="cvEmptyCode" dir="ltr"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stu-screen" id="stuScreen" hidden>
+    <div class="stu-card pane">
+      <svg class="stu-logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
+      <h1 id="ssTitle">لوحتي</h1>
+      <p id="ssMsg">جارٍ الاتصال بمعلمك…</p>
+      <div class="ss-wait" id="ssWait" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div id="ssForm" hidden>
+        <select class="field" id="ssPick" aria-label="اختر اسمك" hidden></select>
+        <input class="field" id="ssName" placeholder="اكتب اسمك" maxlength="40" autocomplete="name">
+        <div class="err" id="ssErr" role="alert"></div>
+        <button class="wbtn primary big" id="ssGo">دخول الحصة</button>
+      </div>
+      <small class="ss-code" id="ssCode"></small>
+    </div>
+  </div>
+  <div class="stu-lock" id="stuLock" hidden><div class="pane">أوقف المعلم الكتابة مؤقتًا</div></div>
+  <div class="stu-q pane" id="stuQ" hidden>
+    <b>سؤال من معلمك: اختر إجابتك</b>
+    <div class="q-btns"><button data-ans="0">أ</button><button data-ans="1">ب</button><button data-ans="2">ج</button><button data-ans="3">د</button></div>
+  </div>
 
   <header class="topbar" id="topbar">
     <div class="pane" id="paneLeft">
@@ -409,6 +558,7 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
         <svg class="logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
         <span class="word">لوحتي</span>
       </div>
+      <span class="stu-name" id="stuName" hidden></span>
       <input id="title" class="title-in" value="درس بدون عنوان" aria-label="عنوان الدرس" maxlength="80" spellcheck="false" dir="auto">
       <span class="vsep"></span>
       <nav class="pages" aria-label="الصفحات">
@@ -437,7 +587,14 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
         </div>
       </div>
       <button class="ib" id="hdrMore" data-menu="m-hdrmore" aria-haspopup="menu" aria-expanded="false" aria-label="أدوات أخرى" title="المزيد" hidden><svg class="i" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <button class="btn live-btn" id="hLive" title="حصة مباشرة: يدخل الطلاب برابط أو رمز QR"><span class="live-dot"></span><svg class="i" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 19c.6-3.4 3-5.5 6-5.5s5.4 2.1 6 5.5"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 13.8c1.7.7 2.8 2.4 3 5.2"/></svg><span class="t" id="hLiveT">حصة مباشرة</span><span class="live-n" id="hLiveN" hidden></span></button>
       <button class="btn primary" id="presentBtn" title="إخفاء الشريط العلوي أثناء الشرح (F)"><svg class="i" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><span class="t">عرض</span></button>
+    </div>
+    <div class="pane" id="stuPane" hidden>
+      <span class="conn" id="stuConn" title="الاتصال"></span>
+      <span class="stu-timer" id="stuTimer" hidden dir="ltr"></span>
+      <button class="btn" id="stuHand" aria-pressed="false" title="ارفع يدك ليراك المعلم"><span aria-hidden="true">✋</span><span class="t">رفع اليد</span></button>
+      <button class="btn" id="stuDone" aria-pressed="false" title="أخبر المعلم أنك انتهيت"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="t">انتهيت</span></button>
     </div>
   </header>
 
@@ -517,6 +674,7 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 </div>
 <div class="menu" id="m-insert" role="menu" hidden>
   <button role="menuitem" data-act="image">صورة أو ورقة عمل…</button>
+  <button role="menuitem" data-act="video">فيديو…</button>
   <button role="menuitem" data-act="graph">رسم بياني لدالة…</button>
   <button role="menuitem" data-act="noteCenter">ملاحظة لاصقة</button>
   <div class="m-h">قوالب الدروس</div>
@@ -548,6 +706,35 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 </div>
 <div class="menu more-menu" id="m-hdrmore" role="menu" hidden></div>
 <div class="menu dock-more" id="m-dockmore" role="menu" aria-label="أدوات رسم أخرى" hidden></div>
+
+
+<dialog id="dlg-live" aria-labelledby="lvTitle" class="live-dlg">
+  <div class="dlg-body">
+    <h2 id="lvTitle">حصة مباشرة</h2>
+    <div id="lvStart">
+      <p>يدخل الطلاب برابط أو رمز QR، دون أي حسابات. يبدأ كل طالب بشاشة انتظار، ثم ترسل إليهم صفحتك كتمرين فيكتب كلٌّ منهم على نسخته، وأنت ترى لوحات الجميع مباشرة وتكتب على أي لوحة منها.</p>
+      <label class="lv-row">أسماء الطلاب من قائمة:
+        <select class="field sm" id="lvRoster"></select>
+      </label>
+      <p class="muted">إن اخترت قائمة فصل، يختار الطالب اسمه منها بدل كتابته، فتبقى الأسماء صحيحة ومرتبة.</p>
+      <div class="err" id="lvErr" role="alert"></div>
+      <div class="dlg-actions"><button class="wbtn" id="lvCancel">إلغاء</button><button class="wbtn primary" id="lvGo">ابدأ الحصة</button></div>
+    </div>
+    <div id="lvInfo" hidden>
+      <div class="lv-grid">
+        <div class="lv-qr" id="lvQr" aria-label="رمز QR للانضمام"></div>
+        <div class="lv-side">
+          <div class="muted">رمز الحصة</div>
+          <div class="lv-code" id="lvCode" dir="ltr"></div>
+          <div class="lv-link"><input class="field sm" id="lvLink" readonly dir="ltr" aria-label="رابط الانضمام"><button class="wbtn" id="lvCopy">نسخ</button><button class="wbtn" id="lvShare">مشاركة</button></div>
+          <div class="lv-count" id="lvCount"></div>
+          <label class="chk"><input type="checkbox" id="lvLockRoom"> قفل الغرفة (منع انضمام طلاب جدد)</label>
+        </div>
+      </div>
+      <div class="dlg-actions"><button class="wbtn" id="lvClose">إغلاق</button><button class="wbtn primary" id="lvOpen">فتح لوحات الطلاب</button></div>
+    </div>
+  </div>
+</dialog>
 
 <dialog id="dlg-graph" aria-labelledby="gTitle">
   <div class="dlg-body">
@@ -598,6 +785,7 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 </dialog>
 
 <input type="file" id="imgFile" accept="image/*" hidden>
+<input type="file" id="vidFile" accept="video/*" hidden>
 <input type="file" id="jsonFile" accept="application/json,.json" hidden>
 <input type="file" id="xlsFile" accept=".xlsx,.xlsm,.xlsb,.xls,.xltx,.xltm,.xlt,.ods,.fods,.numbers,.csv,.tsv,.txt,.xml,.dif,.slk,.prn,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,application/vnd.ms-excel.sheet.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12,application/vnd.oasis.opendocument.spreadsheet,text/csv,text/tab-separated-values,text/plain" hidden>
 <script>
@@ -634,8 +822,12 @@ try {
   const saved = JSON.parse(localStorage.getItem(STORE) || "null");
   if (saved && Array.isArray(saved.pages) && saved.pages.length) doc = saved;
 } catch (e) {}
-const page = () => doc.pages[doc.cur];
-const pal = () => PAL[page().bg] || PAL.chalk;
+/* viewing = a board that is not one of the teacher's pages: a student's own board, or the teacher looking at a student's */
+let viewing = null, palKey = null;
+const page = () => viewing || doc.pages[doc.cur];
+const pal = () => PAL[palKey || page().bg] || PAL.chalk;
+const JOIN = (new URLSearchParams(location.search).get("join") || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+const role = JOIN ? "student" : "teacher";
 
 let tool = "pen", lastShape = "rect", color = 0, hlColor = 0, size = 1, smart = true, noteColor = 0;
 let selected = null, draft = null, action = null, pinch = null, editing = null, spaceHeld = false;
@@ -659,7 +851,7 @@ function resize() {
 }
 new ResizeObserver(resize).observe(stage);
 const req = () => { if (!raf) raf = requestAnimationFrame(render); };
-function markDirty() { sceneDirty = true; req(); scheduleSave(); updateUndo(); }
+function markDirty() { sceneDirty = true; req(); scheduleSave(); updateUndo(); liveChanged(); }
 function markView() { sceneDirty = true; req(); scheduleSave(); }
 
 const col = c => typeof c === "number" ? pal().fg[c] || pal().fg[0] : c;
@@ -673,7 +865,7 @@ function drawStroke(g, it) {
   const p = it.pts; g.save();
   const c = it.hl ? HLP[(typeof it.c === "number" ? it.c : 0) % HLP.length] : col(it.c);
   g.strokeStyle = g.fillStyle = c; g.lineWidth = it.w; g.lineCap = "round"; g.lineJoin = "round";
-  if (it.hl) { const light = page().bg === "white"; g.globalAlpha = light ? .45 : .52; g.globalCompositeOperation = light ? "multiply" : "screen"; g.lineCap = "butt"; }
+  if (it.hl) { const light = (palKey || page().bg) === "white"; g.globalAlpha = light ? .45 : .52; g.globalCompositeOperation = light ? "multiply" : "screen"; g.lineCap = "butt"; }
   if (it.cal) { drawNib(g, it); g.restore(); return; }
   g.beginPath();
   if (p.length <= 4) { g.arc(p[0], p[1], it.w / 2, 0, Math.PI * 2); g.fill(); g.restore(); return; }
@@ -856,6 +1048,7 @@ function drawRaw(g, it) {
     case "text": drawText(g, it); break;
     case "note": drawNote(g, it); break;
     case "image": drawImage(g, it); break;
+    case "video": drawVideo(g, it); break;
     case "plot": drawPlot(g, it); break;
   }
 }
@@ -932,7 +1125,7 @@ function handleAt(it, w, z, touch) {
   for (const key in cs) if (Math.hypot(q.x - cs[key][0], q.y - cs[key][1]) <= tol) return key;
   return null;
 }
-const UNIFORM = it => it.type === "image" || it.type === "text" || it.type === "plot";
+const UNIFORM = it => it.type === "image" || it.type === "video" || it.type === "text" || it.type === "plot";
 function scaleItem(it, A, sx, sy) {
   const X = x => r1(A.x + (x - A.x) * sx), Y = y => r1(A.y + (y - A.y) * sy);
   if (it.type === "stroke" || it.type === "poly") { for (let i = 0; i < it.pts.length; i += 2) { it.pts[i] = X(it.pts[i]); it.pts[i + 1] = Y(it.pts[i + 1]); } bbCache.delete(it); }
@@ -1198,9 +1391,10 @@ function flashSnap(name, it) {
 }
 
 /* ---------- rendering ---------- */
-function drawPattern(g, p) {
-  if (p.pattern === "none") return;
-  const P = pal(), z = p.cam.z, x0 = -p.cam.x / z, y0 = -p.cam.y / z, x1 = (vw - p.cam.x) / z, y1 = (vh - p.cam.y) / z;
+function drawPattern(g, p, V) {
+  if (!p.pattern || p.pattern === "none") return;
+  if (!V) V = { z: p.cam.z, x0: -p.cam.x / p.cam.z, y0: -p.cam.y / p.cam.z, x1: (vw - p.cam.x) / p.cam.z, y1: (vh - p.cam.y) / p.cam.z };
+  const P = pal(), { z, x0, y0, x1, y1 } = V;
   let gs = p.pattern === "lined" ? 48 : 40; while (gs * z < 10) gs *= 2;
   g.save(); g.lineWidth = 1 / z;
   if (p.pattern === "dots") {
@@ -1224,7 +1418,9 @@ function renderScene() {
   sctx.setTransform(1, 0, 0, 1, 0, 0); sctx.fillStyle = P.bg; sctx.fillRect(0, 0, scene.width, scene.height);
   sctx.setTransform(dpr * c.z, 0, 0, dpr * c.z, dpr * c.x, dpr * c.y);
   drawPattern(sctx, p);
+  for (const it of (p.base || [])) drawItem(sctx, it);
   for (const it of p.items) if (!hidden.has(it)) drawItem(sctx, it);
+  for (const it of (p.over || [])) drawItem(sctx, it);
   sceneDirty = false;
 }
 function render() {
@@ -1234,6 +1430,7 @@ function render() {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(scene, 0, 0); ctx.direction = "ltr";
   const c = p.cam; ctx.setTransform(dpr * c.z, 0, 0, dpr * c.z, dpr * c.x, dpr * c.y);
   if (draft) drawItem(ctx, draft);
+  if (role === "student") stuDraftTick();
   if (selected && !hidden.has(selected)) {
     const b = bbox(selected), m = 6 / c.z, k = center(selected), z = c.z;
     ctx.save(); ctx.translate(k.x, k.y); ctx.rotate(selected.rot || 0); ctx.translate(-k.x, -k.y);
@@ -1259,10 +1456,11 @@ function render() {
       ctx.fillStyle = "#FFFFFF"; ctx.direction = "ltr"; ctx.fillText(label, sx, sy + 1);
     }
   }
-  $("#hint").hidden = p.items.length > 0 || !!draft || !!editing;
+  $("#hint").hidden = p.items.length > 0 || !!draft || !!editing || !!viewing;
   $("#hint").style.setProperty("--hint", pal().hint);
   stage.style.background = pal().bg;
   $("#zReset").textContent = Math.round(c.z * 100) + "%";
+  placeVidBar();
   placeSelbar();
 }
 
@@ -1301,6 +1499,7 @@ function updateUndo() { const h = H(); $("#undoBtn").disabled = !h.u.length; $("
 let saveT = 0, warnedQuota = false;
 function scheduleSave() { clearTimeout(saveT); saveT = setTimeout(saveNow, 700); }
 function saveNow() {
+  if (role === "student") return;
   try { localStorage.setItem(STORE, JSON.stringify(doc)); }
   catch (e) { if (!warnedQuota) { warnedQuota = true; toast("هذه اللوحة أكبر من أن تُحفظ في المتصفح. استخدم ملف › حفظ ملف الدرس."); } }
 }
@@ -1328,7 +1527,7 @@ function eraseAt(w) {
   const items = page().items, r = ERASE[size] / page().cam.z;
   for (let i = items.length - 1; i >= 0; i--) {
     const it = items[i];
-    if (it.type === "note" || it.type === "image" || it.type === "plot") continue;
+    if (it.type === "note" || it.type === "image" || it.type === "plot" || it.type === "video") continue;
     if (eraseMode === "part" && it.type === "text") continue;
     if (!hit(it, w.x, w.y, r)) continue;
     if (eraseMode === "part") {
@@ -1407,6 +1606,7 @@ function zoomAt(sx, sy, f) {
 
 cv.addEventListener("pointerdown", e => {
   closeMenus(); if (!pickCard.hidden && !spinning) hidePick();
+  if (role === "student" && (!stu.task || stu.locked)) return;
   if (editing) { commitEditor(); e.preventDefault(); return; }
   const s = sp(e); pointers.set(e.pointerId, { x: s.x, y: s.y, type: e.pointerType });
   try { cv.setPointerCapture(e.pointerId); } catch (_) {}
@@ -1521,7 +1721,8 @@ cv.addEventListener("pointercancel", e => { cancelAction(); pointers.delete(e.po
 cv.addEventListener("contextmenu", e => e.preventDefault());
 cv.addEventListener("dblclick", e => {
   const w = toWorld(sp(e)), it = topHit(w, 6 / page().cam.z);
-  if (it && (it.type === "text" || it.type === "note")) openEditor(it, false);
+  if (it && (it.type === "text" || it.type === "note")) { openEditor(it, false); return; }
+  const v = videoAt(w); if (v && role !== "student") toggleVideo(v);
 });
 stage.addEventListener("pointermove", e => {
   const s = sp(e);
@@ -1668,6 +1869,8 @@ function updatePages() {
   buildChalk(); updateUndo();
 }
 function gotoPage(i) {
+  if (role === "student") return;
+  if (viewing) exitView(false);
   commitEditor(); i = clamp(i, 0, doc.pages.length - 1); if (i === doc.cur) return;
   doc.cur = i; selected = null; draft = null; action = null; updatePages(); markView();
 }
@@ -1711,6 +1914,7 @@ const actions = {
   addPage, dupPage, delPage, clearPage,
   allPages() { const p = page(); doc.pages.forEach(q => { q.bg = p.bg; q.pattern = p.pattern; }); markView(); toast("طُبّقت الخلفية على كل الصفحات"); },
   image() { $("#imgFile").click(); },
+  video() { $("#vidFile").click(); },
   graph() { openGraph(); },
   noteCenter() { const c = viewCenter(); setTool("note"); openEditor({ type: "note", x: r1(c.x - 110), y: r1(c.y - 80), w: 220, text: "", nc: noteColor }, true); },
   png: exportPng, saveJson, openJson() { $("#jsonFile").click(); }
@@ -1750,6 +1954,7 @@ function insertTemplate(kind) {
   addItems(L, false); toast("أُضيف القالب. استخدم أداة التحديد لتحريك أي جزء منه.");
 }
 function insertImageFile(file, at) {
+  if (role === "student") return;
   if (!file || !file.type.startsWith("image/")) return;
   const rd = new FileReader();
   rd.onload = () => {
@@ -1773,7 +1978,7 @@ function insertImageFile(file, at) {
 }
 $("#imgFile").onchange = e => { insertImageFile(e.target.files[0]); e.target.value = ""; };
 stage.addEventListener("dragover", e => { e.preventDefault(); });
-stage.addEventListener("drop", e => { e.preventDefault(); const f = [...(e.dataTransfer?.files || [])].find(f => f.type.startsWith("image/")); if (f) insertImageFile(f, toWorld(sp(e))); });
+stage.addEventListener("drop", e => { e.preventDefault(); if (role === "student") return; const fs = [...(e.dataTransfer?.files || [])], f = fs.find(f => f.type.startsWith("image/")), v = fs.find(f => f.type.startsWith("video/")); if (v) insertVideoFile(v, toWorld(sp(e))); else if (f) insertImageFile(f, toWorld(sp(e))); });
 document.addEventListener("paste", e => {
   if (editing || /INPUT|TEXTAREA/.test(document.activeElement?.tagName || "")) return;
   const items = [...(e.clipboardData?.items || [])], img = items.find(i => i.type.startsWith("image/"));
@@ -1954,6 +2159,8 @@ $("#tReset").onclick = () => tSet(tTotal);
 $("#tPlus").onclick = () => { if (tInt) tEnd += 30000; else { tLeft += 30; tTotal = Math.max(tTotal, tLeft); tShow(); } };
 $("#tMinus").onclick = () => { if (tInt) tEnd = Math.max(Date.now() + 1000, tEnd - 30000); else { tLeft = Math.max(5, tLeft - 30); tShow(); } };
 $$("#w-timer [data-t]").forEach(b => b.onclick = () => tSet(+b.dataset.t));
+["#tStart", "#tReset", "#tPlus", "#tMinus"].forEach(q => { const el = $(q), f = el.onclick; el.onclick = e => { f(e); liveTimerSync(); }; });
+$$("#w-timer [data-t]").forEach(b => { const f = b.onclick; b.onclick = e => { f(e); liveTimerSync(); }; });
 
 /* picker: one saved list per class, importable from Excel */
 const pNames = $("#pNames"), pFace = $("#pFace"), pClass = $("#pClass"), pClassName = $("#pClassName");
@@ -2034,7 +2241,7 @@ function quickPick() {
     $("#pcMeta").textContent = final ? $("#pLeft").textContent : "";
     $("#pcActions").hidden = !final;
     if (!$("#w-picker").hidden) showInWidget(t);
-    if (final) $("#pcAgain").focus({ preventScroll: true });
+    if (final) { $("#pcAgain").focus({ preventScroll: true }); notifyPicked(t); }
   });
   if (r === "empty") {
     hidePick(); toggleWidget("w-picker", true);
@@ -2139,12 +2346,12 @@ function chime() {
     });
   } catch (e) {}
 }
-function celebrate() {
+function celebrate(text) {
   closeMenus();
   let i; do { i = Math.floor(Math.random() * CHEERS.length); } while (i === lastCheer && CHEERS.length > 1); lastCheer = i;
-  cheerEl.textContent = CHEERS[i]; cheerEl.classList.remove("show"); void cheerEl.offsetWidth; cheerEl.classList.add("show");
-  clearTimeout(cheerT); cheerT = setTimeout(() => cheerEl.classList.remove("show"), 1900);
-  chime();
+  cheerEl.textContent = typeof text === "string" && text ? text : CHEERS[i]; cheerEl.classList.remove("show"); void cheerEl.offsetWidth; cheerEl.classList.add("show");
+  clearTimeout(cheerT); cheerT = setTimeout(() => cheerEl.classList.remove("show"), 2200);
+  chime(); applause();
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const W = innerWidth, Hh = innerHeight, d = Math.min(window.devicePixelRatio || 1, 2);
   if (confCv.width !== Math.round(W * d) || confCv.height !== Math.round(Hh * d)) { confCv.width = Math.round(W * d); confCv.height = Math.round(Hh * d); }
@@ -2176,7 +2383,7 @@ function stepConfetti() {
   confRaf = confetti.length ? requestAnimationFrame(stepConfetti) : 0;
   if (!confRaf) confCtx.clearRect(0, 0, W, Hh);
 }
-$("#cheerBtn").onclick = celebrate;
+$("#cheerBtn").onclick = () => cheerAll();
 const TALLY = ["أ", "ب", "ج", "د"], counts = [0, 0, 0, 0];
 function buildTally() {
   const box = $("#tallyRows"), P = PAL.white.fg; box.innerHTML = "";
@@ -2223,12 +2430,15 @@ document.addEventListener("keydown", e => {
   if (k === " " && (el === document.body || el === cv)) { e.preventDefault(); if (!spaceHeld) { spaceHeld = true; setCursor(); } return; }
   if (k === "?" || k === "؟" || (code === "Slash" && e.shiftKey)) { dlgHelp.showModal(); return; }
   const map = { KeyV: "select", KeyG: "hand", KeyP: "pen", KeyQ: "calligraphy", KeyH: "highlighter", KeyE: "eraser", KeyL: "laser", KeyT: "text", KeyN: "note" };
+  if (role === "student" && /^(KeyK|KeyC|KeyR|KeyO|KeyF|KeyL)$/.test(code)) return;
+  if (viewing && role === "teacher" && (k === "ArrowLeft" || k === "ArrowRight")) { e.preventDefault(); stepStudent(k === "ArrowLeft" ? 1 : -1); return; }
+  if (viewing && role === "teacher" && k === "Escape" && $$(".menu").every(m => m.hidden)) { exitView(true); return; }
   if (code === "KeyE" && tool === "eraser") { setEraseMode(eraseMode === "part" ? "stroke" : "part", true); return; }
   if (map[code]) { setTool(map[code]); return; }
   if (code === "KeyS") { setTool(lastShape); return; }
   if (code === "KeyO") { setSpot(spotEl.hidden); return; }
   if (code === "KeyR") { toggleReveal(); return; }
-  if (code === "KeyC") { celebrate(); return; }
+  if (code === "KeyC") { cheerAll(); return; }
   if (code === "KeyK") { quickPick(); return; }
   if (code === "KeyF") { setPresenting(!document.body.classList.contains("presenting")); return; }
   const dm = /^(Digit|Numpad)([1-6])$/.exec(code); if (dm) { setColor(+dm[2] - 1); return; }
@@ -2293,8 +2503,619 @@ function fitDock() {
 }
 function fitAll() { if (!vw) return; closeMenus(); fitHeader(); fitDock(); }
 
+/* =================== VIDEO =================== */
+const IDB = (() => {
+  let dbp = null;
+  const open = () => dbp || (dbp = new Promise((res, rej) => {
+    const r = indexedDB.open("lawhati", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("media");
+    r.onsuccess = () => res(r.result); r.onerror = () => { dbp = null; rej(r.error); };
+  }));
+  return {
+    put: (k, v) => open().then(db => new Promise((res, rej) => { const tx = db.transaction("media", "readwrite"); tx.objectStore("media").put(v, k); tx.oncomplete = res; tx.onerror = () => rej(tx.error); })),
+    get: k => open().then(db => new Promise((res, rej) => { const q = db.transaction("media").objectStore("media").get(k); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }))
+  };
+})();
+const vids = new Map();
+function getVideo(vid) {
+  let v = vids.get(vid);
+  if (v) return v;
+  v = { el: null, state: "loading" }; vids.set(vid, v);
+  const done = st => { v.state = st; sceneDirty = true; req(); };
+  if (role === "student") { done("remote"); return v; }
+  IDB.get(vid).then(blob => {
+    if (!blob) return done("missing");
+    const el = document.createElement("video");
+    el.playsInline = true; el.preload = "auto"; el.src = URL.createObjectURL(blob);
+    el.addEventListener("loadeddata", () => done("ok"));
+    el.addEventListener("error", () => done("error"));
+    el.addEventListener("play", videoLoop);
+    ["pause", "ended", "seeked", "volumechange"].forEach(ev => el.addEventListener(ev, () => { sceneDirty = true; req(); updateVidBar(); }));
+    v.el = el;
+  }).catch(() => done("missing"));
+  return v;
+}
+function drawVideo(g, it) {
+  const v = getVideo(it.vid), el = v.el;
+  g.save();
+  if (v.state === "ok" && el && el.readyState >= 2) {
+    g.fillStyle = "#000"; g.fillRect(it.x, it.y, it.w, it.h);
+    g.drawImage(el, it.x, it.y, it.w, it.h);
+    if (el.paused) {
+      const r = Math.max(14, Math.min(it.w, it.h) * .11), cx = it.x + it.w / 2, cy = it.y + it.h / 2;
+      g.fillStyle = "rgba(0,0,0,.45)"; g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.fill();
+      g.fillStyle = "#fff"; g.beginPath(); g.moveTo(cx - r * .32, cy - r * .48); g.lineTo(cx + r * .52, cy); g.lineTo(cx - r * .32, cy + r * .48); g.closePath(); g.fill();
+    }
+  } else {
+    g.fillStyle = "#121714"; g.fillRect(it.x, it.y, it.w, it.h);
+    g.strokeStyle = "rgba(255,255,255,.25)"; g.lineWidth = 2; g.strokeRect(it.x + 1, it.y + 1, it.w - 2, it.h - 2);
+    const msg = { loading: "جارٍ تحميل الفيديو…", missing: "الفيديو غير محفوظ على هذا الجهاز", error: "تعذّر تشغيل هذا الفيديو. جرّب صيغة MP4", remote: "فيديو يعرضه المعلم على شاشته" }[v.state] || "";
+    const fs = Math.max(12, Math.min(22, it.w / 20));
+    g.fillStyle = "rgba(255,255,255,.8)"; g.font = `${fs}px ${UI_FONT}`; g.textAlign = "center"; g.textBaseline = "middle"; g.direction = "rtl";
+    g.fillText("🎬", it.x + it.w / 2, it.y + it.h / 2 - fs * 1.1); g.fillText(msg, it.x + it.w / 2, it.y + it.h / 2 + fs * .6);
+  }
+  g.restore();
+}
+let vidRaf = 0;
+function videoLoop() {
+  if (vidRaf) return;
+  const tick = () => {
+    let any = false; for (const v of vids.values()) if (v.el && !v.el.paused && !v.el.ended) { any = true; break; }
+    sceneDirty = true; req(); updateVidBar();
+    vidRaf = any ? requestAnimationFrame(tick) : 0;
+  };
+  vidRaf = requestAnimationFrame(tick);
+}
+async function insertVideoFile(file, at) {
+  if (!file || !/^video\//.test(file.type) || role === "student") return;
+  if (file.size > 1.5e9) { toast("الفيديو كبير جدًا. اختر ملفًا أصغر من 1.5 غيغابايت."); return; }
+  const vid = "v" + uid() + uid();
+  try { await IDB.put(vid, file); } catch (e) { toast("تعذّر حفظ الفيديو في هذا المتصفح."); return; }
+  const meta = document.createElement("video"), url = URL.createObjectURL(file);
+  meta.preload = "metadata"; meta.muted = true; meta.src = url;
+  await new Promise(res => { meta.onloadedmetadata = res; meta.onerror = res; setTimeout(res, 5000); });
+  const w0 = meta.videoWidth || 1280, h0 = meta.videoHeight || 720; URL.revokeObjectURL(url);
+  const z = page().cam.z, fit = Math.min((vw * .62 / z) / w0, (vh * .62 / z) / h0), w = w0 * fit, h = h0 * fit, c = at || viewCenter();
+  addItems([{ type: "video", x: r1(c.x - w / 2), y: r1(c.y - h / 2), w: r1(w), h: r1(h), vid, name: file.name.slice(0, 120) }], true);
+  toast("أُضيف الفيديو. مرّر المؤشر فوقه لإظهار أزرار التشغيل، وانقر مرتين للتشغيل أو الإيقاف. يمكنك الكتابة فوقه.");
+}
+const vidBar = $("#vidBar"); let vidActive = null, vidHideT = 0, vidSeeking = false;
+const fmtT = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); };
+function videoAt(w) {
+  const p = page(), list = [...(p.base || []), ...p.items];
+  for (let i = list.length - 1; i >= 0; i--) { const it = list[i]; if (it.type === "video" && hit(it, w.x, w.y, 0)) return it; }
+  return null;
+}
+function showVidBar(it) {
+  clearTimeout(vidHideT); const v = getVideo(it.vid);
+  if (v.state !== "ok") { vidBar.hidden = true; return; }
+  vidActive = it; vidBar.hidden = false; placeVidBar(); updateVidBar();
+}
+function hideVidBarSoon() { clearTimeout(vidHideT); vidHideT = setTimeout(() => { if (!vidSeeking) vidBar.hidden = true; }, 1400); }
+function placeVidBar() {
+  if (!vidActive || vidBar.hidden) return;
+  if (!page().items.includes(vidActive) && !(page().base || []).includes(vidActive)) { vidBar.hidden = true; return; }
+  const b = worldBox(vidActive), c = page().cam, bw = vidBar.offsetWidth, bh = vidBar.offsetHeight;
+  const x = (b.x + b.w / 2) * c.z + c.x, y = (b.y + b.h) * c.z + c.y;
+  vidBar.style.left = clamp(x - bw / 2, 8, vw - bw - 8) + "px"; vidBar.style.top = clamp(y - bh - 10, 70, vh - bh - 80) + "px";
+}
+function updateVidBar() {
+  if (!vidActive || vidBar.hidden) return;
+  const el = getVideo(vidActive.vid).el; if (!el) return;
+  $("#vbPlayIcon").innerHTML = el.paused ? '<path d="M8 5.5v13l10-6.5z" fill="currentColor"/>' : '<rect x="7" y="5.5" width="3.5" height="13" rx="1" fill="currentColor"/><rect x="13.5" y="5.5" width="3.5" height="13" rx="1" fill="currentColor"/>';
+  $("#vbPlay").setAttribute("aria-label", el.paused ? "تشغيل" : "إيقاف مؤقت");
+  $("#vbMuteIcon").innerHTML = el.muted ? '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>' : '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>';
+  if (!vidSeeking && el.duration) $("#vbSeek").value = Math.round(el.currentTime / el.duration * 1000);
+  $("#vbTime").textContent = fmtT(el.currentTime) + " / " + fmtT(el.duration);
+}
+function toggleVideo(it) { const el = getVideo(it.vid).el; if (!el) return; if (el.paused || el.ended) { el.play().catch(() => toast("تعذّر تشغيل الفيديو.")); } else el.pause(); vidActive = it; }
+$("#vbPlay").onclick = () => vidActive && toggleVideo(vidActive);
+$("#vbMute").onclick = () => { const el = vidActive && getVideo(vidActive.vid).el; if (el) el.muted = !el.muted; };
+$("#vbSeek").addEventListener("input", e => { const el = vidActive && getVideo(vidActive.vid).el; if (el && el.duration) { vidSeeking = true; el.currentTime = e.target.value / 1000 * el.duration; sceneDirty = true; req(); } });
+$("#vbSeek").addEventListener("change", () => { vidSeeking = false; });
+vidBar.addEventListener("pointerenter", () => clearTimeout(vidHideT));
+vidBar.addEventListener("pointerleave", hideVidBarSoon);
+vidBar.addEventListener("pointerdown", e => e.stopPropagation());
+stage.addEventListener("pointermove", e => {
+  if (e.target !== cv || action) return;
+  const v = videoAt(toWorld(sp(e)));
+  if (v) showVidBar(v); else if (!vidBar.hidden) hideVidBarSoon();
+});
+$("#vidFile").onchange = e => { insertVideoFile(e.target.files[0]); e.target.value = ""; };
+
+/* =================== APPLAUSE =================== */
+function applause(dur = 2.8) {
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume();
+    const sr = actx.sampleRate, t0 = actx.currentTime + .05;
+    const clap = actx.createBuffer(1, Math.floor(sr * .09), sr), d = clap.getChannelData(0);
+    for (let i = 0; i < d.length; i++) { const t = i / sr; d[i] = (Math.random() * 2 - 1) * (Math.exp(-t / .011) + .25 * Math.exp(-t / .035)); }
+    const master = actx.createGain(); master.gain.value = .5; master.connect(actx.destination);
+    for (let k = 0; k < 170; k++) {
+      const at = dur * Math.pow(Math.random(), 1.15);
+      const env = Math.min(1, at / .25) * Math.min(1, (dur - at) / (dur * .5));
+      const src = actx.createBufferSource(); src.buffer = clap; src.playbackRate.value = .75 + Math.random() * .6;
+      const bp = actx.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 800 + Math.random() * 1800; bp.Q.value = .7 + Math.random() * 1.3;
+      const g = actx.createGain(); g.gain.value = Math.max(0, env) * (.3 + Math.random() * .7);
+      let node = src.connect(bp).connect(g);
+      if (actx.createStereoPanner) { const pn = actx.createStereoPanner(); pn.pan.value = Math.random() * 1.6 - .8; node = node.connect(pn); }
+      node.connect(master); src.start(t0 + at);
+    }
+  } catch (e) {}
+}
+function showCheerText(text) {
+  cheerEl.textContent = text; cheerEl.classList.remove("show"); void cheerEl.offsetWidth; cheerEl.classList.add("show");
+  clearTimeout(cheerT); cheerT = setTimeout(() => cheerEl.classList.remove("show"), 2200);
+}
+
+/* =================== LIVE CLASS: shared helpers =================== */
+const ROOM_ABC = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+const newRoom = () => Array.from({ length: 6 }, () => ROOM_ABC[Math.floor(Math.random() * ROOM_ABC.length)]).join("");
+const peerIdOf = room => "lawhati-v1-" + room;
+const joinUrl = room => location.origin + location.pathname + "?join=" + room;
+const SAFE_TYPES = new Set(["stroke", "poly", "line", "arrow", "rect", "ellipse", "triangle", "rtriangle", "text", "note"]);
+function cleanItems(list) {
+  if (!Array.isArray(list)) return [];
+  return list.slice(0, 4000).filter(it => it && typeof it === "object" && SAFE_TYPES.has(it.type)).map(it => {
+    if ("text" in it) it.text = String(it.text || "").slice(0, 3000);
+    if ("pts" in it && !Array.isArray(it.pts)) it.pts = [];
+    return it;
+  });
+}
+function cleanBase(list) {
+  if (!Array.isArray(list)) return [];
+  return list.filter(it => it && typeof it === "object" && (SAFE_TYPES.has(it.type) || it.type === "plot" || it.type === "video" || (it.type === "image" && /^data:image\//.test(it.src || ""))));
+}
+const cleanName = n => String(n || "").replace(/[<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 40);
+let peerLoading = null, qrLoading = null;
+function loadScript(src, test) {
+  return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = () => test() ? res() : rej(new Error("load")); s.onerror = () => rej(new Error("load")); document.head.appendChild(s); });
+}
+const loadPeer = () => window.Peer ? Promise.resolve() : (peerLoading = peerLoading || loadScript("https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js", () => !!window.Peer).catch(e => { peerLoading = null; throw e; }));
+const loadQR = () => window.qrcode ? Promise.resolve() : (qrLoading = qrLoading || loadScript("https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js", () => !!window.qrcode).catch(e => { qrLoading = null; throw e; }));
+async function qrInto(el, text) {
+  try { await loadQR(); const q = qrcode(0, "M"); q.addData(text); q.make(); el.innerHTML = q.createSvgTag({ cellSize: 6, margin: 2, scalable: true }); }
+  catch (e) { el.innerHTML = '<span class="muted">تعذّر إنشاء رمز QR</span>'; }
+}
+function viewFrame(p) { const c = p.cam; return { x: r1(-c.x / c.z), y: r1(-c.y / c.z), w: r1(vw / c.z), h: r1(vh / c.z) }; }
+function fitCamTo(f) { const z = clamp(Math.min(vw / f.w, vh / f.h) * .96, .2, 4); return { z, x: vw / 2 - (f.x + f.w / 2) * z, y: vh / 2 - (f.y + f.h / 2) * z }; }
+function drawBoardInto(cvs, task, layers) {
+  const w = cvs.clientWidth, h = cvs.clientHeight; if (!w || !h) return;
+  const d = Math.min(window.devicePixelRatio || 1, 2);
+  if (cvs.width !== Math.round(w * d) || cvs.height !== Math.round(h * d)) { cvs.width = Math.round(w * d); cvs.height = Math.round(h * d); }
+  const g = cvs.getContext("2d");
+  palKey = task ? task.bg : "chalk";
+  try {
+    g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = pal().bg; g.fillRect(0, 0, cvs.width, cvs.height);
+    if (!task) { g.fillStyle = pal().hint; g.font = `${14 * d}px ${UI_FONT}`; g.textAlign = "center"; g.textBaseline = "middle"; g.direction = "rtl"; g.fillText("بانتظار التمرين", cvs.width / 2, cvs.height / 2); return; }
+    /* zoom the thumbnail to the actual writing, so small work is still readable */
+    let f = task.frame, x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    for (const L of layers) for (const it of L) { const bb = worldBox(it); x0 = Math.min(x0, bb.x); y0 = Math.min(y0, bb.y); x1 = Math.max(x1, bb.x + bb.w); y1 = Math.max(y1, bb.y + bb.h); }
+    if (x1 > x0) { const pad = 40, cw = Math.max(x1 - x0 + 2 * pad, 320), ch = Math.max(y1 - y0 + 2 * pad, 200); f = { x: (x0 + x1) / 2 - cw / 2, y: (y0 + y1) / 2 - ch / 2, w: cw, h: ch }; }
+    const z = Math.min(w / f.w, h / f.h), ox = (w - f.w * z) / 2 - f.x * z, oy = (h - f.h * z) / 2 - f.y * z;
+    g.setTransform(d * z, 0, 0, d * z, d * ox, d * oy); g.direction = "ltr";
+    drawPattern(g, task, { x0: -ox / z, y0: -oy / z, x1: (w - ox) / z, y1: (h - oy) / z, z });
+    for (const L of layers) for (const it of L) drawItem(g, it);
+  } finally { palKey = null; }
+}
+
+/* =================== LIVE CLASS: teacher =================== */
+const live = { on: false, starting: false, room: null, peer: null, students: new Map(), task: null, taskN: 0, locked: false, hideNames: false, roomLocked: false, question: false, roster: "" };
+const LIVE_KEY = "lawhati:live";
+const studentsSorted = () => [...live.students.values()].sort((a, b) => (b.hand - a.hand) || (b.online - a.online) || (a.joined - b.joined));
+function dispName(s) { if (!live.hideNames) return s.name; return "طالب " + ([...live.students.values()].indexOf(s) + 1); }
+function sendTo(s, msg) { try { if (s && s.conn && s.conn.open) s.conn.send(msg); } catch (e) {} }
+function broadcast(msg) { for (const s of live.students.values()) sendTo(s, msg); }
+function rosterNames() { if (!live.roster) return []; const c = R.list.find(x => x.id === live.roster); return c ? [...new Set(c.text.split("\n").map(cleanName).filter(Boolean))].slice(0, 300) : []; }
+function saveLive() {
+  if (!live.on) { try { localStorage.removeItem(LIVE_KEY); } catch (e) {} return; }
+  const rec = { room: live.room, at: Date.now(), task: live.task, taskN: live.taskN, locked: live.locked, hideNames: live.hideNames, roomLocked: live.roomLocked, roster: live.roster,
+    students: [...live.students.values()].map(s => ({ sid: s.sid, name: s.name, items: s.items, fb: s.fb, joined: s.joined })) };
+  try { localStorage.setItem(LIVE_KEY, JSON.stringify(rec)); }
+  catch (e) { try { rec.students.forEach(s => { s.items = []; s.fb = []; }); localStorage.setItem(LIVE_KEY, JSON.stringify(rec)); } catch (_) {} }
+}
+let saveLiveT = 0; const saveLiveSoon = () => { clearTimeout(saveLiveT); saveLiveT = setTimeout(saveLive, 1500); };
+const NET_ERRORS = ["network", "server-error", "socket-error", "socket-closed", "browser-incompatible", "ssl-unavailable", "webrtc"];
+const NET_MSG = "تعذّر الاتصال بخادم الحصص. تعمل الحصة المباشرة في نسختك المنشورة على الإنترنت (مثل GitHub Pages)، وقد تمنعها بعض المعاينات أو الشبكات المقيّدة.";
+async function startLive(resume) {
+  if (live.starting || live.on) return;
+  live.starting = true; $("#lvErr").textContent = ""; $("#lvGo").disabled = true; $("#lvGo").textContent = "جارٍ البدء…";
+  const fail = msg => { live.starting = false; $("#lvGo").disabled = false; $("#lvGo").textContent = "ابدأ الحصة"; $("#lvErr").textContent = msg; if (!resume) toast(msg); updateLiveUI(); };
+  try { await loadPeer(); } catch (e) { fail("تعذّر تحميل أداة الاتصال. تأكد من اتصالك بالإنترنت."); return; }
+  const room = resume ? resume.room : newRoom(); let tries = 0;
+  const open = () => {
+    const peer = new Peer(peerIdOf(room), { debug: 0 });
+    peer.on("open", () => {
+      live.starting = false; live.on = true; live.peer = peer; live.room = room;
+      $("#lvGo").disabled = false; $("#lvGo").textContent = "ابدأ الحصة";
+      if (resume) {
+        Object.assign(live, { task: resume.task || null, taskN: resume.taskN || 0, locked: !!resume.locked, hideNames: !!resume.hideNames, roomLocked: !!resume.roomLocked, roster: resume.roster || "" });
+        (resume.students || []).forEach(x => live.students.set(x.sid, { sid: x.sid, name: x.name, items: x.items || [], fb: x.fb || [], joined: x.joined || Date.now(), online: false, conn: null, done: false, hand: false, answer: null, draft: null, _dirty: true }));
+        toast("استؤنفت الحصة المباشرة. سيعود الطلاب إليها تلقائيًا.");
+      } else showLiveInfo();
+      updateLiveUI(); saveLive();
+    });
+    peer.on("connection", onStudentConn);
+    peer.on("disconnected", () => { if (live.peer === peer && !peer.destroyed) setTimeout(() => { try { peer.reconnect(); } catch (e) {} }, 1500); });
+    peer.on("error", err => {
+      if (err.type === "unavailable-id") {
+        try { peer.destroy(); } catch (e) {}
+        if (tries++ < 8) { setTimeout(open, 2500); return; }
+        fail("رمز الحصة ما زال مستخدمًا في نافذة أخرى. أغلقها أو ابدأ حصة جديدة."); if (resume) { try { localStorage.removeItem(LIVE_KEY); } catch (e) {} }
+        return;
+      }
+      if (NET_ERRORS.includes(err.type) && !live.on) { try { peer.destroy(); } catch (e) {} fail(NET_MSG); }
+    });
+  };
+  open();
+}
+function onStudentConn(conn) {
+  conn.on("open", () => { try { conn.send({ t: "welcome", roster: rosterNames(), locked: live.roomLocked }); } catch (e) {} });
+  conn.on("data", d => { try { onStudentMsg(conn, d); } catch (e) {} });
+  const gone = () => { const s = [...live.students.values()].find(x => x.conn === conn); if (s) { s.online = false; s.conn = null; s.draft = null; refreshCards(); } };
+  conn.on("close", gone); conn.on("error", gone);
+}
+function onStudentMsg(conn, d) {
+  if (!d || typeof d !== "object" || !live.on) return;
+  if (d.t === "hello") {
+    const sid = String(d.sid || "").replace(/[^a-z0-9]/gi, "").slice(0, 40); if (!sid) return;
+    let s = live.students.get(sid);
+    if (!s) {
+      if (live.roomLocked) { try { conn.send({ t: "denied" }); } catch (e) {} setTimeout(() => { try { conn.close(); } catch (e) {} }, 400); return; }
+      s = { sid, name: cleanName(d.name) || "طالب", items: [], fb: [], joined: Date.now(), done: false, hand: false, answer: null, draft: null, _dirty: true };
+      live.students.set(sid, s);
+      toast(`انضم ${dispName(s)}`);
+    } else if (cleanName(d.name)) s.name = cleanName(d.name);
+    if (s.conn && s.conn !== conn) { try { s.conn.close(); } catch (e) {} }
+    s.conn = conn; s.online = true; s._dirty = true;
+    const hasLocal = live.task && d.taskId === live.task.id;
+    sendTo(s, { t: "state", name: s.name, task: live.task, mine: live.task && !hasLocal ? s.items : null, fb: live.task ? s.fb : [], locked: live.locked, question: live.question, answer: s.answer, timer: timerState() });
+    refreshCards(); saveLiveSoon(); return;
+  }
+  const s = [...live.students.values()].find(x => x.conn === conn); if (!s) return;
+  switch (d.t) {
+    case "ink":
+      if (!live.task || d.taskId !== live.task.id) return;
+      s.items = cleanItems(d.items); s.draft = null; touchStudent(s); saveLiveSoon(); break;
+    case "draft":
+      if (!live.task || d.taskId !== live.task.id) return;
+      s.draft = cleanItems([d.item])[0] || null; touchStudent(s); break;
+    case "status": {
+      const wasHand = s.hand; s.done = !!d.done; s.hand = !!d.hand;
+      if (s.hand && !wasHand) { toast(`✋ ${dispName(s)} يرفع يده`); chime(); }
+      refreshCards(); break;
+    }
+    case "answer":
+      if (!live.question) return;
+      s.answer = (d.choice >= 0 && d.choice < 4) ? d.choice | 0 : null; recountAnswers(); refreshCards(); break;
+  }
+}
+function touchStudent(s) { s._dirty = true; refreshCards(); if (viewing && viewing.sid === s.sid) rebuildViewBase(); }
+function timerState() { return (typeof tInt !== "undefined" && tInt) ? { left: Math.max(0, tEnd - Date.now()) } : null; }
+function liveTimerSync() { if (live.on) broadcast({ t: "timer", timer: timerState() }); }
+function recountAnswers() { counts.fill(0); for (const s of live.students.values()) if (s.answer != null) counts[s.answer]++; drawTally(); }
+function notifyPicked(name) { if (!live.on) return; for (const s of live.students.values()) if (s.online && s.name === name) sendTo(s, { t: "picked" }); }
+function cheerAll() { celebrate(); if (live.on) broadcast({ t: "cheer" }); }
+
+function pushTask() {
+  if (!live.on) return;
+  if (viewing) exitView(false);
+  const p = doc.pages[doc.cur];
+  live.taskN++;
+  live.task = { id: uid(), n: live.taskN, bg: p.bg, pattern: p.pattern, items: JSON.parse(JSON.stringify(p.items)), frame: viewFrame(p) };
+  for (const s of live.students.values()) Object.assign(s, { items: [], fb: [], done: false, hand: false, answer: null, draft: null, _dirty: true });
+  broadcast({ t: "task", task: live.task });
+  const n = [...live.students.values()].filter(s => s.online).length;
+  toast(n ? `أُرسل التمرين ${live.taskN} إلى ${n} ${n === 1 ? "طالب" : n === 2 ? "طالبين" : n <= 10 ? "طلاب" : "طالبًا"}` : `جُهّز التمرين ${live.taskN}، وسيصل إلى كل طالب ينضم`);
+  renderCards(true); updateLiveUI(); saveLive();
+}
+function endTask() {
+  if (!live.task) return;
+  if (viewing) exitView(false);
+  live.task = null; for (const s of live.students.values()) { s.draft = null; s._dirty = true; }
+  broadcast({ t: "task", task: null }); renderCards(true); updateLiveUI(); saveLive();
+  toast("عاد الطلاب إلى شاشة الانتظار");
+}
+function endLive() {
+  broadcast({ t: "end" });
+  const peer = live.peer; setTimeout(() => { try { peer && peer.destroy(); } catch (e) {} }, 600);
+  if (viewing) exitView(false);
+  if (live.question) { live.question = false; }
+  Object.assign(live, { on: false, peer: null, room: null, task: null, taskN: 0, locked: false, roomLocked: false, question: false });
+  live.students.clear(); closeGallery(); saveLive(); updateLiveUI();
+  toast("انتهت الحصة المباشرة");
+}
+
+/* teacher UI */
+function updateLiveUI() {
+  const on = live.on, n = [...live.students.values()].filter(s => s.online).length;
+  const b = $("#hLive"); b.classList.toggle("on", on);
+  $("#hLiveT").textContent = on ? "مباشر" : "حصة مباشرة";
+  $("#hLiveN").hidden = !on; $("#hLiveN").textContent = n;
+  b.title = on ? "لوحات الطلاب" : "حصة مباشرة: يدخل الطلاب برابط أو رمز QR";
+  $("#tlLive").hidden = !on;
+  $("#tlLive").textContent = live.question ? "إيقاف استقبال الإجابات" : "اسأل الطلاب مباشرة";
+  $("#tlLive").classList.toggle("primary", !live.question);
+  $("#lvCount").textContent = on ? (n ? `انضم ${n} حتى الآن` : "لم ينضم أحد بعد") : "";
+  $("#cvLock").setAttribute("aria-pressed", live.locked); $("#cvLock").textContent = live.locked ? "فتح الكتابة" : "قفل الكتابة";
+  $("#cvHide").setAttribute("aria-pressed", live.hideNames);
+  $("#cvEnd").disabled = !live.task;
+  $("#lvLockRoom").checked = live.roomLocked;
+  fitHeader();
+}
+function fillRosterSelect() {
+  const sel = $("#lvRoster"); sel.innerHTML = "";
+  const none = document.createElement("option"); none.value = ""; none.textContent = "بدون قائمة (يكتب الطالب اسمه)"; sel.appendChild(none);
+  R.list.forEach(c => { const n = c.text.split("\n").filter(x => x.trim()).length; if (!n) return; const o = document.createElement("option"); o.value = c.id; o.textContent = `${c.name || "فصل بدون اسم"} (${n})`; sel.appendChild(o); });
+  sel.value = live.roster && R.list.some(c => c.id === live.roster) ? live.roster : (curClass().text.trim() ? curClass().id : "");
+}
+const dlgLive = $("#dlg-live");
+function openLiveDialog() {
+  closeMenus(); fillRosterSelect(); loadQR().catch(() => {}); loadPeer().catch(() => {});
+  $("#lvStart").hidden = live.on; $("#lvInfo").hidden = !live.on; $("#lvErr").textContent = "";
+  if (live.on) showLiveInfo(); else if (!dlgLive.open) dlgLive.showModal();
+}
+function showLiveInfo() {
+  const url = joinUrl(live.room);
+  $("#lvStart").hidden = true; $("#lvInfo").hidden = false;
+  $("#lvCode").textContent = live.room; $("#lvLink").value = url; qrInto($("#lvQr"), url);
+  updateLiveUI(); if (!dlgLive.open) dlgLive.showModal();
+}
+$("#hLive").onclick = () => live.on ? openGallery() : openLiveDialog();
+$("#lvCancel").onclick = () => dlgLive.close();
+$("#lvClose").onclick = () => dlgLive.close();
+$("#lvGo").onclick = () => { live.roster = $("#lvRoster").value; startLive(null); };
+$("#lvRoster").onchange = () => { live.roster = $("#lvRoster").value; saveLiveSoon(); };
+$("#lvOpen").onclick = () => { dlgLive.close(); openGallery(); };
+$("#lvLockRoom").onchange = e => { live.roomLocked = e.target.checked; saveLiveSoon(); toast(live.roomLocked ? "قُفلت الغرفة: لن ينضم طلاب جدد" : "فُتحت الغرفة للانضمام"); };
+$("#lvCopy").onclick = () => {
+  const inp = $("#lvLink");
+  (navigator.clipboard ? navigator.clipboard.writeText(inp.value) : Promise.reject()).then(() => toast("نُسخ رابط الانضمام"))
+    .catch(() => { inp.select(); try { document.execCommand("copy"); toast("نُسخ رابط الانضمام"); } catch (e) { toast("انسخ الرابط يدويًا"); } });
+};
+$("#lvShare").onclick = () => {
+  const url = $("#lvLink").value, text = `انضم إلى حصة لوحتي، الرمز ${live.room}`;
+  if (navigator.share) navigator.share({ title: "لوحتي", text, url }).catch(() => {});
+  else window.open("https://wa.me/?text=" + encodeURIComponent(text + "\n" + url), "_blank", "noopener");
+};
+
+/* gallery of student boards */
+const cvGrid = $("#cvGrid");
+function openGallery() { if (!live.on) { openLiveDialog(); return; } closeMenus(); commitEditor(); $("#classView").hidden = false; renderCards(true); }
+function closeGallery() { $("#classView").hidden = true; }
+let cardsRaf = 0;
+function refreshCards() { if (!cardsRaf) cardsRaf = requestAnimationFrame(() => { cardsRaf = 0; renderCards(false); updateLiveUI(); }); }
+function renderCards(full) {
+  if ($("#classView").hidden) return;
+  const list = studentsSorted(), online = list.filter(s => s.online).length, done = list.filter(s => s.done).length, hands = list.filter(s => s.hand).length;
+  $("#cvSummary").textContent = `${online} متصل` + (live.task ? ` · التمرين ${live.task.n}` : " · لا يوجد تمرين الآن") + (done ? ` · ${done} انتهوا` : "") + (hands ? ` · ✋ ${hands}` : "") + (live.question ? " · السؤال مفتوح" : "");
+  $("#cvEmpty").hidden = list.length > 0;
+  if (!list.length) { $("#cvEmptyCode").textContent = live.room || ""; if (live.room && !$("#cvEmptyQr").dataset.room) { $("#cvEmptyQr").dataset.room = live.room; qrInto($("#cvEmptyQr"), joinUrl(live.room)); } }
+  else delete $("#cvEmptyQr").dataset.room;
+  const seen = new Set();
+  list.forEach(s => {
+    seen.add(s.sid);
+    let card = cvGrid.querySelector(`[data-sid="${s.sid}"]`);
+    if (!card) {
+      card = document.createElement("article"); card.className = "card"; card.dataset.sid = s.sid;
+      card.innerHTML = `<button class="thumb" aria-label="افتح اللوحة"><canvas></canvas></button><div class="c-foot"><span class="c-dot"></span><b class="c-name"></b><span class="c-badges"></span></div><div class="c-acts"><button class="c-cheer" title="تشجيع هذا الطالب" aria-label="تشجيع">⭐</button><button class="c-clear" title="مسح لوحته" aria-label="مسح لوحته"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button></div>`;
+      card.querySelector(".thumb").onclick = () => viewStudent(s.sid);
+      card.querySelector(".c-cheer").onclick = () => { sendTo(s, { t: "cheer", name: s.name }); toast(`أُرسل تشجيع إلى ${dispName(s)}`); };
+      card.querySelector(".c-clear").onclick = () => { s.items = []; s.draft = null; s._dirty = true; sendTo(s, { t: "clear" }); refreshCards(); };
+      full = true;
+    }
+    card.classList.toggle("off", !s.online); card.classList.toggle("hand", s.hand);
+    card.querySelector(".c-name").textContent = dispName(s);
+    card.querySelector(".c-badges").innerHTML = (s.hand ? '<span class="c-badge">✋</span>' : "") + (s.done ? '<span class="c-badge done">✓ انتهى</span>' : "") + (live.question && s.answer != null ? `<span class="c-badge ans">${TALLY[s.answer]}</span>` : "");
+    cvGrid.appendChild(card);
+    if (full || s._dirty) { s._dirty = false; drawBoardInto(card.querySelector("canvas"), live.task, live.task ? [live.task.items, s.items, s.draft ? [s.draft] : [], s.fb] : []); }
+  });
+  [...cvGrid.children].forEach(c => { if (!seen.has(c.dataset.sid)) c.remove(); });
+}
+$("#cvClose").onclick = closeGallery;
+$("#cvPush").onclick = pushTask;
+$("#cvEnd").onclick = endTask;
+$("#cvLock").onclick = () => { live.locked = !live.locked; broadcast({ t: "lock", on: live.locked }); updateLiveUI(); saveLiveSoon(); toast(live.locked ? "أُوقفت كتابة الطلاب" : "عادت الكتابة للطلاب"); };
+$("#cvHide").onclick = () => { live.hideNames = !live.hideNames; updateLiveUI(); renderCards(false); updateBanner(); saveLiveSoon(); };
+$("#cvClear").onclick = () => { for (const s of live.students.values()) { s.items = []; s.draft = null; s._dirty = true; } broadcast({ t: "clear" }); renderCards(true); saveLiveSoon(); toast("مُسحت لوحات الطلاب"); };
+$("#cvJoin").onclick = () => openLiveDialog();
+$("#cvStop").onclick = e => {
+  const b = e.currentTarget;
+  if (b.classList.contains("armed")) { b.classList.remove("armed"); b.textContent = "إنهاء الحصة"; endLive(); return; }
+  b.classList.add("armed"); b.textContent = "اضغط مرة أخرى للتأكيد";
+  setTimeout(() => { b.classList.remove("armed"); b.textContent = "إنهاء الحصة"; }, 3500);
+};
+window.addEventListener("resize", () => { if (!$("#classView").hidden) renderCards(true); });
+
+/* teacher writing on one student's board */
+function viewStudent(sid) {
+  const s = live.students.get(sid); if (!s) return;
+  if (!live.task) { toast("أرسل تمرينًا أولًا لترى عمل الطلاب عليه."); return; }
+  commitEditor(); selected = null; draft = null; action = null;
+  viewing = { id: "fb-" + sid + "-" + live.task.id, sid, bg: live.task.bg, pattern: live.task.pattern, base: [], items: s.fb, cam: fitCamTo(live.task.frame) };
+  rebuildViewBase(); closeGallery(); $("#viewBanner").hidden = false; updateBanner(); updatePages(); markView();
+}
+function rebuildViewBase() {
+  if (!viewing || viewing.sid == null) return;
+  const s = live.students.get(viewing.sid); if (!s || !live.task) return;
+  viewing.base = [...live.task.items, ...s.items, ...(s.draft ? [s.draft] : [])]; sceneDirty = true; req();
+}
+function updateBanner() { if (viewing && viewing.sid != null) { const s = live.students.get(viewing.sid); $("#vwName").textContent = s ? `لوحة ${dispName(s)}` + (s.online ? "" : " (غير متصل)") : ""; } }
+function exitView(back) {
+  if (!viewing || role === "student") return;
+  commitEditor(); viewing = null; selected = null; draft = null; action = null;
+  $("#viewBanner").hidden = true; updatePages(); markView();
+  if (back) openGallery();
+}
+function stepStudent(dir) {
+  if (!viewing) return; const list = studentsSorted(); if (!list.length) return;
+  const i = list.findIndex(s => s.sid === viewing.sid), n = list[(i + dir + list.length) % list.length];
+  if (n && n.sid !== viewing.sid) viewStudent(n.sid);
+}
+$("#vwBack").onclick = () => exitView(true);
+$("#vwPrev").onclick = () => stepStudent(-1);
+$("#vwNext").onclick = () => stepStudent(1);
+$("#vwCheer").onclick = () => { const s = viewing && live.students.get(viewing.sid); if (s) { sendTo(s, { t: "cheer", name: s.name }); toast(`أُرسل تشجيع إلى ${dispName(s)}`); } };
+$("#vwClearFb").onclick = () => { if (!viewing) return; pushHistory(); viewing.items = []; selected = null; markDirty(); };
+$("#vwCopy").onclick = () => {
+  const s = viewing && live.students.get(viewing.sid); if (!s || !live.task) return;
+  const pg = newPage(live.task.bg, live.task.pattern);
+  pg.items = JSON.parse(JSON.stringify([...live.task.items, ...s.items, ...s.fb]));
+  pg.cam = fitCamTo(live.task.frame);
+  exitView(false); doc.pages.splice(doc.cur + 1, 0, pg); gotoPage(doc.cur + 1); updatePages();
+  toast("نُسخ عمل الطالب إلى صفحة جديدة دون اسمه، لتعرضه على الصف");
+};
+$("#tlLive").onclick = () => {
+  live.question = !live.question;
+  if (live.question) { for (const s of live.students.values()) s.answer = null; counts.fill(0); drawTally(); toggleWidget("w-tally", true); }
+  broadcast({ t: "question", open: live.question }); updateLiveUI(); refreshCards();
+  toast(live.question ? "ظهرت أزرار الإجابة عند الطلاب، وتُعدّ إجاباتهم تلقائيًا" : "أُغلق استقبال الإجابات");
+};
+
+/* =================== LIVE CLASS: student =================== */
+const stu = { sid: null, name: "", conn: null, peer: null, task: null, locked: false, done: false, hand: false, answer: null, ended: false, welcomed: false, roster: [], fbSeen: false, retryT: 0, timerI: 0 };
+const STU_KEY = "lawhati:stu:" + JOIN;
+let stuPage = null, lastDraftAt = 0;
+const stuLoad = () => { try { return JSON.parse(localStorage.getItem(STU_KEY) || "null") || {}; } catch (e) { return {}; } };
+function stuSave() { if (!stuPage) return; try { localStorage.setItem(STU_KEY, JSON.stringify({ sid: stu.sid, name: stu.name, taskId: stu.task ? stu.task.id : null, items: stu.task ? stuPage.items : [] })); } catch (e) {} }
+function stuSend(m) { try { if (stu.conn && stu.conn.open) stu.conn.send(m); } catch (e) {} }
+function stuSendInk() { if (stu.task) stuSend({ t: "ink", taskId: stu.task.id, items: stuPage.items }); }
+function stuDraftTick() { if (draft && stu.task && performance.now() - lastDraftAt > 140) { lastDraftAt = performance.now(); stuSend({ t: "draft", taskId: stu.task.id, item: draft }); } }
+function setConn(ok) { const c = $("#stuConn"); c.className = "conn " + (ok ? "ok" : "bad"); c.title = ok ? "متصل بالمعلم" : "انقطع الاتصال، جارٍ إعادة المحاولة…"; }
+function stuScreen(mode, msg) {
+  const board = mode === "board";
+  $("#stuScreen").hidden = board; document.body.classList.toggle("stu-board", board);
+  if (board) return;
+  const T = { connect: ["لوحتي", "جارٍ الاتصال بمعلمك…"], name: ["أهلًا بك!", "اختر اسمك لتدخل الحصة"], wait: [`أهلًا ${stu.name}`, "بانتظار المعلم… سيظهر التمرين هنا عندما يرسله"], end: ["إلى اللقاء", ""], error: ["تعذّر الاتصال", ""] }[mode];
+  $("#ssTitle").textContent = T[0]; $("#ssMsg").textContent = msg || T[1];
+  $("#ssForm").hidden = mode !== "name"; $("#ssWait").hidden = !(mode === "connect" || mode === "wait");
+  $("#ssCode").innerHTML = "رمز الحصة <bdi dir=\"ltr\">" + JOIN + "</bdi>";
+}
+function initStudent() {
+  document.body.classList.add("student");
+  const saved = stuLoad(); stu.sid = saved.sid || (uid() + uid()); stu.name = saved.name || "";
+  stuPage = { id: "stu", bg: "chalk", pattern: "none", base: [], items: [], over: [], cam: { x: null, y: null, z: 1 } };
+  viewing = stuPage;
+  $("#stuPane").hidden = false; $("#stuName").hidden = false; $("#stuName").textContent = stu.name;
+  document.title = "لوحتي: الحصة " + JOIN;
+  stuScreen("connect"); setConn(false); stuConnect();
+}
+async function stuConnect() {
+  if (stu.ended) return;
+  try { await loadPeer(); } catch (e) { stuScreen("error", "تعذّر تحميل أداة الاتصال. تحقق من الإنترنت ثم أعد تحميل الصفحة."); return; }
+  if (stu.peer && !stu.peer.destroyed) { if (stu.peer.open) stuDial(); else try { stu.peer.reconnect(); } catch (e) {} return; }
+  const peer = new Peer({ debug: 0 }); stu.peer = peer;
+  peer.on("open", stuDial);
+  peer.on("disconnected", () => { if (!stu.ended) setTimeout(() => { try { peer.reconnect(); } catch (e) {} }, 1500); });
+  peer.on("error", err => {
+    if (err.type === "peer-unavailable") { if (!stu.welcomed) stuScreen("connect", "لم تبدأ الحصة بعد، أو أن الرمز غير صحيح. نحاول مجددًا تلقائيًا…"); setConn(false); stuRetry(); }
+    else if (NET_ERRORS.includes(err.type)) { setConn(false); if (!stu.welcomed) stuScreen("error", NET_MSG); stuRetry(); }
+  });
+}
+function stuDial() {
+  if (stu.ended || !stu.peer || !stu.peer.open) return;
+  const conn = stu.peer.connect(peerIdOf(JOIN), { reliable: true }); stu.conn = conn;
+  const to = setTimeout(() => { if (!conn.open) { try { conn.close(); } catch (e) {} stuRetry(); } }, 9000);
+  conn.on("open", () => { clearTimeout(to); setConn(true); });
+  conn.on("data", d => { try { stuOnMsg(d); } catch (e) {} });
+  conn.on("close", () => { if (stu.conn === conn) { stu.conn = null; setConn(false); if (!stu.ended) stuRetry(); } });
+  conn.on("error", () => {});
+}
+function stuRetry() { clearTimeout(stu.retryT); stu.retryT = setTimeout(() => { if (!stu.ended && !(stu.conn && stu.conn.open)) stuConnect(); }, 3500); }
+function stuHello() { stuSend({ t: "hello", sid: stu.sid, name: stu.name, taskId: stuLoad().taskId || null }); }
+function stuOnMsg(d) {
+  if (!d || typeof d !== "object") return;
+  switch (d.t) {
+    case "welcome":
+      stu.welcomed = true; stu.roster = Array.isArray(d.roster) ? d.roster.map(cleanName).filter(Boolean) : [];
+      if (stu.name) stuHello(); else showNameForm(); break;
+    case "denied": stu.ended = true; stuScreen("end", "الغرفة مقفلة الآن ولا يمكن الانضمام. اطلب من معلمك فتحها."); break;
+    case "state":
+      stu.name = cleanName(d.name) || stu.name; $("#stuName").textContent = stu.name;
+      stu.locked = !!d.locked; stuApplyTask(d.task || null, d.mine, false);
+      if (stu.task) { stuPage.over = cleanItems(d.fb); sceneDirty = true; req(); }
+      stuSetQuestion(!!d.question, d.answer); stuSetTimer(d.timer); applyLock(); stuSave(); break;
+    case "task": stuApplyTask(d.task || null, null, true); applyLock(); break;
+    case "fb":
+      if (stu.task && d.taskId === stu.task.id) { stuPage.over = cleanItems(d.items); sceneDirty = true; req(); if (stuPage.over.length && !stu.fbSeen) { stu.fbSeen = true; toast("كتب معلمك ملاحظة على لوحتك ✏️"); } } break;
+    case "lock": stu.locked = !!d.on; applyLock(); break;
+    case "clear": if (stu.task) { stuPage.items = []; selected = null; markDirty(); toast("مسح المعلم لوحتك"); } break;
+    case "cheer": celebrate(d.name ? `أحسنت يا ${cleanName(d.name)}!` : null); break;
+    case "picked": showCheerText(`دورك يا ${stu.name}!`); chime(); break;
+    case "question": stuSetQuestion(!!d.open, null); break;
+    case "timer": stuSetTimer(d.timer); break;
+    case "end": stu.ended = true; stuSetTimer(null); stuSetQuestion(false); stuScreen("end", "انتهت الحصة. شكرًا لمشاركتك!"); try { stu.conn && stu.conn.close(); } catch (e) {} break;
+  }
+}
+function showNameForm() {
+  stuScreen("name");
+  const sel = $("#ssPick"), inp = $("#ssName");
+  if (stu.roster.length) {
+    sel.hidden = false; sel.innerHTML = "";
+    const ph = document.createElement("option"); ph.value = ""; ph.textContent = "اختر اسمك من القائمة"; sel.appendChild(ph);
+    stu.roster.forEach(n => { const o = document.createElement("option"); o.value = n; o.textContent = n; sel.appendChild(o); });
+    const other = document.createElement("option"); other.value = "__other"; other.textContent = "اسمي غير موجود…"; sel.appendChild(other);
+    inp.hidden = true; sel.onchange = () => { inp.hidden = sel.value !== "__other"; if (!inp.hidden) inp.focus(); };
+  } else { sel.hidden = true; inp.hidden = false; setTimeout(() => inp.focus(), 50); }
+}
+$("#ssGo").onclick = () => {
+  const sel = $("#ssPick"), v = !sel.hidden && sel.value && sel.value !== "__other" ? sel.value : $("#ssName").value;
+  const name = cleanName(v);
+  if (!name) { $("#ssErr").textContent = "اكتب اسمك أولًا"; return; }
+  $("#ssErr").textContent = ""; stu.name = name; $("#stuName").textContent = name; stuSave(); stuHello(); stuScreen("wait");
+};
+$("#ssName").addEventListener("keydown", e => { if (e.key === "Enter") $("#ssGo").click(); e.stopPropagation(); });
+function stuApplyTask(task, mine, fresh) {
+  if (!task) {
+    stu.task = null; stuPage.base = []; stuPage.items = []; stuPage.over = []; selected = null; draft = null; action = null;
+    stuScreen("wait"); stuSave(); markView(); return;
+  }
+  const same = stu.task && stu.task.id === task.id, saved = stuLoad();
+  stu.task = task;
+  stuPage.bg = PAL[task.bg] ? task.bg : "chalk"; stuPage.pattern = task.pattern || "none"; stuPage.base = cleanBase(task.items);
+  if (!same) {
+    stuPage.id = "stu-" + task.id; stu.fbSeen = false; selected = null; draft = null; action = null;
+    stuPage.items = saved.taskId === task.id ? cleanItems(saved.items) : (mine ? cleanItems(mine) : []);
+    stuPage.over = []; Object.assign(stuPage.cam, fitCamTo(task.frame));
+    if (fresh) { stu.done = false; stu.hand = false; syncStatusBtns(); stuSend({ t: "status", done: false, hand: false }); }
+  }
+  stuScreen("board"); updatePages(); markView();
+  if (!same && saved.taskId === task.id && stuPage.items.length) stuSendInk();
+  if (fresh && !same) { toast("وصل تمرين جديد من معلمك"); chime(); }
+  stuSave();
+}
+function applyLock() { $("#stuLock").hidden = !(stu.locked && stu.task); if (stu.locked) { draft = null; action = null; req(); } }
+function syncStatusBtns() { $("#stuHand").setAttribute("aria-pressed", stu.hand); $("#stuDone").setAttribute("aria-pressed", stu.done); }
+$("#stuHand").onclick = () => { stu.hand = !stu.hand; syncStatusBtns(); stuSend({ t: "status", done: stu.done, hand: stu.hand }); toast(stu.hand ? "رفعت يدك ✋ سيراك المعلم" : "أنزلت يدك"); };
+$("#stuDone").onclick = () => { stu.done = !stu.done; syncStatusBtns(); stuSend({ t: "status", done: stu.done, hand: stu.hand }); if (stu.done) toast("أُبلغ المعلم أنك انتهيت ✓"); };
+function stuSetQuestion(open, ans) {
+  $("#stuQ").hidden = !open; stu.answer = open ? (ans != null ? ans : stu.answer) : null;
+  $$("#stuQ [data-ans]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.ans === stu.answer));
+}
+$$("#stuQ [data-ans]").forEach(b => b.onclick = () => { stu.answer = +b.dataset.ans; stuSetQuestion(true, stu.answer); stuSend({ t: "answer", choice: stu.answer }); });
+function stuSetTimer(t) {
+  clearInterval(stu.timerI); const el = $("#stuTimer");
+  if (!t) { el.hidden = true; return; }
+  const end = Date.now() + t.left; el.hidden = false;
+  const tick = () => { const left = (end - Date.now()) / 1000; if (left <= 0) { el.textContent = "انتهى الوقت"; clearInterval(stu.timerI); setTimeout(() => { el.hidden = true; }, 4000); } else el.textContent = fmt(left); };
+  tick(); stu.timerI = setInterval(tick, 250);
+}
+
+/* called on every board change */
+let liveT = 0;
+function liveChanged() {
+  if (role === "student") { if (!stu.task) return; clearTimeout(liveT); liveT = setTimeout(stuSendInk, 160); stuSave(); return; }
+  if (viewing && viewing.sid != null && live.on) {
+    const s = live.students.get(viewing.sid); if (!s) return;
+    s.fb = viewing.items; s._dirty = true;
+    clearTimeout(liveT); liveT = setTimeout(() => { sendTo(s, { t: "fb", taskId: live.task && live.task.id, items: s.fb }); saveLiveSoon(); }, 160);
+  }
+}
+
 /* ---------- start ---------- */
-setTool("pen"); setSize(1); setEraseMode(eraseMode, false); updatePages();
+if (role === "student") initStudent();
+setTool("pen"); setSize(1); setEraseMode(eraseMode, false); updatePages(); updateLiveUI();
+if (role === "teacher") { try { const rec = JSON.parse(localStorage.getItem(LIVE_KEY) || "null"); if (rec && rec.room && Date.now() - rec.at < 4 * 3600e3) startLive(rec); else if (rec) localStorage.removeItem(LIVE_KEY); } catch (e) {} }
 if (document.fonts && document.fonts.load) {
   Promise.all([document.fonts.load(`22px ${BOARD_FONT}`), document.fonts.load(`700 15px ${UI_FONT}`, "لوحتي"), document.fonts.load(`22px "Aref Ruqaa"`, "لوحتي"), document.fonts.load(`700 22px "Aref Ruqaa"`, "لوحتي")]).then(() => { sceneDirty = true; req(); fitAll(); }).catch(() => {});
 }
