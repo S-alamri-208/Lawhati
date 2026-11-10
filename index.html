@@ -201,11 +201,11 @@ body.presenting .present-exit{display:inline-flex}
 
 /* ---------- widgets ---------- */
 .widget{
-  position:absolute;z-index:9;width:300px;max-width:calc(100% - 24px);overflow:hidden;
+  position:absolute;z-index:9;width:300px;max-width:calc(100% - 24px);max-height:calc(100% - 160px);overflow-x:hidden;overflow-y:auto;
   background:var(--ui-surface);color:var(--ui-ink);border:1px solid var(--glass-edge);border-radius:16px;box-shadow:var(--shadow);
 }
 .w-head{
-  display:flex;align-items:center;justify-content:space-between;padding:6px 6px 6px 14px;cursor:grab;touch-action:none;user-select:none;font-weight:700;
+  position:sticky;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;padding:6px 6px 6px 14px;cursor:grab;touch-action:none;user-select:none;font-weight:700;
   background:var(--glass);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border-bottom:1px solid var(--ui-line)
 }
 .w-head:active{cursor:grabbing}
@@ -371,6 +371,15 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 .c-acts{position:absolute;top:6px;inset-inline-start:6px;display:flex;gap:4px;opacity:0;transition:opacity .15s}
 .card:hover .c-acts,.card:focus-within .c-acts{opacity:1}
 .c-acts button{width:30px;height:30px;border-radius:9px;border:0;background:rgba(16,22,19,.75);color:#fff;cursor:pointer;display:grid;place-items:center}
+.c-acts button.armed{background:var(--danger);width:auto;padding:0 8px;font-size:12px;font-weight:700}
+.c-acts .c-hand{background:#B7791F}
+.card.hand .c-acts{opacity:1}
+#cvCast[aria-pressed="true"],#lvCast[aria-pressed="true"]{background:#E5484D;color:#fff;border-color:transparent}
+.live-list{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:8px}
+.live-list .live-dot,.stu-cast-pill .live-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#E5484D;animation:livePulse 1.6s ease-in-out infinite}
+.live-list[aria-pressed="true"]{background:var(--on-bg);color:var(--on-ink);border-color:transparent}
+.stu-cast-pill{position:absolute;top:70px;left:0;right:0;margin-inline:auto;width:max-content;z-index:10;display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px}
+body.stu-cast .dock,body.stu-cast .zoom,body.stu-cast #stuDone{display:none!important}
 .cv-empty{display:flex;align-items:center;justify-content:center;gap:28px;padding:40px 16px;flex-wrap:wrap;text-align:start}
 .cv-empty p{margin:6px 0 10px;color:var(--ui-muted)}
 .cv-empty-qr,.lv-qr{background:#fff;border-radius:16px;padding:10px;width:220px;max-width:70vw;aspect-ratio:1;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.15)}
@@ -473,6 +482,7 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
         <input id="pClassName" class="field sm" aria-label="اسم الفصل" placeholder="اسم الفصل" maxlength="60">
         <button class="wbtn xl" id="pImport" title="يقبل Excel (xlsx وxlsm وxlsb وxls) وLibreOffice (ods) وApple Numbers وCSV وTSV وTXT. كل ورقة في الملف تصبح فصلًا"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg>استيراد من Excel</button>
       </div>
+      <button class="wbtn live-list" id="pLive" hidden title="قائمة تتحدث تلقائيًا بأسماء الطلاب المتصلين بالحصة المباشرة"><span class="live-dot"></span>الطلاب المتصلون الآن</button>
       <textarea class="names" id="pNames" placeholder="اسم طالب في كل سطر" aria-label="أسماء الطلاب، اسم في كل سطر" dir="auto"></textarea>
       <label class="chk"><input type="checkbox" id="pNoRepeat" checked> لا تكرر اختيار الطالب نفسه</label>
       <div class="row"><button class="wbtn primary" id="pPick">اختر طالبًا</button><button class="wbtn" id="pReset">ابدأ من جديد</button></div>
@@ -516,6 +526,9 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
         <button class="btn" id="cvEnd" title="أعِد الطلاب إلى شاشة الانتظار">إنهاء التمرين</button>
         <button class="btn" id="cvLock" aria-pressed="false" title="أوقف كتابة الطلاب مؤقتًا">قفل الكتابة</button>
         <button class="btn" id="cvHide" aria-pressed="false" title="مفيد عند مشاركة شاشتك">إخفاء الأسماء</button>
+        <button class="btn" id="cvCast" aria-pressed="false" title="يرى الطلاب لوحتك مباشرة للقراءة فقط عندما لا يوجد تمرين"><svg class="i" viewBox="0 0 24 24"><path d="M3 17a4 4 0 0 1 4 4M3 13a8 8 0 0 1 8 8M3 9.5V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"/></svg><span>بث لوحتي</span></button>
+        <button class="btn" id="cvHands" hidden title="أنزل أيدي كل الطلاب">✋ إنزال كل الأيدي</button>
+        <button class="btn" id="cvPick" title="اختر طالبًا عشوائيًا من المتصلين الآن"><svg class="i" viewBox="0 0 24 24"><path d="M3 7h3c4 0 6 10 10 10h4M3 17h3c1.6 0 2.8-1.6 3.9-3.6M14.1 9.6C15.2 8 16.4 7 18 7h2M18 4l3 3-3 3M18 14l3 3-3 3"/></svg><span>اختيار متصل</span></button>
         <button class="btn" id="cvClear" title="امسح ما كتبه كل الطلاب">مسح لوحاتهم</button>
         <button class="btn" id="cvJoin">رمز الانضمام</button>
         <button class="btn danger-t" id="cvStop">إنهاء الحصة</button>
@@ -546,6 +559,7 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
       <small class="ss-code" id="ssCode"></small>
     </div>
   </div>
+  <div class="stu-cast-pill pane" id="stuCastPill" hidden><span class="live-dot"></span>يعرض معلمك لوحته الآن</div>
   <div class="stu-lock" id="stuLock" hidden><div class="pane">أوقف المعلم الكتابة مؤقتًا</div></div>
   <div class="stu-q pane" id="stuQ" hidden>
     <b>سؤال من معلمك: اختر إجابتك</b>
@@ -731,7 +745,7 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
           <label class="chk"><input type="checkbox" id="lvLockRoom"> قفل الغرفة (منع انضمام طلاب جدد)</label>
         </div>
       </div>
-      <div class="dlg-actions"><button class="wbtn" id="lvClose">إغلاق</button><button class="wbtn primary" id="lvOpen">فتح لوحات الطلاب</button></div>
+      <div class="dlg-actions"><button class="wbtn" id="lvClose">إغلاق</button><button class="wbtn" id="lvCast" aria-pressed="false">بث لوحتي للطلاب</button><button class="wbtn primary" id="lvOpen">فتح لوحات الطلاب</button></div>
     </div>
   </div>
 </dialog>
@@ -851,8 +865,8 @@ function resize() {
 }
 new ResizeObserver(resize).observe(stage);
 const req = () => { if (!raf) raf = requestAnimationFrame(render); };
-function markDirty() { sceneDirty = true; req(); scheduleSave(); updateUndo(); liveChanged(); }
-function markView() { sceneDirty = true; req(); scheduleSave(); }
+function markDirty() { sceneDirty = true; req(); scheduleSave(); updateUndo(); liveChanged(); castSoon(); }
+function markView() { sceneDirty = true; req(); scheduleSave(); castSoon(); }
 
 const col = c => typeof c === "number" ? pal().fg[c] || pal().fg[0] : c;
 
@@ -1430,7 +1444,7 @@ function render() {
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(scene, 0, 0); ctx.direction = "ltr";
   const c = p.cam; ctx.setTransform(dpr * c.z, 0, 0, dpr * c.z, dpr * c.x, dpr * c.y);
   if (draft) drawItem(ctx, draft);
-  if (role === "student") stuDraftTick();
+  if (role === "student") stuDraftTick(); else if (draft) castDraftTick();
   if (selected && !hidden.has(selected)) {
     const b = bbox(selected), m = 6 / c.z, k = center(selected), z = c.z;
     ctx.save(); ctx.translate(k.x, k.y); ctx.rotate(selected.rot || 0); ctx.translate(-k.x, -k.y);
@@ -2186,6 +2200,7 @@ function renderClasses() {
     o.textContent = `${c.name || "فصل بدون اسم"} (${n})`; pClass.appendChild(o);
   });
   const c = curClass(); R.cur = c.id; pClass.value = c.id; pClassName.value = c.name; pNames.value = c.text;
+  const isLive = !!c.live; pNames.readOnly = isLive; pClassName.readOnly = isLive;
   $("#pDel").disabled = false; pLeft();
 }
 function pLeft() {
@@ -2351,7 +2366,7 @@ function celebrate(text) {
   let i; do { i = Math.floor(Math.random() * CHEERS.length); } while (i === lastCheer && CHEERS.length > 1); lastCheer = i;
   cheerEl.textContent = typeof text === "string" && text ? text : CHEERS[i]; cheerEl.classList.remove("show"); void cheerEl.offsetWidth; cheerEl.classList.add("show");
   clearTimeout(cheerT); cheerT = setTimeout(() => cheerEl.classList.remove("show"), 2200);
-  chime(); applause();
+  applause();
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const W = innerWidth, Hh = innerHeight, d = Math.min(window.devicePixelRatio || 1, 2);
   if (confCv.width !== Math.round(W * d) || confCv.height !== Math.round(Hh * d)) { confCv.width = Math.round(W * d); confCv.height = Math.round(Hh * d); }
@@ -2679,7 +2694,7 @@ async function qrInto(el, text) {
 }
 function viewFrame(p) { const c = p.cam; return { x: r1(-c.x / c.z), y: r1(-c.y / c.z), w: r1(vw / c.z), h: r1(vh / c.z) }; }
 function fitCamTo(f) { const z = clamp(Math.min(vw / f.w, vh / f.h) * .96, .2, 4); return { z, x: vw / 2 - (f.x + f.w / 2) * z, y: vh / 2 - (f.y + f.h / 2) * z }; }
-function drawBoardInto(cvs, task, layers) {
+function drawBoardInto(cvs, task, layers, emptyMsg) {
   const w = cvs.clientWidth, h = cvs.clientHeight; if (!w || !h) return;
   const d = Math.min(window.devicePixelRatio || 1, 2);
   if (cvs.width !== Math.round(w * d) || cvs.height !== Math.round(h * d)) { cvs.width = Math.round(w * d); cvs.height = Math.round(h * d); }
@@ -2687,7 +2702,7 @@ function drawBoardInto(cvs, task, layers) {
   palKey = task ? task.bg : "chalk";
   try {
     g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = pal().bg; g.fillRect(0, 0, cvs.width, cvs.height);
-    if (!task) { g.fillStyle = pal().hint; g.font = `${14 * d}px ${UI_FONT}`; g.textAlign = "center"; g.textBaseline = "middle"; g.direction = "rtl"; g.fillText("بانتظار التمرين", cvs.width / 2, cvs.height / 2); return; }
+    if (!task) { g.fillStyle = pal().hint; g.font = `${14 * d}px ${UI_FONT}`; g.textAlign = "center"; g.textBaseline = "middle"; g.direction = "rtl"; g.fillText(emptyMsg || "بانتظار التمرين", cvs.width / 2, cvs.height / 2); return; }
     /* zoom the thumbnail to the actual writing, so small work is still readable */
     let f = task.frame, x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
     for (const L of layers) for (const it of L) { const bb = worldBox(it); x0 = Math.min(x0, bb.x); y0 = Math.min(y0, bb.y); x1 = Math.max(x1, bb.x + bb.w); y1 = Math.max(y1, bb.y + bb.h); }
@@ -2700,7 +2715,7 @@ function drawBoardInto(cvs, task, layers) {
 }
 
 /* =================== LIVE CLASS: teacher =================== */
-const live = { on: false, starting: false, room: null, peer: null, students: new Map(), task: null, taskN: 0, locked: false, hideNames: false, roomLocked: false, question: false, roster: "" };
+const live = { on: false, starting: false, room: null, peer: null, students: new Map(), task: null, taskN: 0, locked: false, hideNames: false, roomLocked: false, question: false, roster: "", cast: false, banned: new Set(), assets: new Map() };
 const LIVE_KEY = "lawhati:live";
 const studentsSorted = () => [...live.students.values()].sort((a, b) => (b.hand - a.hand) || (b.online - a.online) || (a.joined - b.joined));
 function dispName(s) { if (!live.hideNames) return s.name; return "طالب " + ([...live.students.values()].indexOf(s) + 1); }
@@ -2709,7 +2724,7 @@ function broadcast(msg) { for (const s of live.students.values()) sendTo(s, msg)
 function rosterNames() { if (!live.roster) return []; const c = R.list.find(x => x.id === live.roster); return c ? [...new Set(c.text.split("\n").map(cleanName).filter(Boolean))].slice(0, 300) : []; }
 function saveLive() {
   if (!live.on) { try { localStorage.removeItem(LIVE_KEY); } catch (e) {} return; }
-  const rec = { room: live.room, at: Date.now(), task: live.task, taskN: live.taskN, locked: live.locked, hideNames: live.hideNames, roomLocked: live.roomLocked, roster: live.roster,
+  const rec = { room: live.room, at: Date.now(), task: live.task, taskN: live.taskN, locked: live.locked, hideNames: live.hideNames, roomLocked: live.roomLocked, roster: live.roster, cast: live.cast, banned: [...live.banned],
     students: [...live.students.values()].map(s => ({ sid: s.sid, name: s.name, items: s.items, fb: s.fb, joined: s.joined })) };
   try { localStorage.setItem(LIVE_KEY, JSON.stringify(rec)); }
   catch (e) { try { rec.students.forEach(s => { s.items = []; s.fb = []; }); localStorage.setItem(LIVE_KEY, JSON.stringify(rec)); } catch (_) {} }
@@ -2729,7 +2744,7 @@ async function startLive(resume) {
       live.starting = false; live.on = true; live.peer = peer; live.room = room;
       $("#lvGo").disabled = false; $("#lvGo").textContent = "ابدأ الحصة";
       if (resume) {
-        Object.assign(live, { task: resume.task || null, taskN: resume.taskN || 0, locked: !!resume.locked, hideNames: !!resume.hideNames, roomLocked: !!resume.roomLocked, roster: resume.roster || "" });
+        Object.assign(live, { task: resume.task || null, taskN: resume.taskN || 0, locked: !!resume.locked, hideNames: !!resume.hideNames, roomLocked: !!resume.roomLocked, roster: resume.roster || "", cast: !!resume.cast, banned: new Set(resume.banned || []) });
         (resume.students || []).forEach(x => live.students.set(x.sid, { sid: x.sid, name: x.name, items: x.items || [], fb: x.fb || [], joined: x.joined || Date.now(), online: false, conn: null, done: false, hand: false, answer: null, draft: null, _dirty: true }));
         toast("استؤنفت الحصة المباشرة. سيعود الطلاب إليها تلقائيًا.");
       } else showLiveInfo();
@@ -2759,17 +2774,20 @@ function onStudentMsg(conn, d) {
   if (!d || typeof d !== "object" || !live.on) return;
   if (d.t === "hello") {
     const sid = String(d.sid || "").replace(/[^a-z0-9]/gi, "").slice(0, 40); if (!sid) return;
+    if (live.banned.has(sid)) { try { conn.send({ t: "denied", why: "kicked" }); } catch (e) {} setTimeout(() => { try { conn.close(); } catch (e) {} }, 400); return; }
     let s = live.students.get(sid);
     if (!s) {
       if (live.roomLocked) { try { conn.send({ t: "denied" }); } catch (e) {} setTimeout(() => { try { conn.close(); } catch (e) {} }, 400); return; }
       s = { sid, name: cleanName(d.name) || "طالب", items: [], fb: [], joined: Date.now(), done: false, hand: false, answer: null, draft: null, _dirty: true };
       live.students.set(sid, s);
-      toast(`انضم ${dispName(s)}`);
+      toast(`انضمام جديد: ${dispName(s)}`);
     } else if (cleanName(d.name)) s.name = cleanName(d.name);
     if (s.conn && s.conn !== conn) { try { s.conn.close(); } catch (e) {} }
     s.conn = conn; s.online = true; s._dirty = true;
     const hasLocal = live.task && d.taskId === live.task.id;
     sendTo(s, { t: "state", name: s.name, task: live.task, mine: live.task && !hasLocal ? s.items : null, fb: live.task ? s.fb : [], locked: live.locked, question: live.question, answer: s.answer, timer: timerState() });
+    s.assets = new Set();
+    if (live.cast && !live.task) sendCast(s, castPayload());
     refreshCards(); saveLiveSoon(); return;
   }
   const s = [...live.students.values()].find(x => x.conn === conn); if (!s) return;
@@ -2782,7 +2800,7 @@ function onStudentMsg(conn, d) {
       s.draft = cleanItems([d.item])[0] || null; touchStudent(s); break;
     case "status": {
       const wasHand = s.hand; s.done = !!d.done; s.hand = !!d.hand;
-      if (s.hand && !wasHand) { toast(`✋ ${dispName(s)} يرفع يده`); chime(); }
+      if (s.hand && !wasHand) { toast(`✋ يد مرفوعة: ${dispName(s)}`); chime(); }
       refreshCards(); break;
     }
     case "answer":
@@ -2814,14 +2832,16 @@ function endTask() {
   if (viewing) exitView(false);
   live.task = null; for (const s of live.students.values()) { s.draft = null; s._dirty = true; }
   broadcast({ t: "task", task: null }); renderCards(true); updateLiveUI(); saveLive();
-  toast("عاد الطلاب إلى شاشة الانتظار");
+  if (live.cast) { castNow(); toast("انتهى التمرين، وعاد الطلاب يرون لوحتك"); } else toast("عاد الطلاب إلى شاشة الانتظار");
 }
 function endLive() {
   broadcast({ t: "end" });
   const peer = live.peer; setTimeout(() => { try { peer && peer.destroy(); } catch (e) {} }, 600);
   if (viewing) exitView(false);
   if (live.question) { live.question = false; }
-  Object.assign(live, { on: false, peer: null, room: null, task: null, taskN: 0, locked: false, roomLocked: false, question: false });
+  Object.assign(live, { on: false, peer: null, room: null, task: null, taskN: 0, locked: false, roomLocked: false, question: false, cast: false });
+  live.banned.clear(); live.assets.clear();
+  const ll = R.list.find(c => c.id === LIVE_LIST); if (ll) { ll.live = false; ll.name = "طلاب آخر حصة مباشرة"; saveRosters(); if (curClass() === ll) renderClasses(); }
   live.students.clear(); closeGallery(); saveLive(); updateLiveUI();
   toast("انتهت الحصة المباشرة");
 }
@@ -2840,6 +2860,10 @@ function updateLiveUI() {
   $("#cvLock").setAttribute("aria-pressed", live.locked); $("#cvLock").textContent = live.locked ? "فتح الكتابة" : "قفل الكتابة";
   $("#cvHide").setAttribute("aria-pressed", live.hideNames);
   $("#cvEnd").disabled = !live.task;
+  $("#cvCast").setAttribute("aria-pressed", live.cast); $("#lvCast").setAttribute("aria-pressed", live.cast);
+  $("#lvCast").textContent = live.cast ? "إيقاف بث لوحتي" : "بث لوحتي للطلاب";
+  $("#cvHands").hidden = ![...live.students.values()].some(s => s.hand);
+  $("#pLive").hidden = !on; $("#pLive").setAttribute("aria-pressed", curClass().id === LIVE_LIST);
   $("#lvLockRoom").checked = live.roomLocked;
   fitHeader();
 }
@@ -2884,7 +2908,7 @@ const cvGrid = $("#cvGrid");
 function openGallery() { if (!live.on) { openLiveDialog(); return; } closeMenus(); commitEditor(); $("#classView").hidden = false; renderCards(true); }
 function closeGallery() { $("#classView").hidden = true; }
 let cardsRaf = 0;
-function refreshCards() { if (!cardsRaf) cardsRaf = requestAnimationFrame(() => { cardsRaf = 0; renderCards(false); updateLiveUI(); }); }
+function refreshCards() { if (!cardsRaf) cardsRaf = requestAnimationFrame(() => { cardsRaf = 0; renderCards(false); updateLiveUI(); syncLiveRoster(); }); }
 function renderCards(full) {
   if ($("#classView").hidden) return;
   const list = studentsSorted(), online = list.filter(s => s.online).length, done = list.filter(s => s.done).length, hands = list.filter(s => s.hand).length;
@@ -2898,21 +2922,100 @@ function renderCards(full) {
     let card = cvGrid.querySelector(`[data-sid="${s.sid}"]`);
     if (!card) {
       card = document.createElement("article"); card.className = "card"; card.dataset.sid = s.sid;
-      card.innerHTML = `<button class="thumb" aria-label="افتح اللوحة"><canvas></canvas></button><div class="c-foot"><span class="c-dot"></span><b class="c-name"></b><span class="c-badges"></span></div><div class="c-acts"><button class="c-cheer" title="تشجيع هذا الطالب" aria-label="تشجيع">⭐</button><button class="c-clear" title="مسح لوحته" aria-label="مسح لوحته"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button></div>`;
+      card.innerHTML = `<button class="thumb" aria-label="افتح اللوحة"><canvas></canvas></button><div class="c-foot"><span class="c-dot"></span><b class="c-name"></b><span class="c-badges"></span></div><div class="c-acts"><button class="c-hand" title="إنزال يده" aria-label="إنزال يده" hidden>✋</button><button class="c-cheer" title="تشجيع هذا الطالب" aria-label="تشجيع">⭐</button><button class="c-clear" title="مسح لوحته" aria-label="مسح لوحته"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button><button class="c-kick" title="إخراج من الحصة" aria-label="إخراج من الحصة"><svg class="i flip" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M9 8l-4 4 4 4M5 12h10"/></svg></button></div>`;
       card.querySelector(".thumb").onclick = () => viewStudent(s.sid);
       card.querySelector(".c-cheer").onclick = () => { sendTo(s, { t: "cheer", name: s.name }); toast(`أُرسل تشجيع إلى ${dispName(s)}`); };
+      card.querySelector(".c-hand").onclick = () => lowerHand(s);
+      card.querySelector(".c-kick").onclick = e => {
+        const b = e.currentTarget;
+        if (b.classList.contains("armed")) { kickStudent(s); return; }
+        b.classList.add("armed"); b.textContent = "تأكيد الإخراج"; setTimeout(() => { if (b.isConnected) { b.classList.remove("armed"); b.innerHTML = '<svg class="i flip" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M9 8l-4 4 4 4M5 12h10"/></svg>'; } }, 3000);
+      };
       card.querySelector(".c-clear").onclick = () => { s.items = []; s.draft = null; s._dirty = true; sendTo(s, { t: "clear" }); refreshCards(); };
       full = true;
     }
-    card.classList.toggle("off", !s.online); card.classList.toggle("hand", s.hand);
+    card.classList.toggle("off", !s.online); card.classList.toggle("hand", s.hand); card.querySelector(".c-hand").hidden = !s.hand;
     card.querySelector(".c-name").textContent = dispName(s);
     card.querySelector(".c-badges").innerHTML = (s.hand ? '<span class="c-badge">✋</span>' : "") + (s.done ? '<span class="c-badge done">✓ انتهى</span>' : "") + (live.question && s.answer != null ? `<span class="c-badge ans">${TALLY[s.answer]}</span>` : "");
     cvGrid.appendChild(card);
-    if (full || s._dirty) { s._dirty = false; drawBoardInto(card.querySelector("canvas"), live.task, live.task ? [live.task.items, s.items, s.draft ? [s.draft] : [], s.fb] : []); }
+    if (full || s._dirty) { s._dirty = false; drawBoardInto(card.querySelector("canvas"), live.task, live.task ? [live.task.items, s.items, s.draft ? [s.draft] : [], s.fb] : [], live.cast ? "يشاهد لوحتك المعروضة" : "بانتظار التمرين"); }
   });
   [...cvGrid.children].forEach(c => { if (!seen.has(c.dataset.sid)) c.remove(); });
 }
 $("#cvClose").onclick = closeGallery;
+
+/* casting the teacher's board when no exercise is running */
+function castPayload() {
+  const p = doc.pages[doc.cur];
+  const items = p.items.map(it => {
+    if (it.type !== "image" || !it.src) return it;
+    const key = it.src.length + ":" + it.src.slice(-48); live.assets.set(key, it.src);
+    return { ...it, src: "", ak: key };
+  });
+  return { bg: p.bg, pattern: p.pattern, items, frame: viewFrame(p) };
+}
+function sendCast(s, pl) {
+  s.assets = s.assets || new Set();
+  for (const it of pl.items) if (it.ak && !s.assets.has(it.ak)) { sendTo(s, { t: "asset", key: it.ak, src: live.assets.get(it.ak) }); s.assets.add(it.ak); }
+  sendTo(s, { t: "cast", page: pl });
+}
+function castNow() {
+  if (!live.on) return;
+  const pl = live.cast && !live.task ? castPayload() : null;
+  for (const s of live.students.values()) if (s.online) { if (pl) sendCast(s, pl); else sendTo(s, { t: "cast", page: null }); }
+}
+let castT = 0, castDraftAt = 0;
+function castSoon() { if (role !== "teacher" || !live.on || !live.cast || live.task || viewing) return; clearTimeout(castT); castT = setTimeout(castNow, 180); }
+function castDraftTick() {
+  if (!draft || !live.on || !live.cast || live.task || viewing || performance.now() - castDraftAt < 120) return;
+  castDraftAt = performance.now(); broadcast({ t: "castDraft", item: draft });
+}
+function setCast(on) {
+  live.cast = on; updateLiveUI(); saveLiveSoon(); castNow(); renderCards(true);
+  if (!on) toast("أُوقف بث لوحتك");
+  else if (live.task) toast("سيبدأ البث تلقائيًا بعد إنهاء التمرين");
+  else toast("يرى الطلاب لوحتك الآن مباشرة");
+}
+$("#cvCast").onclick = () => setCast(!live.cast);
+$("#lvCast").onclick = () => setCast(!live.cast);
+
+/* hands and kicking out */
+function lowerHand(s) { if (!s.hand) return; s.hand = false; sendTo(s, { t: "hand", up: false }); refreshCards(); }
+$("#cvHands").onclick = () => { let n = 0; for (const s of live.students.values()) if (s.hand) { lowerHand(s); n++; } if (n) toast("أُنزلت كل الأيدي"); };
+function kickStudent(s) {
+  const sid = s.sid, name = dispName(s);
+  sendTo(s, { t: "kick" }); const c = s.conn; setTimeout(() => { try { c && c.close(); } catch (e) {} }, 400);
+  live.students.delete(sid); live.banned.add(sid);
+  if (viewing && viewing.sid === sid) exitView(true);
+  refreshCards(); saveLive();
+  toast(`تم إخراج ${name} من الحصة`, "تراجع", () => {
+    live.banned.delete(sid); Object.assign(s, { online: false, conn: null, draft: null, _dirty: true }); live.students.set(sid, s);
+    refreshCards(); saveLive(); toast(`يمكن لـ${name} الانضمام مجددًا`);
+  });
+}
+
+/* a picker list that follows the students who are connected right now */
+const LIVE_LIST = "live-list";
+function onlineNames() { return [...new Set(studentsSorted().filter(s => s.online).map(s => s.name))].join("\n"); }
+function syncLiveRoster() {
+  if (!live.on) return;
+  const c = R.list.find(x => x.id === LIVE_LIST); if (!c || !c.live) return;
+  const t = onlineNames(); if (t === c.text) return;
+  c.text = t; saveRosters();
+  if (curClass() === c) { pNames.value = t; pLeft(); const o = pClass.selectedOptions[0]; if (o) o.textContent = `${c.name} (${roster().length})`; }
+  else { const o = pClass.querySelector(`option[value="${LIVE_LIST}"]`); if (o) o.textContent = `${c.name} (${t ? t.split("\n").length : 0})`; }
+}
+function useLiveList() {
+  let c = R.list.find(x => x.id === LIVE_LIST);
+  if (!c) { c = { id: LIVE_LIST, name: "", text: "" }; R.list.unshift(c); }
+  c.live = true; c.name = "الطلاب المتصلون الآن"; c.text = onlineNames(); pickedBy.delete(LIVE_LIST);
+  R.cur = LIVE_LIST; saveRosters(); renderClasses(); updateLiveUI();
+}
+$("#pLive").onclick = () => { useLiveList(); toast("تتحدث القائمة تلقائيًا مع انضمام الطلاب وخروجهم"); };
+$("#cvPick").onclick = () => {
+  if (![...live.students.values()].some(s => s.online)) { toast("لا يوجد طلاب متصلون الآن"); return; }
+  useLiveList(); closeGallery(); quickPick();
+};
 $("#cvPush").onclick = pushTask;
 $("#cvEnd").onclick = endTask;
 $("#cvLock").onclick = () => { live.locked = !live.locked; broadcast({ t: "lock", on: live.locked }); updateLiveUI(); saveLiveSoon(); toast(live.locked ? "أُوقفت كتابة الطلاب" : "عادت الكتابة للطلاب"); };
@@ -2973,7 +3076,7 @@ $("#tlLive").onclick = () => {
 };
 
 /* =================== LIVE CLASS: student =================== */
-const stu = { sid: null, name: "", conn: null, peer: null, task: null, locked: false, done: false, hand: false, answer: null, ended: false, welcomed: false, roster: [], fbSeen: false, retryT: 0, timerI: 0 };
+const stu = { cast: null, castDraft: null, assets: new Map(), sid: null, name: "", conn: null, peer: null, task: null, locked: false, done: false, hand: false, answer: null, ended: false, welcomed: false, roster: [], fbSeen: false, retryT: 0, timerI: 0 };
 const STU_KEY = "lawhati:stu:" + JOIN;
 let stuPage = null, lastDraftAt = 0;
 const stuLoad = () => { try { return JSON.parse(localStorage.getItem(STU_KEY) || "null") || {}; } catch (e) { return {}; } };
@@ -3029,7 +3132,12 @@ function stuOnMsg(d) {
     case "welcome":
       stu.welcomed = true; stu.roster = Array.isArray(d.roster) ? d.roster.map(cleanName).filter(Boolean) : [];
       if (stu.name) stuHello(); else showNameForm(); break;
-    case "denied": stu.ended = true; stuScreen("end", "الغرفة مقفلة الآن ولا يمكن الانضمام. اطلب من معلمك فتحها."); break;
+    case "denied": stu.ended = true; stuScreen("end", d.why === "kicked" ? "أخرجك المعلم من هذه الحصة." : "الغرفة مقفلة الآن ولا يمكن الانضمام. اطلب من معلمك فتحها."); break;
+    case "kick": stu.ended = true; stu.cast = null; document.body.classList.remove("stu-cast"); $("#stuCastPill").hidden = true; stuSetQuestion(false); stuSetTimer(null); stuScreen("end", "أخرجك المعلم من هذه الحصة."); try { stu.conn && stu.conn.close(); } catch (e) {} break;
+    case "hand": stu.hand = !!d.up; syncStatusBtns(); if (!d.up) toast("أنزل المعلم يدك"); break;
+    case "asset": if (typeof d.src === "string" && /^data:image\//.test(d.src)) { stu.assets.set(String(d.key), d.src); if (stu.cast && !stu.task) stuShowCast(); } break;
+    case "cast": stu.cast = d.page && typeof d.page === "object" ? d.page : null; stu.castDraft = null; if (!stu.task) stuShowCast(); break;
+    case "castDraft": if (stu.cast && !stu.task) { stu.castDraft = cleanItems([d.item])[0] || null; stuShowCast(true); } break;
     case "state":
       stu.name = cleanName(d.name) || stu.name; $("#stuName").textContent = stu.name;
       stu.locked = !!d.locked; stuApplyTask(d.task || null, d.mine, false);
@@ -3068,8 +3176,10 @@ $("#ssName").addEventListener("keydown", e => { if (e.key === "Enter") $("#ssGo"
 function stuApplyTask(task, mine, fresh) {
   if (!task) {
     stu.task = null; stuPage.base = []; stuPage.items = []; stuPage.over = []; selected = null; draft = null; action = null;
-    stuScreen("wait"); stuSave(); markView(); return;
+    stuSave(); if (stu.cast) { stuShowCast(); return; }
+    stuScreen("wait"); markView(); return;
   }
+  document.body.classList.remove("stu-cast"); $("#stuCastPill").hidden = true;
   const same = stu.task && stu.task.id === task.id, saved = stuLoad();
   stu.task = task;
   stuPage.bg = PAL[task.bg] ? task.bg : "chalk"; stuPage.pattern = task.pattern || "none"; stuPage.base = cleanBase(task.items);
@@ -3083,6 +3193,15 @@ function stuApplyTask(task, mine, fresh) {
   if (!same && saved.taskId === task.id && stuPage.items.length) stuSendInk();
   if (fresh && !same) { toast("وصل تمرين جديد من معلمك"); chime(); }
   stuSave();
+}
+function stuShowCast(draftOnly) {
+  if (!stu.cast) { document.body.classList.remove("stu-cast"); $("#stuCastPill").hidden = true; if (!stu.task && !stu.ended) { stuScreen("wait"); markView(); } return; }
+  const c = stu.cast, items = (Array.isArray(c.items) ? c.items : []).map(it => it && it.ak ? { ...it, src: stu.assets.get(String(it.ak)) || "" } : it);
+  stuPage.bg = PAL[c.bg] ? c.bg : "chalk"; stuPage.pattern = c.pattern || "none";
+  stuPage.base = [...cleanBase(items), ...(stu.castDraft ? [stu.castDraft] : [])]; stuPage.items = []; stuPage.over = [];
+  if (!draftOnly && c.frame && c.frame.w > 0) Object.assign(stuPage.cam, fitCamTo(c.frame));
+  document.body.classList.add("stu-cast"); $("#stuCastPill").hidden = false; selected = null;
+  stuScreen("board"); if (!draftOnly) updatePages(); sceneDirty = true; req();
 }
 function applyLock() { $("#stuLock").hidden = !(stu.locked && stu.task); if (stu.locked) { draft = null; action = null; req(); } }
 function syncStatusBtns() { $("#stuHand").setAttribute("aria-pressed", stu.hand); $("#stuDone").setAttribute("aria-pressed", stu.done); }
