@@ -2572,6 +2572,8 @@ function fitHeader() {
 }
 function fitDock() {
   const dock = $("#dock"), max = stage.clientWidth - 24;
+  /* a hidden dock measures 0px wide, so only fit it while it is on screen */
+  if (getComputedStyle(dock).display === "none") return;
   const order = role === "student" ? ["#smartGrp", "#sizeGrp", "#dHand", "#dLaser", "#dCal", "#dHl", "#dNote", "#shapeBtn", "#dSelect", "#colorGrp", "#dText", "#undoGrp", "#dEraser"].map(q => dockUnits.find(u => u.el === $(q))).filter(Boolean) : dockUnits;
   moveOverflow(order, () => dock.offsetWidth <= max, $("#dockMore"), $("#m-dockmore"), $("#dockItems"));
   updateDockMore();
@@ -3182,6 +3184,7 @@ function setConn(ok) { const c = $("#stuConn"); c.className = "conn " + (ok ? "o
 function stuScreen(mode, msg) {
   const board = mode === "board";
   $("#stuScreen").hidden = board; document.body.classList.toggle("stu-board", board);
+  if (board) fitDock();
   if (board) return;
   const T = { connect: ["لوحتي", "جارٍ الاتصال بمعلمك…"], name: ["أهلًا بك!", "اختر اسمك لتدخل الحصة"], wait: [`أهلًا ${stu.name}`, "بانتظار المعلم… سيظهر التمرين هنا عندما يرسله"], end: ["إلى اللقاء", ""], error: ["تعذّر الاتصال", ""] }[mode];
   $("#ssTitle").textContent = T[0]; $("#ssMsg").textContent = msg || T[1];
@@ -3326,7 +3329,7 @@ function stuRefreshView() {
   if (!hasT) stu.view = "cast"; else if (!hasC) stu.view = "task";
   const target = stu.view === "cast" ? castPage : stuPage;
   if (viewing !== target) { commitEditor(); selected = null; draft = null; action = null; viewing = target; }
-  document.body.classList.toggle("stu-cast", stu.view === "cast");
+  document.body.classList.toggle("stu-cast", stu.view === "cast"); fitDock();
   $("#stuView").hidden = !hasC; $("#svLive").hidden = hasT; $("#svSeg").hidden = !hasT;
   $$("#svSeg [data-v]").forEach(b => b.setAttribute("aria-selected", b.dataset.v === stu.view));
   stuScreen("board"); applyLock(); updatePages(); markView();
