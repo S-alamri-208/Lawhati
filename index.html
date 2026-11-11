@@ -402,6 +402,68 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
 .q-btns button{width:64px;height:64px;border-radius:16px;border:2px solid var(--ui-line);background:var(--ui-surface);font-size:26px;font-weight:700;cursor:pointer;color:var(--ui-ink)}
 .q-btns button[aria-pressed="true"]{background:var(--on-bg);color:var(--on-ink);border-color:transparent}
 
+
+/* ---------- student view: responsive ---------- */
+body.student .topbar{gap:8px}
+body.student #paneLeft{flex:0 1 auto;min-width:0}
+body.student #paneLeft .brand{flex:none}
+body.student .stu-name{flex:0 1 auto;min-width:0;max-width:260px}
+body.student #stuPane{flex:none}
+.stu-screen{overflow-y:auto}
+#ssErr:empty{display:none}
+.stu-card{margin:auto}
+/* tablets */
+@media (max-width:899px){
+  body.student .stu-name{max-width:200px}
+}
+/* phones */
+@media (max-width:599px){
+  body.student .topbar{top:8px;left:8px;right:8px;gap:6px}
+  body.student .brand .word{display:none}
+  body.student #paneLeft{padding:4px}
+  body.student .stu-name{max-width:none;padding:0 4px 0 6px;font-size:14px}
+  body.student #stuPane{padding:4px;gap:2px}
+  body.student #stuPane .t{display:none}
+  body.student #stuPane .btn{width:40px;padding:0}
+  body.student .stu-timer{padding:4px 8px;font-size:13px}
+  body.student .conn{margin-inline:6px 4px}
+  body.student .zoom{display:none!important}
+  body.student .dock{bottom:8px}
+  body.student .toast{bottom:76px}
+  body.student .stu-view{top:62px}
+  .sv-seg button{padding:7px 12px}
+  .sv-live{font-size:13px}
+  .stu-q{left:8px;right:8px;margin-inline:0;transform:none;width:auto;bottom:74px;padding:10px 10px 12px;border-radius:18px}
+  .q-btns{width:100%;gap:8px}
+  .q-btns button{flex:1;width:auto;height:58px}
+  .stu-screen{padding:14px}
+  .stu-card{padding:22px 18px 18px;border-radius:20px}
+  .stu-logo{width:62px;height:54px}
+  .stu-card h1{font-size:28px}
+  #cheer{font-size:clamp(44px,13vw,72px);white-space:normal;width:92vw;text-align:center}
+}
+/* very small phones */
+@media (max-width:359px){
+  body.student #stuPane .btn{width:36px}
+  .sv-seg button{padding:6px 9px;font-size:13px}
+  .q-btns button{height:52px;font-size:22px}
+}
+/* phones held sideways and other short screens */
+@media (max-height:520px){
+  body.student .topbar{top:6px}
+  body.student .stu-view{top:58px}
+  .stu-screen{place-items:start center;padding:10px}
+  .stu-card{padding:12px 18px 14px;gap:6px}
+  .stu-logo{width:42px;height:36px}
+  .stu-card h1{font-size:22px}
+  .wbtn.big{height:40px}
+  .stu-q{flex-direction:row;bottom:70px;padding:8px 12px;gap:12px;left:0;right:0;margin-inline:auto;width:max-content;transform:none}
+  .stu-q b{font-size:13px;max-width:130px;line-height:1.35}
+  .q-btns{width:auto}
+  .q-btns button{flex:none;width:50px;height:50px;font-size:22px}
+  body.student .zoom{bottom:72px}
+}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
 }
@@ -845,8 +907,9 @@ let vw = 0, vh = 0, dpr = 1, raf = 0, sceneDirty = true;
 
 function ensureCam(p) { if (p.cam.x == null) { p.cam.x = vw / 2; p.cam.y = vh / 2; p.cam.z = p.cam.z || 1; } }
 function resize() {
-  const r = stage.getBoundingClientRect();
+  const r = stage.getBoundingClientRect(), ow = vw, oh = vh;
   vw = r.width; vh = r.height; dpr = Math.min(window.devicePixelRatio || 1, 2);
+  if (role === "student" && ow && oh && (ow !== vw || oh !== vh)) stuKeepViews(ow, oh);
   for (const c of [cv, fx, scene]) { c.width = Math.max(1, Math.round(vw * dpr)); c.height = Math.max(1, Math.round(vh * dpr)); }
   sceneDirty = true; render(); fitAll();
 }
@@ -1607,6 +1670,14 @@ function zoomAt(sx, sy, f) {
 
 cv.addEventListener("pointerdown", e => {
   closeMenus(); if (!pickCard.hidden && !spinning) hidePick();
+  if (role === "student" && viewing === castPage && castPage) {
+    const s0 = sp(e); pointers.set(e.pointerId, { x: s0.x, y: s0.y, type: e.pointerType });
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    castPage.userMoved = true;
+    if (pointers.size === 2) { cancelAction(); startPinch(); return; }
+    if (pointers.size === 1) action = { kind: "pan", sx: s0.x, sy: s0.y, cx: page().cam.x, cy: page().cam.y };
+    return;
+  }
   if (role === "student" && (!stu.task || stu.locked || viewing !== stuPage)) return;
   if (editing) { commitEditor(); e.preventDefault(); return; }
   const s = sp(e); pointers.set(e.pointerId, { x: s.x, y: s.y, type: e.pointerType });
@@ -1740,6 +1811,7 @@ stage.addEventListener("pointerleave", () => { hover = null; if (!fxRaf) fxRaf =
 stage.addEventListener("wheel", e => {
   if (e.target !== cv && !e.target.closest("#shade,#spot")) return;
   e.preventDefault();
+  if (role === "student" && castPage && viewing === castPage) castPage.userMoved = true;
   const s = sp(e);
   if (!spotEl.hidden && e.shiftKey) { spotR = clamp(spotR * Math.exp(-(e.deltaY || e.deltaX) * .002), 50, 600); spotEl.style.setProperty("--sr", spotR + "px"); return; }
   if (e.ctrlKey || e.metaKey) zoomAt(s.x, s.y, Math.exp(-e.deltaY * .0025));
@@ -2500,7 +2572,8 @@ function fitHeader() {
 }
 function fitDock() {
   const dock = $("#dock"), max = stage.clientWidth - 24;
-  moveOverflow(dockUnits, () => dock.offsetWidth <= max, $("#dockMore"), $("#m-dockmore"), $("#dockItems"));
+  const order = role === "student" ? ["#smartGrp", "#sizeGrp", "#dHand", "#dLaser", "#dCal", "#dHl", "#dNote", "#shapeBtn", "#dSelect", "#colorGrp", "#dText", "#undoGrp", "#dEraser"].map(q => dockUnits.find(u => u.el === $(q))).filter(Boolean) : dockUnits;
+  moveOverflow(order, () => dock.offsetWidth <= max, $("#dockMore"), $("#m-dockmore"), $("#dockItems"));
   updateDockMore();
 }
 function fitAll() { if (!vw) return; closeMenus(); fitHeader(); fitDock(); }
@@ -2680,7 +2753,39 @@ async function qrInto(el, text) {
   catch (e) { el.innerHTML = '<span class="muted">تعذّر إنشاء رمز QR</span>'; }
 }
 function viewFrame(p) { const c = p.cam; return { x: r1(-c.x / c.z), y: r1(-c.y / c.z), w: r1(vw / c.z), h: r1(vh / c.z) }; }
-function fitCamTo(f) { const z = clamp(Math.min(vw / f.w, vh / f.h) * .96, .2, 4); return { z, x: vw / 2 - (f.x + f.w / 2) * z, y: vh / 2 - (f.y + f.h / 2) * z }; }
+function fitCamTo(f, ins) {
+  ins = ins || { t: 0, b: 0 }; const H = Math.max(80, vh - ins.t - ins.b);
+  const z = clamp(Math.min(vw / f.w, H / f.h) * .96, .2, 4);
+  return { z, x: vw / 2 - (f.x + f.w / 2) * z, y: ins.t + H / 2 - (f.y + f.h / 2) * z };
+}
+/* room taken by the student's floating bars */
+function stuInsets(isCast) { const short = vh <= 520; return { t: (short ? 54 : 66) + (stu.cast ? 46 : 0), b: isCast ? 12 : (short ? 70 : 78) }; }
+/* on narrow screens, fit the exercise's actual content rather than the teacher's wide screen */
+const compactScreen = (w, h) => w < 700 || h < 560 || h > w * 1.15;
+function taskFitBox(task) { return fitBoxFor(cleanBase(task.items), task.frame); }
+function fitBoxFor(items, f) {
+  if (!compactScreen(vw, vh)) return f;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const it of items) { const b = worldBox(it); x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.w); y1 = Math.max(y1, b.y + b.h); }
+  if (!(x1 > x0)) return { x: f.x + f.w * .25, y: f.y + f.h * .1, w: f.w * .5, h: f.h * .8 };
+  const pad = 50, w = Math.max(x1 - x0 + 2 * pad, f.w * .45), h = Math.max(y1 - y0 + 2 * pad, f.h * .45);
+  return { x: (x0 + x1) / 2 - w / 2, y: (y0 + y1) / 2 - h / 2, w, h };
+}
+function stuKeepViews(ow, oh) {
+  if (editing || /INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || "")) return;
+  const keep = (pg, f, cast) => {
+    if (!pg || !f || pg.cam.x == null) return;
+    const c = pg.cam, wx = (ow / 2 - c.x) / c.z, wy = (oh / 2 - c.y) / c.z, ins = stuInsets(cast);
+    const fz = (W, H) => Math.min(W / f.w, Math.max(80, H - ins.t - ins.b) / f.h);
+    c.z = clamp(c.z * fz(vw, vh) / fz(ow, oh), .2, 4); c.x = vw / 2 - wx * c.z; c.y = vh / 2 - wy * c.z;
+  };
+  if (stu.task && compactScreen(ow, oh) !== compactScreen(vw, vh)) {
+    /* moved between phone and wider layouts: refit the exercise from scratch */
+    stu.fitBox = taskFitBox(stu.task); Object.assign(stuPage.cam, fitCamTo(stu.fitBox, stuInsets(false)));
+  } else keep(stuPage, stu.task && (stu.fitBox || stu.task.frame), false);
+  if (stu.cast && castPage && !castPage.userMoved && castPage.shown) Object.assign(castPage.cam, fitCamTo(fitBoxFor(castPage.shown, stu.cast.frame), stuInsets(true)));
+  else keep(castPage, stu.cast && stu.cast.frame, true);
+}
 function drawBoardInto(cvs, task, layers, emptyMsg) {
   const w = cvs.clientWidth, h = cvs.clientHeight; if (!w || !h) return;
   const d = Math.min(window.devicePixelRatio || 1, 2);
@@ -3183,7 +3288,7 @@ function stuApplyTask(task, mine, fresh) {
   if (!same) {
     stuPage.id = "stu-" + task.id; stu.fbSeen = false; selected = null; draft = null; action = null;
     stuPage.items = saved.taskId === task.id ? cleanItems(saved.items) : (mine ? cleanItems(mine) : []);
-    stuPage.over = []; Object.assign(stuPage.cam, fitCamTo(task.frame)); stu.view = "task";
+    stuPage.over = []; stu.fitBox = taskFitBox(task); Object.assign(stuPage.cam, fitCamTo(stu.fitBox, stuInsets(false))); stu.view = "task";
     if (fresh) { stu.done = false; stu.hand = false; syncStatusBtns(); stuStatus(); }
   }
   stuRefreshView();
@@ -3198,7 +3303,15 @@ function stuUpdateCast(draftOnly) {
   if (!draftOnly) {
     const items = (Array.isArray(c.items) ? c.items : []).map(it => it && it.ak ? { ...it, src: stu.assets.get(String(it.ak)) || "" } : it);
     castPage.bg = PAL[c.bg] ? c.bg : "white"; castPage.pattern = c.pattern || "none"; castPage.shown = cleanBase(items);
-    if (c.frame && c.frame.w > 0) Object.assign(castPage.cam, fitCamTo(c.frame));
+    if (c.frame && c.frame.w > 0) {
+      /* follow the teacher only when their view changes, so a student's own pinch-zoom is kept between strokes */
+      const fk = [c.frame.x, c.frame.y, c.frame.w, c.frame.h].map(Math.round).join(",");
+      if (fk !== castPage.fk) castPage.userMoved = false;
+      const box = fitBoxFor(castPage.shown, c.frame), bk = [box.x, box.y, box.w, box.h].map(v => Math.round(v / 40)).join(",");
+      if (fk !== castPage.fk || castPage.cam.x == null || (!castPage.userMoved && bk !== castPage.bk)) {
+        castPage.fk = fk; castPage.bk = bk; Object.assign(castPage.cam, fitCamTo(box, stuInsets(true)));
+      }
+    }
   }
   castPage.base = [...(castPage.shown || []), ...(stu.castDraft ? [stu.castDraft] : [])];
   if (viewing === castPage) { sceneDirty = true; req(); }
