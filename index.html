@@ -13,39 +13,16 @@
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
-  --ui-bg:#EEF0EC; --ui-surface:#FFFFFF; --ui-ink:#15201B; --ui-muted:#56625C;
-  --ui-line:rgba(21,32,27,.13); --ui-hover:rgba(21,32,27,.07);
-  --glass:rgba(255,255,255,.84); --glass-strong:rgba(255,255,255,.93);
-  --glass-hi:rgba(255,255,255,.75); --glass-edge:rgba(21,32,27,.12);
-  --on-bg:#15201B; --on-ink:#FFFFFF;
-  --accent:#E8B21F; --accent-ink:#231B03;
-  --danger:#B3361F;
-  --shadow:0 12px 32px rgba(10,20,15,.24), 0 2px 6px rgba(10,20,15,.12);
-  --blur:saturate(160%) blur(16px);
-  color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --ui-bg:#121916; --ui-surface:#1B2320; --ui-ink:#EAF0EC; --ui-muted:#A2B0A8;
-    --ui-line:rgba(234,240,236,.13); --ui-hover:rgba(234,240,236,.09);
-    --glass:rgba(22,29,26,.74); --glass-strong:rgba(26,34,30,.93);
-    --glass-hi:rgba(255,255,255,.08); --glass-edge:rgba(0,0,0,.45);
-    --on-bg:#F1C548; --on-ink:#1A1505;
-    --accent:#F1C548; --accent-ink:#1A1505;
-    --danger:#FF8F78;
-    --shadow:0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.35);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
+  /* dark frosted glass, always (it does not follow the device theme) */
   --ui-bg:#121916; --ui-surface:#1B2320; --ui-ink:#EAF0EC; --ui-muted:#A2B0A8;
   --ui-line:rgba(234,240,236,.13); --ui-hover:rgba(234,240,236,.09);
-  --glass:rgba(22,29,26,.74); --glass-strong:rgba(26,34,30,.93);
+  --glass:rgba(18,25,22,.8); --glass-strong:rgba(26,34,30,.93);
   --glass-hi:rgba(255,255,255,.08); --glass-edge:rgba(0,0,0,.45);
   --on-bg:#F1C548; --on-ink:#1A1505;
   --accent:#F1C548; --accent-ink:#1A1505;
   --danger:#FF8F78;
   --shadow:0 12px 32px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.35);
+  --blur:saturate(160%) blur(16px);
   color-scheme:dark;
 }
 html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -94,7 +71,7 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stro
 }
 
 /* ---------- stage ---------- */
-#stage{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:none;background:#2D4238}
+#stage{position:relative;flex:1;min-height:0;overflow:hidden;touch-action:none;background:#FCFCF9}
 #board,#fx{position:absolute;inset:0;width:100%;height:100%;display:block}
 #fx{pointer-events:none}
 #board{cursor:crosshair}
@@ -155,7 +132,7 @@ body.presenting .topbar{display:none}
 .sw-btn:hover{background:var(--ui-hover)}
 .sw-dot{
   width:24px;height:24px;border-radius:50%;background:var(--c);transition:transform .12s ease;
-  box-shadow:inset 0 0 0 1px rgba(0,0,0,.22), 0 1px 3px rgba(0,0,0,.25)
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.32), 0 1px 3px rgba(0,0,0,.4)
 }
 .sw-btn:hover .sw-dot{transform:scale(1.08)}
 .sw-btn[aria-checked="true"] .sw-dot{box-shadow:0 0 0 2px var(--glass-strong),0 0 0 4.5px var(--ui-ink)}
@@ -305,9 +282,7 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 .sq{width:36px;height:36px;flex:none;display:grid;place-items:center;border:1px solid var(--ui-line);background:var(--ui-surface);border-radius:10px;cursor:pointer;color:var(--ui-ink)}
 .sq:hover{background:var(--ui-hover)}
 #pDel:hover{color:var(--danger)}
-.wbtn.xl{display:inline-flex;align-items:center;gap:6px;height:36px;flex:none;color:#107C41;border-color:rgba(16,124,65,.35)}
-:root[data-theme="dark"] .wbtn.xl{color:#5CD18F}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .wbtn.xl{color:#5CD18F}}
+.wbtn.xl{display:inline-flex;align-items:center;gap:6px;height:36px;flex:none;color:#5CD18F;border-color:rgba(92,209,143,.35)}
 #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 #cheer{
   position:fixed;left:50%;top:42%;z-index:61;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.7);
@@ -358,7 +333,7 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 .card{position:relative;border-radius:14px;overflow:hidden;background:var(--ui-surface);border:1px solid var(--glass-edge);box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .card.off{opacity:.55}
 .card.hand{box-shadow:0 0 0 3px #F1C548,0 2px 8px rgba(0,0,0,.12)}
-.card .thumb{display:block;width:100%;aspect-ratio:16/10;border:0;padding:0;cursor:zoom-in;background:#2D4238}
+.card .thumb{display:block;width:100%;aspect-ratio:16/10;border:0;padding:0;cursor:zoom-in;background:#FCFCF9}
 .card canvas{display:block;width:100%;height:100%}
 .c-foot{display:flex;align-items:center;gap:6px;padding:7px 10px;font-size:14px}
 .c-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -366,8 +341,8 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 .card.off .c-dot{background:#999}
 .c-badges{display:flex;gap:4px;align-items:center;font-size:13px}
 .c-badge{padding:1px 7px;border-radius:999px;background:var(--ui-hover);font-weight:700}
-.c-badge.done{background:#D3F9D8;color:#1B6E2D}
-.c-badge.ans{background:#E7F0FF;color:#1D4ED8}
+.c-badge.done{background:rgba(92,209,143,.18);color:#7EE2A8}
+.c-badge.ans{background:rgba(110,160,255,.2);color:#9CC0FF}
 .c-acts{position:absolute;top:6px;inset-inline-start:6px;display:flex;gap:4px;opacity:0;transition:opacity .15s}
 .card:hover .c-acts,.card:focus-within .c-acts{opacity:1}
 .c-acts button{width:30px;height:30px;border-radius:9px;border:0;background:rgba(16,22,19,.75);color:#fff;cursor:pointer;display:grid;place-items:center}
@@ -376,9 +351,14 @@ select.field.sm{padding-inline-end:6px;cursor:pointer}
 .card.hand .c-acts{opacity:1}
 #cvCast[aria-pressed="true"],#lvCast[aria-pressed="true"]{background:#E5484D;color:#fff;border-color:transparent}
 .live-list{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:8px}
-.live-list .live-dot,.stu-cast-pill .live-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#E5484D;animation:livePulse 1.6s ease-in-out infinite}
+.live-list .live-dot,.stu-view .live-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#E5484D;animation:livePulse 1.6s ease-in-out infinite}
 .live-list[aria-pressed="true"]{background:var(--on-bg);color:var(--on-ink);border-color:transparent}
-.stu-cast-pill{position:absolute;top:70px;left:0;right:0;margin-inline:auto;width:max-content;z-index:10;display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-weight:700;font-size:14px}
+.stu-view{position:absolute;top:70px;left:0;right:0;margin-inline:auto;width:max-content;max-width:calc(100% - 24px);z-index:10;display:flex;align-items:center;gap:6px;padding:5px;border-radius:999px;font-weight:700;font-size:14px}
+.sv-live{display:flex;align-items:center;gap:8px;padding:3px 10px}
+.sv-seg{display:flex;gap:2px}
+.sv-seg button{border:0;background:transparent;border-radius:999px;padding:7px 14px;font:inherit;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;color:var(--ui-ink);white-space:nowrap}
+.sv-seg button:hover{background:var(--ui-hover)}
+.sv-seg button[aria-selected="true"]{background:var(--on-bg);color:var(--on-ink)}
 body.stu-cast .dock,body.stu-cast .zoom,body.stu-cast #stuDone{display:none!important}
 .cv-empty{display:flex;align-items:center;justify-content:center;gap:28px;padding:40px 16px;flex-wrap:wrap;text-align:start}
 .cv-empty p{margin:6px 0 10px;color:var(--ui-muted)}
@@ -432,7 +412,7 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
 <main id="stage">
   <canvas id="board" aria-label="مساحة اللوحة"></canvas>
   <canvas id="fx" aria-hidden="true"></canvas>
-  <div class="hint" id="hint"><b>التقط الطبشورة وابدأ الكتابة.</b><span>الأدوات في الشريط السفلي. اضغط ؟ لعرض الاختصارات.</span></div>
+  <div class="hint" id="hint"><b>اختر قلمًا وابدأ الكتابة.</b><span>الأدوات في الشريط السفلي. اضغط ؟ لعرض الاختصارات.</span></div>
 
   <div class="selbar pane" id="selbar" hidden>
     <button id="selColor" title="تغيير لون الملاحظة">اللون</button>
@@ -523,6 +503,7 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
       <div class="cv-title"><b>لوحات الطلاب</b><small id="cvSummary"></small></div>
       <div class="cv-actions">
         <button class="btn primary" id="cvPush" title="أرسل صفحتك الحالية إلى كل الطلاب ليكتبوا عليها"><svg class="i flip" viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/><path d="M11.5 13.5L20 4"/></svg><span>إرسال صفحتي كتمرين</span></button>
+        <button class="btn" id="cvPushEmpty" title="أرسل لكل طالب لوحة فارغة بخلفية صفحتك ونمطها، ليكتب حلّه بحرية"><svg class="i" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><path d="M12 9v6M9 12h6"/></svg><span>تمرين بلوحة فارغة</span></button>
         <button class="btn" id="cvEnd" title="أعِد الطلاب إلى شاشة الانتظار">إنهاء التمرين</button>
         <button class="btn" id="cvLock" aria-pressed="false" title="أوقف كتابة الطلاب مؤقتًا">قفل الكتابة</button>
         <button class="btn" id="cvHide" aria-pressed="false" title="مفيد عند مشاركة شاشتك">إخفاء الأسماء</button>
@@ -559,7 +540,13 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
       <small class="ss-code" id="ssCode"></small>
     </div>
   </div>
-  <div class="stu-cast-pill pane" id="stuCastPill" hidden><span class="live-dot"></span>يعرض معلمك لوحته الآن</div>
+  <div class="stu-view pane" id="stuView" hidden>
+    <span class="sv-live" id="svLive"><span class="live-dot"></span>يعرض معلمك لوحته الآن</span>
+    <div class="sv-seg" id="svSeg" role="tablist" aria-label="ما تشاهده الآن">
+      <button role="tab" data-v="task" aria-selected="true" title="عملك محفوظ كما تركته"><svg class="i flip" viewBox="0 0 24 24" style="width:17px;height:17px"><path d="M4 20l1-4L16.5 4.5a2.1 2.1 0 0 1 3 3L8 19z"/></svg>تمريني</button>
+      <button role="tab" data-v="cast" aria-selected="false"><span class="live-dot"></span>لوحة المعلم</button>
+    </div>
+  </div>
   <div class="stu-lock" id="stuLock" hidden><div class="pane">أوقف المعلم الكتابة مؤقتًا</div></div>
   <div class="stu-q pane" id="stuQ" hidden>
     <b>سؤال من معلمك: اختر إجابتك</b>
@@ -670,8 +657,8 @@ body.student:not(.stu-board) .dock,body.student:not(.stu-board) .zoom{display:no
 <div class="menu wide" id="m-board" role="menu" hidden>
   <div class="m-h">الخلفية</div>
   <div class="opts" id="bgOpts">
-    <button class="opt" data-bg="chalk"><span class="sw" style="background:#2D4238"></span>سبورة طباشير</button>
     <button class="opt" data-bg="white"><span class="sw" style="background:#FCFCF9"></span>سبورة بيضاء</button>
+    <button class="opt" data-bg="chalk"><span class="sw" style="background:#2D4238"></span>سبورة طباشير</button>
     <button class="opt" data-bg="night"><span class="sw" style="background:#171C27"></span>ليلي</button>
   </div>
   <div class="m-h">النمط</div>
@@ -830,11 +817,11 @@ const COLOR_NAMES_W = ["أسود","أزرق","أحمر","أخضر","برتقال
 const STORE = "chalkline:v1", ROSTER = "chalkline:roster", ROSTERS = "lawhati:rosters";
 
 /* ---------- document state ---------- */
-const newPage = (bg = "chalk", pattern = "none") => ({ id: uid(), bg, pattern, items: [], cam: { x: null, y: null, z: 1 } });
+const newPage = (bg = "white", pattern = "none") => ({ id: uid(), bg, pattern, items: [], cam: { x: null, y: null, z: 1 } });
 let doc = { title: "درس بدون عنوان", cur: 0, pages: [newPage()] };
 try {
   const saved = JSON.parse(localStorage.getItem(STORE) || "null");
-  if (saved && Array.isArray(saved.pages) && saved.pages.length) doc = saved;
+  if (saved && Array.isArray(saved.pages) && saved.pages.length) { doc = saved; doc.pages.forEach(p => { if (p.bg === "chalk" && !(p.items || []).length) p.bg = "white"; }); }
 } catch (e) {}
 /* viewing = a board that is not one of the teacher's pages: a student's own board, or the teacher looking at a student's */
 let viewing = null, palKey = null;
@@ -1620,7 +1607,7 @@ function zoomAt(sx, sy, f) {
 
 cv.addEventListener("pointerdown", e => {
   closeMenus(); if (!pickCard.hidden && !spinning) hidePick();
-  if (role === "student" && (!stu.task || stu.locked)) return;
+  if (role === "student" && (!stu.task || stu.locked || viewing !== stuPage)) return;
   if (editing) { commitEditor(); e.preventDefault(); return; }
   const s = sp(e); pointers.set(e.pointerId, { x: s.x, y: s.y, type: e.pointerType });
   try { cv.setPointerCapture(e.pointerId); } catch (_) {}
@@ -2053,7 +2040,7 @@ $("#jsonFile").onchange = e => {
     try {
       const d = JSON.parse(rd.result);
       if (!Array.isArray(d.pages) || !d.pages.length) throw 0;
-      d.pages.forEach(p => { p.id = p.id || uid(); p.items = Array.isArray(p.items) ? p.items : []; p.cam = p.cam || { x: null, y: null, z: 1 }; p.bg = PAL[p.bg] ? p.bg : "chalk"; p.pattern = p.pattern || "none"; });
+      d.pages.forEach(p => { p.id = p.id || uid(); p.items = Array.isArray(p.items) ? p.items : []; p.cam = p.cam || { x: null, y: null, z: 1 }; p.bg = PAL[p.bg] ? p.bg : "white"; p.pattern = p.pattern || "none"; });
       doc = { title: String(d.title || "درس بدون عنوان").slice(0, 80), cur: 0, pages: d.pages };
       hist.clear(); selected = null; $("#title").value = doc.title; updatePages(); markView();
       toast(`فُتح «${doc.title}» (عدد الصفحات: ${doc.pages.length})`);
@@ -2699,7 +2686,7 @@ function drawBoardInto(cvs, task, layers, emptyMsg) {
   const d = Math.min(window.devicePixelRatio || 1, 2);
   if (cvs.width !== Math.round(w * d) || cvs.height !== Math.round(h * d)) { cvs.width = Math.round(w * d); cvs.height = Math.round(h * d); }
   const g = cvs.getContext("2d");
-  palKey = task ? task.bg : "chalk";
+  palKey = task ? task.bg : "white";
   try {
     g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = pal().bg; g.fillRect(0, 0, cvs.width, cvs.height);
     if (!task) { g.fillStyle = pal().hint; g.font = `${14 * d}px ${UI_FONT}`; g.textAlign = "center"; g.textBaseline = "middle"; g.direction = "rtl"; g.fillText(emptyMsg || "بانتظار التمرين", cvs.width / 2, cvs.height / 2); return; }
@@ -2787,7 +2774,7 @@ function onStudentMsg(conn, d) {
     const hasLocal = live.task && d.taskId === live.task.id;
     sendTo(s, { t: "state", name: s.name, task: live.task, mine: live.task && !hasLocal ? s.items : null, fb: live.task ? s.fb : [], locked: live.locked, question: live.question, answer: s.answer, timer: timerState() });
     s.assets = new Set();
-    if (live.cast && !live.task) sendCast(s, castPayload());
+    if (live.cast) sendCast(s, castPayload());
     refreshCards(); saveLiveSoon(); return;
   }
   const s = [...live.students.values()].find(x => x.conn === conn); if (!s) return;
@@ -2799,7 +2786,7 @@ function onStudentMsg(conn, d) {
       if (!live.task || d.taskId !== live.task.id) return;
       s.draft = cleanItems([d.item])[0] || null; touchStudent(s); break;
     case "status": {
-      const wasHand = s.hand; s.done = !!d.done; s.hand = !!d.hand;
+      const wasHand = s.hand; s.done = !!d.done; s.hand = !!d.hand; s.view = d.view === "cast" ? "cast" : "task";
       if (s.hand && !wasHand) { toast(`✋ يد مرفوعة: ${dispName(s)}`); chime(); }
       refreshCards(); break;
     }
@@ -2815,16 +2802,17 @@ function recountAnswers() { counts.fill(0); for (const s of live.students.values
 function notifyPicked(name) { if (!live.on) return; for (const s of live.students.values()) if (s.online && s.name === name) sendTo(s, { t: "picked" }); }
 function cheerAll() { celebrate(); if (live.on) broadcast({ t: "cheer" }); }
 
-function pushTask() {
+function pushTask(empty) {
   if (!live.on) return;
   if (viewing) exitView(false);
   const p = doc.pages[doc.cur];
   live.taskN++;
-  live.task = { id: uid(), n: live.taskN, bg: p.bg, pattern: p.pattern, items: JSON.parse(JSON.stringify(p.items)), frame: viewFrame(p) };
+  live.task = { id: uid(), n: live.taskN, bg: p.bg, pattern: p.pattern, items: empty ? [] : JSON.parse(JSON.stringify(p.items)), frame: viewFrame(p), empty: !!empty };
   for (const s of live.students.values()) Object.assign(s, { items: [], fb: [], done: false, hand: false, answer: null, draft: null, _dirty: true });
   broadcast({ t: "task", task: live.task });
   const n = [...live.students.values()].filter(s => s.online).length;
-  toast(n ? `أُرسل التمرين ${live.taskN} إلى ${n} ${n === 1 ? "طالب" : n === 2 ? "طالبين" : n <= 10 ? "طلاب" : "طالبًا"}` : `جُهّز التمرين ${live.taskN}، وسيصل إلى كل طالب ينضم`);
+  const kind = empty ? " بلوحة فارغة" : "";
+  toast(n ? `أُرسل التمرين ${live.taskN}${kind} إلى ${n} ${n === 1 ? "طالب" : n === 2 ? "طالبين" : n <= 10 ? "طلاب" : "طالبًا"}` : `جُهّز التمرين ${live.taskN}${kind}، وسيصل إلى كل طالب ينضم`);
   renderCards(true); updateLiveUI(); saveLive();
 }
 function endTask() {
@@ -2936,7 +2924,7 @@ function renderCards(full) {
     }
     card.classList.toggle("off", !s.online); card.classList.toggle("hand", s.hand); card.querySelector(".c-hand").hidden = !s.hand;
     card.querySelector(".c-name").textContent = dispName(s);
-    card.querySelector(".c-badges").innerHTML = (s.hand ? '<span class="c-badge">✋</span>' : "") + (s.done ? '<span class="c-badge done">✓ انتهى</span>' : "") + (live.question && s.answer != null ? `<span class="c-badge ans">${TALLY[s.answer]}</span>` : "");
+    card.querySelector(".c-badges").innerHTML = (s.hand ? '<span class="c-badge">✋</span>' : "") + (s.done ? '<span class="c-badge done">✓ انتهى</span>' : "") + (live.question && s.answer != null ? `<span class="c-badge ans">${TALLY[s.answer]}</span>` : "") + (live.task && live.cast && s.view === "cast" ? '<span class="c-badge" title="يشاهد لوحتك الآن">📺</span>' : "");
     cvGrid.appendChild(card);
     if (full || s._dirty) { s._dirty = false; drawBoardInto(card.querySelector("canvas"), live.task, live.task ? [live.task.items, s.items, s.draft ? [s.draft] : [], s.fb] : [], live.cast ? "يشاهد لوحتك المعروضة" : "بانتظار التمرين"); }
   });
@@ -2961,19 +2949,19 @@ function sendCast(s, pl) {
 }
 function castNow() {
   if (!live.on) return;
-  const pl = live.cast && !live.task ? castPayload() : null;
+  const pl = live.cast ? castPayload() : null;
   for (const s of live.students.values()) if (s.online) { if (pl) sendCast(s, pl); else sendTo(s, { t: "cast", page: null }); }
 }
 let castT = 0, castDraftAt = 0;
-function castSoon() { if (role !== "teacher" || !live.on || !live.cast || live.task || viewing) return; clearTimeout(castT); castT = setTimeout(castNow, 180); }
+function castSoon() { if (role !== "teacher" || !live.on || !live.cast || viewing) return; clearTimeout(castT); castT = setTimeout(castNow, 180); }
 function castDraftTick() {
-  if (!draft || !live.on || !live.cast || live.task || viewing || performance.now() - castDraftAt < 120) return;
+  if (!draft || !live.on || !live.cast || viewing || performance.now() - castDraftAt < 120) return;
   castDraftAt = performance.now(); broadcast({ t: "castDraft", item: draft });
 }
 function setCast(on) {
   live.cast = on; updateLiveUI(); saveLiveSoon(); castNow(); renderCards(true);
   if (!on) toast("أُوقف بث لوحتك");
-  else if (live.task) toast("سيبدأ البث تلقائيًا بعد إنهاء التمرين");
+  else if (live.task) toast("يرى الطلاب لوحتك الآن، ويمكنهم الرجوع إلى تمرينهم في أي وقت دون فقدان عملهم");
   else toast("يرى الطلاب لوحتك الآن مباشرة");
 }
 $("#cvCast").onclick = () => setCast(!live.cast);
@@ -3016,7 +3004,8 @@ $("#cvPick").onclick = () => {
   if (![...live.students.values()].some(s => s.online)) { toast("لا يوجد طلاب متصلون الآن"); return; }
   useLiveList(); closeGallery(); quickPick();
 };
-$("#cvPush").onclick = pushTask;
+$("#cvPush").onclick = () => pushTask(false);
+$("#cvPushEmpty").onclick = () => pushTask(true);
 $("#cvEnd").onclick = endTask;
 $("#cvLock").onclick = () => { live.locked = !live.locked; broadcast({ t: "lock", on: live.locked }); updateLiveUI(); saveLiveSoon(); toast(live.locked ? "أُوقفت كتابة الطلاب" : "عادت الكتابة للطلاب"); };
 $("#cvHide").onclick = () => { live.hideNames = !live.hideNames; updateLiveUI(); renderCards(false); updateBanner(); saveLiveSoon(); };
@@ -3078,12 +3067,12 @@ $("#tlLive").onclick = () => {
 /* =================== LIVE CLASS: student =================== */
 const stu = { cast: null, castDraft: null, assets: new Map(), sid: null, name: "", conn: null, peer: null, task: null, locked: false, done: false, hand: false, answer: null, ended: false, welcomed: false, roster: [], fbSeen: false, retryT: 0, timerI: 0 };
 const STU_KEY = "lawhati:stu:" + JOIN;
-let stuPage = null, lastDraftAt = 0;
+let stuPage = null, castPage = null, lastDraftAt = 0;
 const stuLoad = () => { try { return JSON.parse(localStorage.getItem(STU_KEY) || "null") || {}; } catch (e) { return {}; } };
 function stuSave() { if (!stuPage) return; try { localStorage.setItem(STU_KEY, JSON.stringify({ sid: stu.sid, name: stu.name, taskId: stu.task ? stu.task.id : null, items: stu.task ? stuPage.items : [] })); } catch (e) {} }
 function stuSend(m) { try { if (stu.conn && stu.conn.open) stu.conn.send(m); } catch (e) {} }
 function stuSendInk() { if (stu.task) stuSend({ t: "ink", taskId: stu.task.id, items: stuPage.items }); }
-function stuDraftTick() { if (draft && stu.task && performance.now() - lastDraftAt > 140) { lastDraftAt = performance.now(); stuSend({ t: "draft", taskId: stu.task.id, item: draft }); } }
+function stuDraftTick() { if (draft && stu.task && viewing === stuPage && performance.now() - lastDraftAt > 140) { lastDraftAt = performance.now(); stuSend({ t: "draft", taskId: stu.task.id, item: draft }); } }
 function setConn(ok) { const c = $("#stuConn"); c.className = "conn " + (ok ? "ok" : "bad"); c.title = ok ? "متصل بالمعلم" : "انقطع الاتصال، جارٍ إعادة المحاولة…"; }
 function stuScreen(mode, msg) {
   const board = mode === "board";
@@ -3097,7 +3086,8 @@ function stuScreen(mode, msg) {
 function initStudent() {
   document.body.classList.add("student");
   const saved = stuLoad(); stu.sid = saved.sid || (uid() + uid()); stu.name = saved.name || "";
-  stuPage = { id: "stu", bg: "chalk", pattern: "none", base: [], items: [], over: [], cam: { x: null, y: null, z: 1 } };
+  stuPage = { id: "stu", bg: "white", pattern: "none", base: [], items: [], over: [], cam: { x: null, y: null, z: 1 } };
+  castPage = { id: "cast", bg: "white", pattern: "none", base: [], items: [], over: [], cam: { x: null, y: null, z: 1 } }; stu.view = "task";
   viewing = stuPage;
   $("#stuPane").hidden = false; $("#stuName").hidden = false; $("#stuName").textContent = stu.name;
   document.title = "لوحتي: الحصة " + JOIN;
@@ -3133,11 +3123,20 @@ function stuOnMsg(d) {
       stu.welcomed = true; stu.roster = Array.isArray(d.roster) ? d.roster.map(cleanName).filter(Boolean) : [];
       if (stu.name) stuHello(); else showNameForm(); break;
     case "denied": stu.ended = true; stuScreen("end", d.why === "kicked" ? "أخرجك المعلم من هذه الحصة." : "الغرفة مقفلة الآن ولا يمكن الانضمام. اطلب من معلمك فتحها."); break;
-    case "kick": stu.ended = true; stu.cast = null; document.body.classList.remove("stu-cast"); $("#stuCastPill").hidden = true; stuSetQuestion(false); stuSetTimer(null); stuScreen("end", "أخرجك المعلم من هذه الحصة."); try { stu.conn && stu.conn.close(); } catch (e) {} break;
+    case "kick": stu.ended = true; stu.cast = null; document.body.classList.remove("stu-cast"); $("#stuView").hidden = true; stuSetQuestion(false); stuSetTimer(null); stuScreen("end", "أخرجك المعلم من هذه الحصة."); try { stu.conn && stu.conn.close(); } catch (e) {} break;
     case "hand": stu.hand = !!d.up; syncStatusBtns(); if (!d.up) toast("أنزل المعلم يدك"); break;
-    case "asset": if (typeof d.src === "string" && /^data:image\//.test(d.src)) { stu.assets.set(String(d.key), d.src); if (stu.cast && !stu.task) stuShowCast(); } break;
-    case "cast": stu.cast = d.page && typeof d.page === "object" ? d.page : null; stu.castDraft = null; if (!stu.task) stuShowCast(); break;
-    case "castDraft": if (stu.cast && !stu.task) { stu.castDraft = cleanItems([d.item])[0] || null; stuShowCast(true); } break;
+    case "asset": if (typeof d.src === "string" && /^data:image\//.test(d.src)) { stu.assets.set(String(d.key), d.src); if (stu.cast) stuUpdateCast(); } break;
+    case "cast": {
+      const was = !!stu.cast; stu.cast = d.page && typeof d.page === "object" ? d.page : null; stu.castDraft = null;
+      if (stu.cast) stuUpdateCast();
+      if (was !== !!stu.cast) {
+        if (stu.cast && stu.task) { stu.view = "cast"; toast("يعرض معلمك لوحته. ارجع إلى تمرينك من الأعلى متى شئت، وعملك محفوظ"); }
+        if (!stu.cast) stu.view = "task";
+        stuRefreshView(); stuStatus();
+      }
+      break;
+    }
+    case "castDraft": if (stu.cast) { stu.castDraft = cleanItems([d.item])[0] || null; stuUpdateCast(true); } break;
     case "state":
       stu.name = cleanName(d.name) || stu.name; $("#stuName").textContent = stu.name;
       stu.locked = !!d.locked; stuApplyTask(d.task || null, d.mine, false);
@@ -3152,7 +3151,7 @@ function stuOnMsg(d) {
     case "picked": showCheerText(`دورك يا ${stu.name}!`); chime(); break;
     case "question": stuSetQuestion(!!d.open, null); break;
     case "timer": stuSetTimer(d.timer); break;
-    case "end": stu.ended = true; stuSetTimer(null); stuSetQuestion(false); stuScreen("end", "انتهت الحصة. شكرًا لمشاركتك!"); try { stu.conn && stu.conn.close(); } catch (e) {} break;
+    case "end": stu.ended = true; stu.cast = null; document.body.classList.remove("stu-cast"); $("#stuView").hidden = true; stuSetTimer(null); stuSetQuestion(false); stuScreen("end", "انتهت الحصة. شكرًا لمشاركتك!"); try { stu.conn && stu.conn.close(); } catch (e) {} break;
   }
 }
 function showNameForm() {
@@ -3176,37 +3175,55 @@ $("#ssName").addEventListener("keydown", e => { if (e.key === "Enter") $("#ssGo"
 function stuApplyTask(task, mine, fresh) {
   if (!task) {
     stu.task = null; stuPage.base = []; stuPage.items = []; stuPage.over = []; selected = null; draft = null; action = null;
-    stuSave(); if (stu.cast) { stuShowCast(); return; }
-    stuScreen("wait"); markView(); return;
+    stuSave(); stuRefreshView(); return;
   }
-  document.body.classList.remove("stu-cast"); $("#stuCastPill").hidden = true;
   const same = stu.task && stu.task.id === task.id, saved = stuLoad();
   stu.task = task;
-  stuPage.bg = PAL[task.bg] ? task.bg : "chalk"; stuPage.pattern = task.pattern || "none"; stuPage.base = cleanBase(task.items);
+  stuPage.bg = PAL[task.bg] ? task.bg : "white"; stuPage.pattern = task.pattern || "none"; stuPage.base = cleanBase(task.items);
   if (!same) {
     stuPage.id = "stu-" + task.id; stu.fbSeen = false; selected = null; draft = null; action = null;
     stuPage.items = saved.taskId === task.id ? cleanItems(saved.items) : (mine ? cleanItems(mine) : []);
-    stuPage.over = []; Object.assign(stuPage.cam, fitCamTo(task.frame));
-    if (fresh) { stu.done = false; stu.hand = false; syncStatusBtns(); stuSend({ t: "status", done: false, hand: false }); }
+    stuPage.over = []; Object.assign(stuPage.cam, fitCamTo(task.frame)); stu.view = "task";
+    if (fresh) { stu.done = false; stu.hand = false; syncStatusBtns(); stuStatus(); }
   }
-  stuScreen("board"); updatePages(); markView();
+  stuRefreshView();
   if (!same && saved.taskId === task.id && stuPage.items.length) stuSendInk();
-  if (fresh && !same) { toast("وصل تمرين جديد من معلمك"); chime(); }
+  if (fresh && !same) { toast(stu.cast ? "وصل تمرين جديد. يمكنك التبديل إلى لوحة المعلم من الأعلى" : "وصل تمرين جديد من معلمك"); chime(); }
   stuSave();
 }
-function stuShowCast(draftOnly) {
-  if (!stu.cast) { document.body.classList.remove("stu-cast"); $("#stuCastPill").hidden = true; if (!stu.task && !stu.ended) { stuScreen("wait"); markView(); } return; }
-  const c = stu.cast, items = (Array.isArray(c.items) ? c.items : []).map(it => it && it.ak ? { ...it, src: stu.assets.get(String(it.ak)) || "" } : it);
-  stuPage.bg = PAL[c.bg] ? c.bg : "chalk"; stuPage.pattern = c.pattern || "none";
-  stuPage.base = [...cleanBase(items), ...(stu.castDraft ? [stu.castDraft] : [])]; stuPage.items = []; stuPage.over = [];
-  if (!draftOnly && c.frame && c.frame.w > 0) Object.assign(stuPage.cam, fitCamTo(c.frame));
-  document.body.classList.add("stu-cast"); $("#stuCastPill").hidden = false; selected = null;
-  stuScreen("board"); if (!draftOnly) updatePages(); sceneDirty = true; req();
+function stuStatus() { stuSend({ t: "status", done: stu.done, hand: stu.hand, view: stu.view }); }
+/* the teacher's cast lives on its own board, so the exercise board is never touched */
+function stuUpdateCast(draftOnly) {
+  const c = stu.cast; if (!c || !castPage) return;
+  if (!draftOnly) {
+    const items = (Array.isArray(c.items) ? c.items : []).map(it => it && it.ak ? { ...it, src: stu.assets.get(String(it.ak)) || "" } : it);
+    castPage.bg = PAL[c.bg] ? c.bg : "white"; castPage.pattern = c.pattern || "none"; castPage.shown = cleanBase(items);
+    if (c.frame && c.frame.w > 0) Object.assign(castPage.cam, fitCamTo(c.frame));
+  }
+  castPage.base = [...(castPage.shown || []), ...(stu.castDraft ? [stu.castDraft] : [])];
+  if (viewing === castPage) { sceneDirty = true; req(); }
 }
-function applyLock() { $("#stuLock").hidden = !(stu.locked && stu.task); if (stu.locked) { draft = null; action = null; req(); } }
+function stuRefreshView() {
+  if (stu.ended || !stuPage) return;
+  const hasT = !!stu.task, hasC = !!stu.cast;
+  if (!hasT && !hasC) {
+    stu.view = "task"; viewing = stuPage; document.body.classList.remove("stu-cast"); $("#stuView").hidden = true;
+    stuScreen("wait"); applyLock(); markView(); return;
+  }
+  if (!hasT) stu.view = "cast"; else if (!hasC) stu.view = "task";
+  const target = stu.view === "cast" ? castPage : stuPage;
+  if (viewing !== target) { commitEditor(); selected = null; draft = null; action = null; viewing = target; }
+  document.body.classList.toggle("stu-cast", stu.view === "cast");
+  $("#stuView").hidden = !hasC; $("#svLive").hidden = hasT; $("#svSeg").hidden = !hasT;
+  $$("#svSeg [data-v]").forEach(b => b.setAttribute("aria-selected", b.dataset.v === stu.view));
+  stuScreen("board"); applyLock(); updatePages(); markView();
+}
+function stuSetView(v) { if (stu.view === v || !stu.task || !stu.cast) return; stu.view = v; stuRefreshView(); stuStatus(); }
+$$("#svSeg [data-v]").forEach(b => b.onclick = () => stuSetView(b.dataset.v));
+function applyLock() { $("#stuLock").hidden = !(stu.locked && stu.task && viewing === stuPage); if (stu.locked) { draft = null; action = null; req(); } }
 function syncStatusBtns() { $("#stuHand").setAttribute("aria-pressed", stu.hand); $("#stuDone").setAttribute("aria-pressed", stu.done); }
-$("#stuHand").onclick = () => { stu.hand = !stu.hand; syncStatusBtns(); stuSend({ t: "status", done: stu.done, hand: stu.hand }); toast(stu.hand ? "رفعت يدك ✋ سيراك المعلم" : "أنزلت يدك"); };
-$("#stuDone").onclick = () => { stu.done = !stu.done; syncStatusBtns(); stuSend({ t: "status", done: stu.done, hand: stu.hand }); if (stu.done) toast("أُبلغ المعلم أنك انتهيت ✓"); };
+$("#stuHand").onclick = () => { stu.hand = !stu.hand; syncStatusBtns(); stuStatus(); toast(stu.hand ? "رفعت يدك ✋ سيراك المعلم" : "أنزلت يدك"); };
+$("#stuDone").onclick = () => { stu.done = !stu.done; syncStatusBtns(); stuStatus(); if (stu.done) toast("أُبلغ المعلم أنك انتهيت ✓"); };
 function stuSetQuestion(open, ans) {
   $("#stuQ").hidden = !open; stu.answer = open ? (ans != null ? ans : stu.answer) : null;
   $$("#stuQ [data-ans]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.ans === stu.answer));
