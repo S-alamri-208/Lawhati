@@ -464,6 +464,85 @@ body.student #stuPane{flex:none}
   body.student .zoom{bottom:72px}
 }
 
+
+/* ---------- timer extras ---------- */
+.t-prog{height:6px;border-radius:999px;background:var(--ui-hover);overflow:hidden;margin:6px 4px 2px}
+.t-prog i{display:block;height:100%;width:100%;border-radius:999px;background:var(--accent);transition:width .25s linear,background .3s}
+.widget.low .t-prog i{background:var(--danger)}
+.widget.low .timer-face{color:var(--danger)}
+.t-custom{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin-top:10px}
+.t-custom label{display:flex;flex-direction:column;font-size:12px;color:var(--ui-muted);gap:2px;width:72px}
+.t-custom .field{text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.t-colon{font-weight:700;font-size:20px;padding-bottom:4px}
+.t-custom .wbtn{height:36px}
+/* ---------- quick question ---------- */
+.q-text-in{display:block;width:100%;height:auto;min-height:44px;padding:8px 10px;resize:vertical;line-height:1.5;font:inherit;font-size:14px}
+.q-kinds{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.q-kinds .chip[aria-checked="true"]{background:var(--on-bg);color:var(--on-ink);border-color:transparent}
+#tallyRows .tal-row{grid-template-columns:34px minmax(0,1fr) 26px 30px 30px;align-items:center}
+.tal-mid{display:flex;flex-direction:column;gap:4px;min-width:0}
+.tal-mid input.field.sm{height:30px;font-size:13px;padding:0 8px}
+.tal-l{height:30px;border-radius:9px;border:1.5px solid var(--ui-line);background:transparent;color:var(--ui-ink);font:inherit;font-weight:700;cursor:pointer;padding:0}
+.tal-l.ok{background:#2F9E44;border-color:#2F9E44;color:#fff}
+.tal-bar{height:12px}
+.stu-q{z-index:13;max-width:min(560px,calc(100% - 24px))}
+.q-tag{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+.q-text{font-weight:700;font-size:17px;line-height:1.55;text-align:center;max-width:520px;overflow-wrap:anywhere}
+.q-btns button{position:relative;overflow:hidden}
+.q-btns.has-text{flex-direction:column;width:100%;min-width:min(420px,calc(100vw - 48px))}
+.q-btns.has-text button{width:100%;height:auto;min-height:52px;display:flex;align-items:center;gap:12px;padding:8px 14px;font-size:16px;text-align:start}
+.q-btns.has-text button b{font-size:22px;width:28px;flex:none;text-align:center}
+.q-btns button .q-bar{position:absolute;inset:auto 0 0 0;height:4px;background:transparent}
+.q-btns button .q-bar s{display:block;height:100%;width:0;background:var(--accent);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.q-btns button em{position:absolute;top:4px;inset-inline-end:7px;font-style:normal;font-size:11px;font-weight:700;opacity:.8}
+.q-btns button.right{background:#2F9E44!important;color:#fff!important;border-color:#2F9E44!important}
+.q-btns button.wrong{background:#C0392B!important;color:#fff!important;border-color:#C0392B!important}
+.q-btns button:disabled{cursor:default}
+.q-msg{font-weight:700;font-size:15px}
+.c-badge.ans.ok{background:rgba(92,209,143,.22);color:#7EE2A8}
+.c-badge.ans.no{background:rgba(255,120,100,.2);color:#FF9C8A}
+/* student timer states */
+.stu-timer.low{background:var(--danger);color:#fff;animation:tick 1s ease-in-out infinite}
+.stu-timer.paused{background:var(--ui-hover);color:var(--ui-ink)}
+.stu-timer.over{background:var(--danger);color:#fff;animation:shake .5s ease 2}
+
+/* ---------- motion ---------- */
+#fade{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;z-index:1}
+#fade.go{animation:fadeOut .38s ease forwards}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+@keyframes popIn{from{opacity:0;scale:.94}}
+@keyframes riseIn{from{opacity:0;translate:0 14px}}
+@keyframes dropIn{from{opacity:0;translate:0 -12px}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes draw{from{stroke-dashoffset:1}}
+@keyframes wiggle{0%,100%{rotate:0deg}25%{rotate:-14deg}75%{rotate:14deg}}
+@keyframes tick{50%{scale:1.08}}
+@keyframes shake{0%,100%{translate:0}25%{translate:-4px 0}75%{translate:4px 0}}
+@keyframes bounceIn{0%{opacity:0;scale:.6}60%{opacity:1;scale:1.08}100%{scale:1}}
+.topbar > .pane{animation:dropIn .45s cubic-bezier(.2,.8,.2,1) backwards}
+#paneRight{animation-delay:.06s}
+.dock{animation:riseIn .45s .08s cubic-bezier(.2,.8,.2,1) backwards}
+.zoom{animation:fadeIn .5s .15s ease backwards}
+.menu{animation:popIn .16s cubic-bezier(.2,.8,.2,1)}
+.widget{animation:popIn .2s cubic-bezier(.2,.8,.2,1)}
+dialog[open]{animation:popIn .22s cubic-bezier(.2,.8,.2,1)}
+dialog[open]::backdrop{animation:fadeIn .22s ease}
+.toast{animation:riseIn .24s cubic-bezier(.2,.8,.2,1)}
+.selbar,.vidbar,.view-banner{animation:fadeIn .15s ease}
+#pickCard{animation:bounceIn .4s cubic-bezier(.2,.8,.2,1)}
+.class-view{animation:fadeIn .2s ease}
+.card{animation:popIn .3s cubic-bezier(.2,.8,.2,1) backwards}
+.card.hand .c-badge:first-child{display:inline-block;animation:wiggle .6s ease 3}
+.stu-card{animation:riseIn .5s cubic-bezier(.2,.8,.2,1) backwards}
+.stu-view{animation:dropIn .3s cubic-bezier(.2,.8,.2,1)}
+.stu-q{animation:riseIn .32s cubic-bezier(.2,.8,.2,1)}
+.q-btns button.right{animation:bounceIn .45s ease}
+.q-btns button.wrong{animation:shake .4s ease}
+.logo .wave,.stu-logo .wave{stroke-dasharray:1;stroke-dashoffset:0;animation:draw 1.1s .3s ease-in-out backwards}
+.btn,.ib,.tb,.wbtn,.chip,.sw-btn,.q-btns button,.sv-seg button{transition:background .15s,color .15s,scale .1s}
+.btn:active,.ib:active,.tb:active,.wbtn:active,.chip:active,.sw-btn:active,.q-btns button:active,.sv-seg button:active{scale:.93}
+#stuHand[aria-pressed="true"] span:first-child{display:inline-block;animation:wiggle .6s ease 2}
+
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
 }
@@ -474,6 +553,7 @@ body.student #stuPane{flex:none}
 <main id="stage">
   <canvas id="board" aria-label="مساحة اللوحة"></canvas>
   <canvas id="fx" aria-hidden="true"></canvas>
+  <canvas id="fade" aria-hidden="true"></canvas>
   <div class="hint" id="hint"><b>اختر قلمًا وابدأ الكتابة.</b><span>الأدوات في الشريط السفلي. اضغط ؟ لعرض الاختصارات.</span></div>
 
   <div class="selbar pane" id="selbar" hidden>
@@ -498,9 +578,16 @@ body.student #stuPane{flex:none}
     <div class="w-head"><span>المؤقت</span><button class="w-x" aria-label="إغلاق المؤقت">×</button></div>
     <div class="w-body">
       <div class="timer-face" id="tFace" aria-live="polite" dir="ltr">05:00</div>
+      <div class="t-prog" aria-hidden="true"><i id="tProg"></i></div>
       <div class="row" style="justify-content:center">
         <button class="chip" data-t="60">دقيقة</button><button class="chip" data-t="180">3 دقائق</button>
         <button class="chip" data-t="300">5 دقائق</button><button class="chip" data-t="600">10 دقائق</button>
+      </div>
+      <div class="t-custom" dir="ltr">
+        <label>دقائق<input type="number" class="field sm" id="tMin" min="0" max="99" value="5" inputmode="numeric"></label>
+        <span class="t-colon">:</span>
+        <label>ثوانٍ<input type="number" class="field sm" id="tSec" min="0" max="59" value="0" inputmode="numeric"></label>
+        <button class="wbtn" id="tApply">ضبط</button>
       </div>
       <div class="row" style="justify-content:center">
         <button class="wbtn" id="tPlus">+30 ث</button>
@@ -508,6 +595,8 @@ body.student #stuPane{flex:none}
         <button class="wbtn" id="tReset">إعادة</button>
         <button class="wbtn" id="tMinus">−30 ث</button>
       </div>
+      <label class="chk"><input type="checkbox" id="tSound" checked> تنبيه صوتي عند انتهاء الوقت</label>
+      <label class="chk" id="tShareRow" hidden><input type="checkbox" id="tShare" checked> عرض المؤقت على شاشات الطلاب</label>
     </div>
   </section>
 
@@ -532,15 +621,25 @@ body.student #stuPane{flex:none}
     </div>
   </section>
 
-  <section class="widget" id="w-tally" hidden aria-label="سؤال سريع">
+  <section class="widget wide-w" id="w-tally" hidden aria-label="سؤال سريع">
     <div class="w-head"><span>سؤال سريع</span><button class="w-x" aria-label="إغلاق السؤال السريع">×</button></div>
     <div class="w-body">
-      <p class="muted" style="margin-top:0">اطرح سؤال اختيار من متعدد، ثم عُدّ الإجابات التي يكتبها الطلاب في الدردشة.</p>
+      <textarea class="field sm q-text-in" id="qTextIn" rows="2" placeholder="اكتب السؤال (اختياري)" dir="auto" maxlength="300"></textarea>
+      <div class="q-kinds" role="radiogroup" aria-label="نوع السؤال">
+        <button class="chip" data-kind="4" role="radio" aria-checked="true">أ ب ج د</button>
+        <button class="chip" data-kind="3" role="radio" aria-checked="false">أ ب ج</button>
+        <button class="chip" data-kind="2" role="radio" aria-checked="false">صح أو خطأ</button>
+      </div>
       <div id="tallyRows"></div>
-      <div class="row"><button class="wbtn primary" id="tlLive" hidden>اسأل الطلاب مباشرة</button><button class="wbtn primary" id="tlShow">اعرض النتائج على اللوحة</button><button class="wbtn" id="tlReset">إعادة</button></div>
+      <p class="muted" id="tlHint">اضغط الحرف لتحديد الإجابة الصحيحة. بدون حصة مباشرة، عُدّ الإجابات يدويًا بالأزرار.</p>
+      <div class="row" id="tlLiveRow" hidden>
+        <button class="wbtn primary" id="tlLive">إرسال السؤال للطلاب</button>
+        <button class="wbtn" id="tlResults" aria-pressed="false" title="يرى الطلاب نسب الإجابات مباشرة">إظهار النتائج لهم</button>
+        <button class="wbtn" id="tlReveal" title="يرى كل طالب هل أصاب أم لا">كشف الإجابة</button>
+      </div>
+      <div class="row"><button class="wbtn" id="tlShow">اعرض النتائج على اللوحة</button><button class="wbtn" id="tlReset">سؤال جديد</button></div>
     </div>
   </section>
-
 
   <div class="vidbar pane" id="vidBar" hidden dir="ltr">
     <button id="vbPlay" aria-label="تشغيل"><svg class="i" viewBox="0 0 24 24" id="vbPlayIcon"><path d="M8 5.5v13l10-6.5z" fill="currentColor"/></svg></button>
@@ -589,7 +688,7 @@ body.student #stuPane{flex:none}
 
   <div class="stu-screen" id="stuScreen" hidden>
     <div class="stu-card pane">
-      <svg class="stu-logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
+      <svg class="stu-logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path class="wave" pathLength="1" d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
       <h1 id="ssTitle">لوحتي</h1>
       <p id="ssMsg">جارٍ الاتصال بمعلمك…</p>
       <div class="ss-wait" id="ssWait" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -611,14 +710,16 @@ body.student #stuPane{flex:none}
   </div>
   <div class="stu-lock" id="stuLock" hidden><div class="pane">أوقف المعلم الكتابة مؤقتًا</div></div>
   <div class="stu-q pane" id="stuQ" hidden>
-    <b>سؤال من معلمك: اختر إجابتك</b>
-    <div class="q-btns"><button data-ans="0">أ</button><button data-ans="1">ب</button><button data-ans="2">ج</button><button data-ans="3">د</button></div>
+    <span class="q-tag">سؤال من معلمك</span>
+    <div class="q-text" id="qTextS" hidden></div>
+    <div class="q-btns" id="qBtns"></div>
+    <div class="q-msg" id="qMsg" hidden></div>
   </div>
 
   <header class="topbar" id="topbar">
     <div class="pane" id="paneLeft">
       <div class="brand" aria-label="لوحتي">
-        <svg class="logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
+        <svg class="logo" viewBox="0 0 32 28" aria-hidden="true"><rect x="1.5" y="1.5" width="29" height="21" rx="5" fill="#2D4238" stroke="#B48958" stroke-width="2.4"/><path class="wave" pathLength="1" d="M8 15c2-5 4-5 5-1s3 4 5-1 3-4 6 0" fill="none" stroke="#F7D774" stroke-width="2.4" stroke-linecap="round"/><rect x="10" y="23.5" width="12" height="3" rx="1.5" fill="#B48958"/></svg>
         <span class="word">لوحتي</span>
       </div>
       <span class="stu-name" id="stuName" hidden></span>
@@ -658,6 +759,7 @@ body.student #stuPane{flex:none}
       <span class="stu-timer" id="stuTimer" hidden dir="ltr"></span>
       <button class="btn" id="stuHand" aria-pressed="false" title="ارفع يدك ليراك المعلم"><span aria-hidden="true">✋</span><span class="t">رفع اليد</span></button>
       <button class="btn" id="stuDone" aria-pressed="false" title="أخبر المعلم أنك انتهيت"><svg class="i" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="t">انتهيت</span></button>
+      <button class="btn" id="stuSave" hidden title="حفظ لوحتك كصورة على جهازك"><svg class="i" viewBox="0 0 24 24"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg><span class="t">حفظ</span></button>
     </div>
   </header>
 
@@ -1945,7 +2047,7 @@ function gotoPage(i) {
   if (role === "student") return;
   if (viewing) exitView(false);
   commitEditor(); i = clamp(i, 0, doc.pages.length - 1); if (i === doc.cur) return;
-  doc.cur = i; selected = null; draft = null; action = null; updatePages(); markView();
+  crossfade(); doc.cur = i; selected = null; draft = null; action = null; updatePages(); markView();
 }
 function addPage() { commitEditor(); const p = page(); doc.pages.splice(doc.cur + 1, 0, newPage(p.bg, p.pattern)); gotoPage(doc.cur + 1); updatePages(); }
 function dupPage() { commitEditor(); const cp = JSON.parse(JSON.stringify(page())); cp.id = uid(); doc.pages.splice(doc.cur + 1, 0, cp); gotoPage(doc.cur + 1); updatePages(); }
@@ -2205,35 +2307,54 @@ $$(".widget").forEach(w => {
 /* timer */
 let tTotal = 300, tLeft = 300, tEnd = 0, tInt = 0, actx = null;
 const fmt = s => { s = Math.max(0, Math.ceil(s)); return String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); };
-function tShow() { $("#tFace").textContent = fmt(tLeft); }
-function tStop() { clearInterval(tInt); tInt = 0; $("#tStart").textContent = "ابدأ"; }
-function tSet(s) { tStop(); $("#w-timer").classList.remove("done"); tTotal = tLeft = clamp(s, 5, 5999); tShow(); }
+function ensureAudio() { try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); if (actx.state === "suspended") actx.resume(); } catch (e) {} return actx; }
+document.addEventListener("pointerdown", ensureAudio, { capture: true });
+document.addEventListener("keydown", ensureAudio, { capture: true });
+function tShow() {
+  $("#tFace").textContent = fmt(tLeft);
+  $("#tProg").style.width = (tTotal ? clamp(tLeft / tTotal, 0, 1) * 100 : 0) + "%";
+  $("#w-timer").classList.toggle("low", tLeft > 0 && tLeft <= 10 && !!tInt);
+}
+function tStop() { clearInterval(tInt); tInt = 0; $("#tStart").textContent = "ابدأ"; $("#w-timer").classList.remove("low"); }
+function tSet(s) {
+  tStop(); $("#w-timer").classList.remove("done"); tTotal = tLeft = clamp(Math.round(s), 5, 5999);
+  $("#tMin").value = Math.floor(tTotal / 60); $("#tSec").value = tTotal % 60; tShow();
+}
 function beep() {
+  const a = ensureAudio(); if (!a) return;
   try {
-    const t = actx.currentTime;
+    const t = a.currentTime + .02;
     [0, .28, .56].forEach(o => {
-      const os = actx.createOscillator(), g = actx.createGain(); os.frequency.value = 880;
+      const os = a.createOscillator(), g = a.createGain(); os.frequency.value = 880;
       g.gain.setValueAtTime(.0001, t + o); g.gain.exponentialRampToValueAtTime(.25, t + o + .02); g.gain.exponentialRampToValueAtTime(.0001, t + o + .22);
-      os.connect(g).connect(actx.destination); os.start(t + o); os.stop(t + o + .25);
+      os.connect(g).connect(a.destination); os.start(t + o); os.stop(t + o + .25);
     });
   } catch (e) {}
 }
 $("#tStart").onclick = () => {
-  try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); actx.resume && actx.resume(); } catch (e) {}
-  if (tInt) { tLeft = (tEnd - Date.now()) / 1000; tStop(); return; }
+  ensureAudio();
+  if (tInt) { tLeft = (tEnd - Date.now()) / 1000; tStop(); tShow(); liveTimerSync(); return; }
   if (tLeft <= 0) tLeft = tTotal;
   $("#w-timer").classList.remove("done"); tEnd = Date.now() + tLeft * 1000; $("#tStart").textContent = "إيقاف مؤقت";
   tInt = setInterval(() => {
     tLeft = (tEnd - Date.now()) / 1000; tShow();
-    if (tLeft <= 0) { tStop(); tLeft = 0; $("#tFace").textContent = "انتهى الوقت"; $("#w-timer").classList.add("done"); beep(); }
+    if (tLeft <= 0) { tStop(); tLeft = 0; tShow(); $("#tFace").textContent = "انتهى الوقت"; $("#w-timer").classList.add("done"); if ($("#tSound").checked) beep(); }
   }, 200);
+  liveTimerSync();
 };
-$("#tReset").onclick = () => tSet(tTotal);
-$("#tPlus").onclick = () => { if (tInt) tEnd += 30000; else { tLeft += 30; tTotal = Math.max(tTotal, tLeft); tShow(); } };
-$("#tMinus").onclick = () => { if (tInt) tEnd = Math.max(Date.now() + 1000, tEnd - 30000); else { tLeft = Math.max(5, tLeft - 30); tShow(); } };
-$$("#w-timer [data-t]").forEach(b => b.onclick = () => tSet(+b.dataset.t));
-["#tStart", "#tReset", "#tPlus", "#tMinus"].forEach(q => { const el = $(q), f = el.onclick; el.onclick = e => { f(e); liveTimerSync(); }; });
-$$("#w-timer [data-t]").forEach(b => { const f = b.onclick; b.onclick = e => { f(e); liveTimerSync(); }; });
+$("#tReset").onclick = () => { tSet(tTotal); liveTimerSync(); };
+$("#tPlus").onclick = () => { if (tInt) { tEnd += 30000; tTotal += 30; } else { tLeft = Math.min(5999, tLeft + 30); tTotal = Math.max(tTotal, tLeft); } tShow(); liveTimerSync(); };
+$("#tMinus").onclick = () => { if (tInt) tEnd = Math.max(Date.now() + 1000, tEnd - 30000); else { tLeft = Math.max(5, tLeft - 30); } tShow(); liveTimerSync(); };
+$$("#w-timer [data-t]").forEach(b => b.onclick = () => { tSet(+b.dataset.t); liveTimerSync(); });
+function applyCustom() {
+  const m = clamp(parseInt($("#tMin").value, 10) || 0, 0, 99), sec = clamp(parseInt($("#tSec").value, 10) || 0, 0, 59), total = m * 60 + sec;
+  if (total < 5) { toast("أقل مدة للمؤقت 5 ثوانٍ"); return; }
+  tSet(total); liveTimerSync(); toast(`ضُبط المؤقت على ${fmt(total)}`);
+}
+$("#tApply").onclick = applyCustom;
+["#tMin", "#tSec"].forEach(q => $(q).addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); applyCustom(); } e.stopPropagation(); }));
+$("#tSound").onchange = () => liveTimerSync();
+$("#tShare").onchange = () => liveTimerSync();
 
 /* picker: one saved list per class, importable from Excel */
 const pNames = $("#pNames"), pFace = $("#pFace"), pClass = $("#pClass"), pClassName = $("#pClassName");
@@ -2459,35 +2580,63 @@ function stepConfetti() {
 }
 $("#cheerBtn").onclick = () => cheerAll();
 const TALLY = ["أ", "ب", "ج", "د"], counts = [0, 0, 0, 0];
+const qset = { text: "", n: 4, opts: ["", "", "", ""], correct: null, showResults: false, revealed: false };
+const optLabel = i => qset.n === 2 ? ["صح", "خطأ"][i] : TALLY[i];
+function qPayload() { return { text: qset.text, n: qset.n, labels: [0, 1, 2, 3].slice(0, qset.n).map(optLabel), opts: qset.opts.slice(0, qset.n).map(o => o.trim().slice(0, 120)) }; }
 function buildTally() {
   const box = $("#tallyRows"), P = PAL.white.fg; box.innerHTML = "";
   TALLY.forEach((l, i) => {
     const r = document.createElement("div"); r.className = "tal-row";
-    r.innerHTML = `<span class="tal-l">${l}</span><div class="tal-bar"><i style="background:${P[i + 1]}"></i></div><span class="tal-n">0</span><button aria-label="إجابة أقل للخيار ${l}">−</button><button aria-label="إجابة أكثر للخيار ${l}">+</button>`;
-    const [minus, plus] = r.querySelectorAll("button");
-    minus.onclick = () => { counts[i] = Math.max(0, counts[i] - 1); drawTally(); };
-    plus.onclick = () => { counts[i]++; drawTally(); };
+    r.innerHTML = `<button class="tal-l" title="حدّدها كإجابة صحيحة"></button><div class="tal-mid"><input class="field sm" maxlength="120" dir="auto"><div class="tal-bar"><i style="background:${P[i + 1]}"></i></div></div><span class="tal-n">0</span><button aria-label="إجابة أقل">−</button><button aria-label="إجابة أكثر">+</button>`;
+    const [letter, minus, plus] = r.querySelectorAll("button"), inp = r.querySelector("input");
+    letter.onclick = () => { qset.correct = qset.correct === i ? null : i; if (qset.revealed) { qset.revealed = false; qBroadcast("reveal"); } drawTally(); };
+    inp.addEventListener("input", () => { qset.opts[i] = inp.value; qBroadcastSoon(); });
+    inp.addEventListener("keydown", e => e.stopPropagation());
+    minus.onclick = () => { counts[i] = Math.max(0, counts[i] - 1); drawTally(); qBroadcast("results"); };
+    plus.onclick = () => { counts[i]++; drawTally(); qBroadcast("results"); };
     box.appendChild(r);
   });
 }
 function drawTally() {
-  const max = Math.max(1, ...counts), total = counts.reduce((a, b) => a + b, 0);
-  $$("#tallyRows .tal-row").forEach((r, i) => { r.querySelector("i").style.width = (counts[i] / max * 100) + "%"; r.querySelector(".tal-n").textContent = counts[i]; r.title = total ? Math.round(counts[i] / total * 100) + "%" : ""; });
-}
-$("#tlReset").onclick = () => { counts.fill(0); drawTally(); };
-$("#tlShow").onclick = () => {
-  const total = counts.reduce((a, b) => a + b, 0);
-  if (!total) { toast("عُدّ بعض الإجابات أولًا."); return; }
-  const { x, y } = viewCenter(), max = Math.max(...counts), base = y + 140, L = [T(x + 250, y - 240, "نتائج السؤال السريع", 0, 38)];
-  counts.forEach((n, i) => {
-    const bx = x + 130 - i * 110, h = n / max * 260;
-    if (n) L.push(S("rect", bx, base - h, bx + 70, base, i + 1, 5));
-    L.push(T(bx + 48, base + 6, TALLY[i], i + 1, 34), T(bx + 4, base - h - 40, `${n} (${Math.round(n / total * 100)}%)`, 0, 24, 0));
+  const n = qset.n, max = Math.max(1, ...counts.slice(0, n)), total = counts.slice(0, n).reduce((a, b) => a + b, 0);
+  $$("#tallyRows .tal-row").forEach((r, i) => {
+    r.hidden = i >= n;
+    const l = r.querySelector(".tal-l"); l.textContent = optLabel(i); l.classList.toggle("ok", qset.correct === i);
+    l.setAttribute("aria-label", `${optLabel(i)}${qset.correct === i ? "، الإجابة الصحيحة" : ""}`);
+    r.querySelector("input").placeholder = n === 2 ? `نص خيار «${optLabel(i)}» (اختياري)` : `نص الخيار ${optLabel(i)} (اختياري)`;
+    r.querySelector("i").style.width = (counts[i] / max * 100) + "%"; r.querySelector(".tal-n").textContent = counts[i];
+    r.title = total ? Math.round(counts[i] / total * 100) + "%" : "";
   });
+  $$(".q-kinds [data-kind]").forEach(b => b.setAttribute("aria-checked", +b.dataset.kind === n));
+}
+$$(".q-kinds [data-kind]").forEach(b => b.onclick = () => {
+  const k = +b.dataset.kind; if (k === qset.n) return;
+  qset.n = k; if (qset.correct != null && qset.correct >= k) qset.correct = null;
+  for (let i = k; i < 4; i++) counts[i] = 0;
+  if (typeof clearAnswersBeyond === "function") clearAnswersBeyond(k);
+  drawTally(); qBroadcast("question");
+});
+$("#qTextIn").addEventListener("input", e => { qset.text = e.target.value; qBroadcastSoon(); });
+$("#qTextIn").addEventListener("keydown", e => e.stopPropagation());
+$("#tlReset").onclick = () => {
+  counts.fill(0); Object.assign(qset, { text: "", opts: ["", "", "", ""], correct: null, revealed: false });
+  $("#qTextIn").value = ""; $$("#tallyRows input").forEach(i => i.value = "");
+  if (typeof resetLiveAnswers === "function") resetLiveAnswers();
+  drawTally(); qBroadcast("question");
+};
+$("#tlShow").onclick = () => {
+  const n = qset.n, total = counts.slice(0, n).reduce((a, b) => a + b, 0);
+  if (!total) { toast("لا توجد إجابات بعد."); return; }
+  const { x, y } = viewCenter(), max = Math.max(...counts.slice(0, n)), base = y + 140, L = [T(x + 250, y - 240, qset.text.trim() || "نتائج السؤال السريع", 0, 36)];
+  for (let i = 0; i < n; i++) {
+    const c = counts[i], bx = x + 130 - i * 110, h = c / max * 260;
+    if (c) L.push(S("rect", bx, base - h, bx + 70, base, i + 1, 5));
+    L.push(T(bx + 56, base + 6, optLabel(i) + (qset.correct === i ? " ✓" : ""), i + 1, 30), T(bx + 4, base - h - 40, `${c} (${Math.round(c / total * 100)}%)`, 0, 24, 0));
+  }
   L.push(S("line", x - 260, base, x + 230, base, 0, 3));
   addItems(L, false); toast("أُضيفت النتائج إلى اللوحة");
 };
-buildTally();
+buildTally(); drawTally();
 
 /* ---------- keyboard ---------- */
 document.addEventListener("keydown", e => {
@@ -2579,6 +2728,42 @@ function fitDock() {
   updateDockMore();
 }
 function fitAll() { if (!vw) return; closeMenus(); fitHeader(); fitDock(); }
+
+/* =================== EXPORT & MOTION HELPERS =================== */
+const safeFile = t => String(t || "لوحتي").replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "لوحتي";
+function exportBoardImage(layers, bg, pattern, filename, footer, okMsg) {
+  const items = layers.flat().filter(Boolean);
+  if (!items.length) { toast("لا يوجد شيء لحفظه بعد"); return; }
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const it of items) { const b = worldBox(it); x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.w); y1 = Math.max(y1, b.y + b.h); }
+  const pad = 60; x0 -= pad; y0 -= pad; x1 += pad; y1 += pad;
+  { const mw = 900, mh = 560, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    if (x1 - x0 < mw) { x0 = cx - mw / 2; x1 = cx + mw / 2; } if (y1 - y0 < mh) { y0 = cy - mh / 2; y1 = cy + mh / 2; } }
+  const w = x1 - x0, h = y1 - y0, k = clamp(2200 / Math.max(w, h), 1, 2.5), foot = footer ? 64 : 0;
+  const c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k) + foot;
+  const g = c.getContext("2d");
+  palKey = PAL[bg] ? bg : "white";
+  try {
+    g.fillStyle = pal().bg; g.fillRect(0, 0, c.width, c.height);
+    g.setTransform(k, 0, 0, k, -x0 * k, -y0 * k); g.direction = "ltr";
+    drawPattern(g, { pattern: pattern || "none" }, { z: k, x0, y0, x1, y1 });
+    for (const it of items) drawItem(g, it);
+    if (foot) {
+      g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = "rgba(0,0,0,.06)"; g.fillRect(0, c.height - foot, c.width, foot);
+      g.fillStyle = pal().hint; g.font = `700 24px ${UI_FONT}`; g.textBaseline = "middle"; g.direction = "rtl"; g.textAlign = "right";
+      g.fillText(footer, c.width - 24, c.height - foot / 2);
+      g.textAlign = "left"; g.direction = "rtl"; g.font = `22px ${UI_FONT}`;
+      g.fillText(new Date().toLocaleDateString("ar-SA-u-nu-latn", { year: "numeric", month: "long", day: "numeric" }), 24, c.height - foot / 2);
+    }
+  } finally { palKey = null; }
+  c.toBlob(b => { if (b) offer(filename, b, okMsg || "حُفظت الصورة"); }, "image/png");
+}
+const fadeCv = $("#fade"), fadeCtx = fadeCv.getContext("2d");
+function crossfade() {
+  if (!vw || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  fadeCv.width = cv.width; fadeCv.height = cv.height; fadeCtx.drawImage(cv, 0, 0);
+  fadeCv.classList.remove("go"); void fadeCv.offsetWidth; fadeCv.classList.add("go");
+}
 
 /* =================== VIDEO =================== */
 const IDB = (() => {
@@ -2879,7 +3064,7 @@ function onStudentMsg(conn, d) {
     if (s.conn && s.conn !== conn) { try { s.conn.close(); } catch (e) {} }
     s.conn = conn; s.online = true; s._dirty = true;
     const hasLocal = live.task && d.taskId === live.task.id;
-    sendTo(s, { t: "state", name: s.name, task: live.task, mine: live.task && !hasLocal ? s.items : null, fb: live.task ? s.fb : [], locked: live.locked, question: live.question, answer: s.answer, timer: timerState() });
+    sendTo(s, { t: "state", name: s.name, task: live.task, mine: live.task && !hasLocal ? s.items : null, fb: live.task ? s.fb : [], locked: live.locked, question: live.question, q: live.question ? qPayload() : null, results: live.question && qset.showResults ? qResults() : null, reveal: live.question && qset.revealed ? qset.correct : null, answer: s.answer, timer: timerState() });
     s.assets = new Set();
     if (live.cast) sendCast(s, castPayload());
     refreshCards(); saveLiveSoon(); return;
@@ -2898,14 +3083,20 @@ function onStudentMsg(conn, d) {
       refreshCards(); break;
     }
     case "answer":
-      if (!live.question) return;
-      s.answer = (d.choice >= 0 && d.choice < 4) ? d.choice | 0 : null; recountAnswers(); refreshCards(); break;
+      if (!live.question || qset.revealed) return;
+      s.answer = (d.choice >= 0 && d.choice < qset.n) ? d.choice | 0 : null; recountAnswers(); refreshCards(); break;
   }
 }
 function touchStudent(s) { s._dirty = true; refreshCards(); if (viewing && viewing.sid === s.sid) rebuildViewBase(); }
-function timerState() { return (typeof tInt !== "undefined" && tInt) ? { left: Math.max(0, tEnd - Date.now()) } : null; }
+function timerState() {
+  if (typeof tInt === "undefined" || !$("#tShare").checked) return null;
+  const sound = $("#tSound").checked;
+  if (tInt) return { left: Math.max(0, tEnd - Date.now()), total: tTotal * 1000, running: true, sound };
+  if (tLeft > 0 && tLeft < tTotal) return { left: tLeft * 1000, total: tTotal * 1000, running: false, sound };
+  return null;
+}
 function liveTimerSync() { if (live.on) broadcast({ t: "timer", timer: timerState() }); }
-function recountAnswers() { counts.fill(0); for (const s of live.students.values()) if (s.answer != null) counts[s.answer]++; drawTally(); }
+function recountAnswers() { counts.fill(0); for (const s of live.students.values()) if (s.answer != null) counts[s.answer]++; drawTally(); qBroadcast("results"); }
 function notifyPicked(name) { if (!live.on) return; for (const s of live.students.values()) if (s.online && s.name === name) sendTo(s, { t: "picked" }); }
 function cheerAll() { celebrate(); if (live.on) broadcast({ t: "cheer" }); }
 
@@ -2948,9 +3139,13 @@ function updateLiveUI() {
   $("#hLiveT").textContent = on ? "مباشر" : "حصة مباشرة";
   $("#hLiveN").hidden = !on; $("#hLiveN").textContent = n;
   b.title = on ? "لوحات الطلاب" : "حصة مباشرة: يدخل الطلاب برابط أو رمز QR";
-  $("#tlLive").hidden = !on;
-  $("#tlLive").textContent = live.question ? "إيقاف استقبال الإجابات" : "اسأل الطلاب مباشرة";
+  $("#tlLiveRow").hidden = !on; $("#tShareRow").hidden = !on;
+  $("#tlLive").textContent = live.question ? "إغلاق السؤال" : "إرسال السؤال للطلاب";
   $("#tlLive").classList.toggle("primary", !live.question);
+  $("#tlResults").hidden = $("#tlReveal").hidden = !live.question;
+  $("#tlResults").setAttribute("aria-pressed", qset.showResults); $("#tlResults").textContent = qset.showResults ? "إخفاء النتائج عنهم" : "إظهار النتائج لهم";
+  $("#tlReveal").textContent = qset.revealed ? "إخفاء الإجابة" : "كشف الإجابة";
+  $("#tlHint").textContent = on ? "اضغط الحرف لتحديد الإجابة الصحيحة، ثم أرسل السؤال. يتحدث ما تكتبه عند الطلاب مباشرة." : "اضغط الحرف لتحديد الإجابة الصحيحة. بدون حصة مباشرة، عُدّ الإجابات يدويًا بالأزرار.";
   $("#lvCount").textContent = on ? (n ? `انضم ${n} حتى الآن` : "لم ينضم أحد بعد") : "";
   $("#cvLock").setAttribute("aria-pressed", live.locked); $("#cvLock").textContent = live.locked ? "فتح الكتابة" : "قفل الكتابة";
   $("#cvHide").setAttribute("aria-pressed", live.hideNames);
@@ -3012,12 +3207,12 @@ function renderCards(full) {
   if (!list.length) { $("#cvEmptyCode").textContent = live.room || ""; if (live.room && !$("#cvEmptyQr").dataset.room) { $("#cvEmptyQr").dataset.room = live.room; qrInto($("#cvEmptyQr"), joinUrl(live.room)); } }
   else delete $("#cvEmptyQr").dataset.room;
   const seen = new Set();
-  list.forEach(s => {
+  list.forEach((s, idx) => {
     seen.add(s.sid);
     let card = cvGrid.querySelector(`[data-sid="${s.sid}"]`);
     if (!card) {
       card = document.createElement("article"); card.className = "card"; card.dataset.sid = s.sid;
-      card.innerHTML = `<button class="thumb" aria-label="افتح اللوحة"><canvas></canvas></button><div class="c-foot"><span class="c-dot"></span><b class="c-name"></b><span class="c-badges"></span></div><div class="c-acts"><button class="c-hand" title="إنزال يده" aria-label="إنزال يده" hidden>✋</button><button class="c-cheer" title="تشجيع هذا الطالب" aria-label="تشجيع">⭐</button><button class="c-clear" title="مسح لوحته" aria-label="مسح لوحته"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button><button class="c-kick" title="إخراج من الحصة" aria-label="إخراج من الحصة"><svg class="i flip" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M9 8l-4 4 4 4M5 12h10"/></svg></button></div>`;
+      card.innerHTML = `<button class="thumb" aria-label="افتح اللوحة"><canvas></canvas></button><div class="c-foot"><span class="c-dot"></span><b class="c-name"></b><span class="c-badges"></span></div><div class="c-acts"><button class="c-hand" title="إنزال يده" aria-label="إنزال يده" hidden>✋</button><button class="c-cheer" title="تشجيع هذا الطالب" aria-label="تشجيع">⭐</button><button class="c-clear" title="مسح لوحته" aria-label="مسح لوحته"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button><button class="c-dl" title="تنزيل لوحته كصورة" aria-label="تنزيل لوحته"><svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 19h14"/></svg></button><button class="c-kick" title="إخراج من الحصة" aria-label="إخراج من الحصة"><svg class="i flip" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M9 8l-4 4 4 4M5 12h10"/></svg></button></div>`;
       card.querySelector(".thumb").onclick = () => viewStudent(s.sid);
       card.querySelector(".c-cheer").onclick = () => { sendTo(s, { t: "cheer", name: s.name }); toast(`أُرسل تشجيع إلى ${dispName(s)}`); };
       card.querySelector(".c-hand").onclick = () => lowerHand(s);
@@ -3026,13 +3221,17 @@ function renderCards(full) {
         if (b.classList.contains("armed")) { kickStudent(s); return; }
         b.classList.add("armed"); b.textContent = "تأكيد الإخراج"; setTimeout(() => { if (b.isConnected) { b.classList.remove("armed"); b.innerHTML = '<svg class="i flip" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M9 8l-4 4 4 4M5 12h10"/></svg>'; } }, 3000);
       };
+      card.querySelector(".c-dl").onclick = () => {
+        if (!live.task) { toast("لا يوجد تمرين لحفظه الآن"); return; }
+        exportBoardImage([live.task.items, s.items, s.fb], live.task.bg, live.task.pattern, `${safeFile(dispName(s))}-تمرين-${live.task.n}.png`, `${dispName(s)} · التمرين ${live.task.n}`, "حُفظت لوحة الطالب");
+      };
       card.querySelector(".c-clear").onclick = () => { s.items = []; s.draft = null; s._dirty = true; sendTo(s, { t: "clear" }); refreshCards(); };
       full = true;
     }
     card.classList.toggle("off", !s.online); card.classList.toggle("hand", s.hand); card.querySelector(".c-hand").hidden = !s.hand;
     card.querySelector(".c-name").textContent = dispName(s);
-    card.querySelector(".c-badges").innerHTML = (s.hand ? '<span class="c-badge">✋</span>' : "") + (s.done ? '<span class="c-badge done">✓ انتهى</span>' : "") + (live.question && s.answer != null ? `<span class="c-badge ans">${TALLY[s.answer]}</span>` : "") + (live.task && live.cast && s.view === "cast" ? '<span class="c-badge" title="يشاهد لوحتك الآن">📺</span>' : "");
-    cvGrid.appendChild(card);
+    card.querySelector(".c-badges").innerHTML = (s.hand ? '<span class="c-badge">✋</span>' : "") + (s.done ? '<span class="c-badge done">✓ انتهى</span>' : "") + (live.question && s.answer != null ? `<span class="c-badge ans${qset.revealed && qset.correct != null ? (s.answer === qset.correct ? " ok" : " no") : ""}">${optLabel(s.answer)}</span>` : "") + (live.task && live.cast && s.view === "cast" ? '<span class="c-badge" title="يشاهد لوحتك الآن">📺</span>' : "");
+    if (cvGrid.children[idx] !== card) cvGrid.insertBefore(card, cvGrid.children[idx] || null);
     if (full || s._dirty) { s._dirty = false; drawBoardInto(card.querySelector("canvas"), live.task, live.task ? [live.task.items, s.items, s.draft ? [s.draft] : [], s.fb] : [], live.cast ? "يشاهد لوحتك المعروضة" : "بانتظار التمرين"); }
   });
   [...cvGrid.children].forEach(c => { if (!seen.has(c.dataset.sid)) c.remove(); });
@@ -3164,11 +3363,32 @@ $("#vwCopy").onclick = () => {
   exitView(false); doc.pages.splice(doc.cur + 1, 0, pg); gotoPage(doc.cur + 1); updatePages();
   toast("نُسخ عمل الطالب إلى صفحة جديدة دون اسمه، لتعرضه على الصف");
 };
+function qResults() { return { counts: counts.slice(0, qset.n), total: counts.slice(0, qset.n).reduce((a, b) => a + b, 0) }; }
+function qBroadcast(what) {
+  if (typeof live === "undefined" || !live.on || !live.question) return;
+  if (what === "question") broadcast({ t: "question", open: true, q: qPayload(), results: qset.showResults ? qResults() : null, reveal: qset.revealed ? qset.correct : null });
+  else if (what === "results") { if (qset.showResults) broadcast({ t: "qResults", results: qResults() }); }
+  else if (what === "reveal") broadcast({ t: "qReveal", correct: qset.revealed ? qset.correct : null });
+}
+let qT = 0; function qBroadcastSoon() { clearTimeout(qT); qT = setTimeout(() => qBroadcast("question"), 350); }
+function resetLiveAnswers() { for (const s of live.students.values()) s.answer = null; refreshCards(); }
+function clearAnswersBeyond(k) { for (const s of live.students.values()) if (s.answer != null && s.answer >= k) s.answer = null; }
 $("#tlLive").onclick = () => {
   live.question = !live.question;
-  if (live.question) { for (const s of live.students.values()) s.answer = null; counts.fill(0); drawTally(); toggleWidget("w-tally", true); }
-  broadcast({ t: "question", open: live.question }); updateLiveUI(); refreshCards();
-  toast(live.question ? "ظهرت أزرار الإجابة عند الطلاب، وتُعدّ إجاباتهم تلقائيًا" : "أُغلق استقبال الإجابات");
+  if (live.question) { for (const s of live.students.values()) s.answer = null; counts.fill(0); qset.revealed = false; drawTally(); toggleWidget("w-tally", true); qBroadcast("question"); }
+  else broadcast({ t: "question", open: false });
+  updateLiveUI(); refreshCards();
+  toast(live.question ? "وصل السؤال إلى الطلاب، وتُعدّ إجاباتهم تلقائيًا" : "أُغلق السؤال عند الطلاب");
+};
+$("#tlResults").onclick = () => {
+  qset.showResults = !qset.showResults; updateLiveUI();
+  broadcast({ t: "qResults", results: qset.showResults ? qResults() : null });
+  toast(qset.showResults ? "يرى الطلاب نسب الإجابات الآن" : "أُخفيت النتائج عن الطلاب");
+};
+$("#tlReveal").onclick = () => {
+  if (qset.correct == null) { toast("اختر الإجابة الصحيحة أولًا بالضغط على حرفها"); return; }
+  qset.revealed = !qset.revealed; qBroadcast("reveal"); updateLiveUI(); refreshCards();
+  if (qset.revealed) { const ok = [...live.students.values()].filter(s => s.answer === qset.correct).length; toast(`كُشفت الإجابة: أصاب ${ok} من ${[...live.students.values()].filter(s => s.answer != null).length}`); }
 };
 
 /* =================== LIVE CLASS: student =================== */
@@ -3249,7 +3469,7 @@ function stuOnMsg(d) {
       stu.name = cleanName(d.name) || stu.name; $("#stuName").textContent = stu.name;
       stu.locked = !!d.locked; stuApplyTask(d.task || null, d.mine, false);
       if (stu.task) { stuPage.over = cleanItems(d.fb); sceneDirty = true; req(); }
-      stuSetQuestion(!!d.question, d.answer); stuSetTimer(d.timer); applyLock(); stuSave(); break;
+      stuSetQuestion(!!d.question, d.answer, d.q || null, d.results || null, d.reveal != null ? d.reveal : null); stuSetTimer(d.timer); applyLock(); stuSave(); break;
     case "task": stuApplyTask(d.task || null, null, true); applyLock(); break;
     case "fb":
       if (stu.task && d.taskId === stu.task.id) { stuPage.over = cleanItems(d.items); sceneDirty = true; req(); if (stuPage.over.length && !stu.fbSeen) { stu.fbSeen = true; toast("كتب معلمك ملاحظة على لوحتك ✏️"); } } break;
@@ -3257,7 +3477,12 @@ function stuOnMsg(d) {
     case "clear": if (stu.task) { stuPage.items = []; selected = null; markDirty(); toast("مسح المعلم لوحتك"); } break;
     case "cheer": celebrate(d.name ? `أحسنت يا ${cleanName(d.name)}!` : null); break;
     case "picked": showCheerText(`دورك يا ${stu.name}!`); chime(); break;
-    case "question": stuSetQuestion(!!d.open, null); break;
+    case "question": stuSetQuestion(!!d.open, qs.open && d.q && qs.q && qs.q.n === d.q.n ? undefined : null, d.q || null, d.results || null, d.reveal != null ? d.reveal : null); break;
+    case "qResults": if (qs.open) { qs.results = d.results || null; stuRenderQ(false); } break;
+    case "qReveal": if (qs.open) {
+      const was = qs.reveal; qs.reveal = d.correct != null ? d.correct | 0 : null; stuRenderQ(false);
+      if (qs.reveal != null && was == null) { if (stu.answer === qs.reveal) celebrate("إجابة صحيحة!"); else chime(); }
+    } break;
     case "timer": stuSetTimer(d.timer); break;
     case "end": stu.ended = true; stu.cast = null; document.body.classList.remove("stu-cast"); $("#stuView").hidden = true; stuSetTimer(null); stuSetQuestion(false); stuScreen("end", "انتهت الحصة. شكرًا لمشاركتك!"); try { stu.conn && stu.conn.close(); } catch (e) {} break;
   }
@@ -3299,6 +3524,11 @@ function stuApplyTask(task, mine, fresh) {
   if (fresh && !same) { toast(stu.cast ? "وصل تمرين جديد. يمكنك التبديل إلى لوحة المعلم من الأعلى" : "وصل تمرين جديد من معلمك"); chime(); }
   stuSave();
 }
+$("#stuSave").onclick = () => {
+  const cast = viewing === castPage, pg = cast ? castPage : stuPage, layers = cast ? [pg.shown || []] : [pg.base || [], pg.items || [], pg.over || []];
+  const what = cast ? "لوحة المعلم" : stu.task ? `التمرين ${stu.task.n}` : "اللوحة";
+  exportBoardImage(layers, pg.bg, pg.pattern, `${safeFile(stu.name || "لوحتي")}-${safeFile(what)}.png`, `${stu.name} · ${what}`, "حُفظت اللوحة على جهازك");
+};
 function stuStatus() { stuSend({ t: "status", done: stu.done, hand: stu.hand, view: stu.view }); }
 /* the teacher's cast lives on its own board, so the exercise board is never touched */
 function stuUpdateCast(draftOnly) {
@@ -3323,12 +3553,13 @@ function stuRefreshView() {
   if (stu.ended || !stuPage) return;
   const hasT = !!stu.task, hasC = !!stu.cast;
   if (!hasT && !hasC) {
-    stu.view = "task"; viewing = stuPage; document.body.classList.remove("stu-cast"); $("#stuView").hidden = true;
+    stu.view = "task"; viewing = stuPage; document.body.classList.remove("stu-cast"); $("#stuView").hidden = true; $("#stuSave").hidden = true;
     stuScreen("wait"); applyLock(); markView(); return;
   }
   if (!hasT) stu.view = "cast"; else if (!hasC) stu.view = "task";
   const target = stu.view === "cast" ? castPage : stuPage;
-  if (viewing !== target) { commitEditor(); selected = null; draft = null; action = null; viewing = target; }
+  if (viewing !== target) { crossfade(); commitEditor(); selected = null; draft = null; action = null; viewing = target; }
+  $("#stuSave").hidden = false;
   document.body.classList.toggle("stu-cast", stu.view === "cast"); fitDock();
   $("#stuView").hidden = !hasC; $("#svLive").hidden = hasT; $("#svSeg").hidden = !hasT;
   $$("#svSeg [data-v]").forEach(b => b.setAttribute("aria-selected", b.dataset.v === stu.view));
@@ -3340,16 +3571,68 @@ function applyLock() { $("#stuLock").hidden = !(stu.locked && stu.task && viewin
 function syncStatusBtns() { $("#stuHand").setAttribute("aria-pressed", stu.hand); $("#stuDone").setAttribute("aria-pressed", stu.done); }
 $("#stuHand").onclick = () => { stu.hand = !stu.hand; syncStatusBtns(); stuStatus(); toast(stu.hand ? "رفعت يدك ✋ سيراك المعلم" : "أنزلت يدك"); };
 $("#stuDone").onclick = () => { stu.done = !stu.done; syncStatusBtns(); stuStatus(); if (stu.done) toast("أُبلغ المعلم أنك انتهيت ✓"); };
-function stuSetQuestion(open, ans) {
-  $("#stuQ").hidden = !open; stu.answer = open ? (ans != null ? ans : stu.answer) : null;
-  $$("#stuQ [data-ans]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.ans === stu.answer));
+const qs = { open: false, q: null, results: null, reveal: null };
+function stuSetQuestion(open, ans, q, results, reveal) {
+  const was = qs.open;
+  qs.open = !!open;
+  if (!qs.open) { qs.q = null; qs.results = null; qs.reveal = null; stu.answer = null; $("#stuQ").hidden = true; return; }
+  if (q) { if (qs.q && (qs.q.n !== q.n)) stu.answer = null; qs.q = q; }
+  if (!qs.q) qs.q = { text: "", n: 4, labels: TALLY.slice(), opts: [] };
+  if (ans !== undefined) stu.answer = ans;
+  if (results !== undefined) qs.results = results;
+  if (reveal !== undefined) qs.reveal = reveal;
+  if (!was) { chime(); if (stu.view === "cast" && navigator.vibrate) navigator.vibrate(60); }
+  stuRenderQ(!was);
 }
-$$("#stuQ [data-ans]").forEach(b => b.onclick = () => { stu.answer = +b.dataset.ans; stuSetQuestion(true, stu.answer); stuSend({ t: "answer", choice: stu.answer }); });
+function stuRenderQ(fresh) {
+  const box = $("#qBtns"), q = qs.q, n = clamp(q.n | 0, 2, 4), hasText = (q.opts || []).some(o => o && o.trim());
+  $("#stuQ").hidden = false;
+  $("#qTextS").hidden = !q.text; $("#qTextS").textContent = q.text || "";
+  box.classList.toggle("has-text", hasText);
+  if (box.children.length !== n || box.dataset.text !== String(hasText) || fresh) {
+    box.innerHTML = ""; box.dataset.text = String(hasText);
+    for (let i = 0; i < n; i++) {
+      const b = document.createElement("button"); b.dataset.ans = i;
+      b.innerHTML = `<b></b><span class="q-o"></span><em hidden></em><i class="q-bar"><s></s></i>`;
+      b.onclick = () => { if (qs.reveal != null) return; stu.answer = i; stuRenderQ(false); stuSend({ t: "answer", choice: i }); };
+      box.appendChild(b);
+    }
+  }
+  const tot = qs.results ? qs.results.total : 0;
+  [...box.children].forEach((b, i) => {
+    b.querySelector("b").textContent = (q.labels || [])[i] || TALLY[i];
+    b.querySelector(".q-o").textContent = hasText ? ((q.opts || [])[i] || "") : "";
+    b.setAttribute("aria-pressed", stu.answer === i);
+    const pct = qs.results && tot ? Math.round((qs.results.counts[i] || 0) / tot * 100) : null;
+    b.querySelector(".q-bar s").style.width = pct == null ? "0%" : pct + "%";
+    const em = b.querySelector("em"); em.hidden = pct == null; em.textContent = pct == null ? "" : pct + "%";
+    b.classList.toggle("right", qs.reveal != null && qs.reveal === i);
+    b.classList.toggle("wrong", qs.reveal != null && stu.answer === i && qs.reveal !== i);
+    b.disabled = qs.reveal != null;
+  });
+  const msg = $("#qMsg");
+  if (qs.reveal != null) {
+    msg.hidden = false;
+    msg.textContent = stu.answer == null ? `الإجابة الصحيحة: ${(q.labels || [])[qs.reveal] || TALLY[qs.reveal]}` : stu.answer === qs.reveal ? "إجابة صحيحة! أحسنت 🎉" : `ليست صحيحة. الإجابة الصحيحة: ${(q.labels || [])[qs.reveal] || TALLY[qs.reveal]}`;
+  } else if (stu.answer != null) { msg.hidden = false; msg.textContent = "وصلت إجابتك، ويمكنك تغييرها"; }
+  else msg.hidden = true;
+}
 function stuSetTimer(t) {
-  clearInterval(stu.timerI); const el = $("#stuTimer");
+  clearInterval(stu.timerI); const el = $("#stuTimer"); el.classList.remove("low", "paused", "over");
   if (!t) { el.hidden = true; return; }
-  const end = Date.now() + t.left; el.hidden = false;
-  const tick = () => { const left = (end - Date.now()) / 1000; if (left <= 0) { el.textContent = "انتهى الوقت"; clearInterval(stu.timerI); setTimeout(() => { el.hidden = true; }, 4000); } else el.textContent = fmt(left); };
+  el.hidden = false;
+  if (!t.running) { el.textContent = "⏸ " + fmt(t.left / 1000); el.classList.add("paused"); return; }
+  const end = Date.now() + t.left;
+  const tick = () => {
+    const left = (end - Date.now()) / 1000;
+    if (left <= 0) {
+      clearInterval(stu.timerI); el.textContent = "انتهى الوقت"; el.classList.remove("low"); el.classList.add("over");
+      if (t.sound !== false) beep();
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+      toast("انتهى الوقت!");
+      setTimeout(() => { el.hidden = true; el.classList.remove("over"); }, 5000);
+    } else { el.textContent = fmt(left); el.classList.toggle("low", left <= 10); }
+  };
   tick(); stu.timerI = setInterval(tick, 250);
 }
 
